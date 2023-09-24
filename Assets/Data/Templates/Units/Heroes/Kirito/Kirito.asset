@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e331af0e423248f4a9b013b0acdae083, type: 3}
+  m_Name: Kirito
+  m_EditorClassIdentifier: 
+  _id: 1
+  _name: Kirito
+  _maxHealth: 1250
+  _heroType: 0
+  _dashDistance: 0.5
+  _dashForce: 5
+  _maxDashesCount: 2
+  _jumpsCount: 2
+  _heroAnimationData:
+    _dashClip: {fileID: 7400000, guid: 9c594c101a8cb11468a5f9151b61338a, type: 2}
+    _jumpAnimationData:
+      _riseClip: {fileID: 7400000, guid: 7b744569af082fc4382f748fe1b5cf22, type: 2}
+      _cycleClip: {fileID: 7400000, guid: 80c017aefd79e904eb5043a8f52d9812, type: 2}
+      _landingClip: {fileID: 7400000, guid: 495daea75e6e4634dace85fb8170d0d2, type: 2}
+    _attackAnimationData:
+      _groundAttack1: {fileID: 7400000, guid: c82772993c402ca4a9ebdb76b575150b, type: 2}
+  _actions:
+  - {fileID: 11400000, guid: e7c40cee70d258944aacdac92f18277b, type: 2}
+  - {fileID: 11400000, guid: 137186e8005e6634886ef0698c162075, type: 2}
+  - {fileID: 11400000, guid: 8eb880db838012e4185cf0d3315f5898, type: 2}
+  - {fileID: 11400000, guid: 82f2d125d7d8cd042bcfd09a924fc4c0, type: 2}
+  - {fileID: 11400000, guid: 5b47710e71ed6ae4daaf7dcca169a8ca, type: 2}

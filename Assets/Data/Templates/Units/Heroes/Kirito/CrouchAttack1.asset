@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 772b55505b9f4feda34fecf04c99a937, type: 3}
+  m_Name: CrouchAttack1
+  m_EditorClassIdentifier: 
+  _name: CrouchAttack1
+  _extendsInto:
+  - {fileID: 11400000, guid: b1115635836d12747a35cdfec1424943, type: 2}
+  _extendsFrom: 1
+  _direction: 2
+  _executionPlacement: 0
+  _animationClip: {fileID: 7400000, guid: 8d1968dc23f845d4e9ae71226d0dc555, type: 2}

@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 772b55505b9f4feda34fecf04c99a937, type: 3}
+  m_Name: BaseAttack1
+  m_EditorClassIdentifier: 
+  _name: Attack1
+  _baseEffect: 0
+  _amount: 100
+  _knockback: 1
+  _knockbackForce: {x: 0, y: 0}
+  _knockbackTime: 0.3
+  _vector: {x: 0, y: 0}
+  _distance: 0.3
+  _time: 0
+  _useClipLengthAsTime: 1
+  _extendsInto:
+  - {fileID: 11400000, guid: 0dca0d91fffdf3a4b8c588d7347f82c8, type: 2}
+  _extendsFrom: 1
+  _direction: 0
+  _executionPlacement: 0
+  _animationClip: {fileID: 7400000, guid: c82772993c402ca4a9ebdb76b575150b, type: 2}
