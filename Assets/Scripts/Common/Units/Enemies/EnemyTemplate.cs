@@ -1,4 +1,5 @@
-﻿using Common.Models.Actions;
+﻿using System.Collections.Generic;
+using Common.Models.Actions.Templates;
 using Infrastructure.Utils;
 using UnityEngine;
 
@@ -8,9 +9,16 @@ namespace Common.Units.Enemies
     public class EnemyTemplate : UnitTemplate
     {
         [SerializeField] private Enums.Enemy _type;
-        [SerializeField] private EnemyActionTemplate _actionTemplate;
+        [SerializeField] private Enums.ActionExecutionAwait _executionType;
+        [SerializeField] private ActionTemplate[] _actionTemplates;
+
+        [Space, Header("Near Execution")]
+        [SerializeField] private float _attackDistance;
 
         public Enums.Enemy Type => _type;
-        public EnemyActionTemplate ActionTemplate => _actionTemplate;
+        public Enums.ActionExecutionAwait ExecutionType => _executionType;
+        public IReadOnlyList<ActionTemplate> ActionTemplates => _actionTemplates;
+        
+        public float AttackDistance => _attackDistance;
     }
 }

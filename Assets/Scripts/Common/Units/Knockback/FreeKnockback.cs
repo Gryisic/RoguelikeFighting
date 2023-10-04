@@ -22,14 +22,14 @@ namespace Common.Units.Knockback
             float timer = 0;
             
             _rigidbody.velocity = _force;
-
+            
             while (timer < time && token.IsCancellationRequested == false)
             {
                  if (_rigidbody.velocity.x == 0) 
                      return;
                 
                  Vector2 currentVelocity = _rigidbody.velocity;
-                 float slowdownSpeed = currentVelocity.x - Constants.LinearVelocitySlowdownSpeed * Time.fixedDeltaTime;
+                 float slowdownSpeed = currentVelocity.x * Constants.LinearVelocitySlowdownSpeed;
                  Vector2 velocity = new Vector2(slowdownSpeed, currentVelocity.y);
 
                  _rigidbody.velocity = velocity;

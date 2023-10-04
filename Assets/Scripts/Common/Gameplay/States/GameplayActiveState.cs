@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using Common.Gameplay.Interfaces;
-using Common.Gameplay.Modifiers;
+using Common.Gameplay.Modifiers.Templates;
 using Common.Scene.Cameras.Interfaces;
 using Common.UI.Gameplay;
 using Common.Units;
+using Common.Utils.Interfaces;
 using Core.Interfaces;
 using Infrastructure.Utils;
 using UnityEngine.InputSystem;
@@ -12,21 +14,29 @@ namespace Common.Gameplay.States
 {
     public class GameplayActiveState : IGameplayState, IDeactivatable, IDisposable
     {
-        private readonly IInputService _input;
-        private readonly ICameraService _cameraService;
-        private readonly UnitsHandler _unitsHandler;
+        private readonly IStateChanger<IGameplayState> _stateChanger;
+        private readonly IGameplayData _gameplayData;
+        private readonly IStageData _stageData;
         private readonly Player _player;
-        private readonly ModifiersResolver _modifiersResolver;
-        private readonly UI.UI _ui;
+        private readonly IRunData _runData;
+        private readonly IInputService _input;
+        private readonly IServicesHandler _servicesHandler;
+        private readonly UnitsHandler _unitsHandler;
+        private readonly GameplayUI _ui;
         
-        public GameplayActiveState(Player player, IInputService input, ICameraService cameraService, UnitsHandler unitsHandler, ModifiersResolver modifiersResolver, UI.UI ui)
+        private ICameraService _cameraService;
+        
+        public GameplayActiveState(IStateChanger<IGameplayState> stateChanger, IGameplayData gameplayData, IStageData stageData, Player player, IRunData runData, IServicesHandler servicesHandler, UnitsHandler unitsHandler, UI.UI ui)
         {
+            _stateChanger = stateChanger;
             _player = player;
-            _input = input;
-            _cameraService = cameraService;
+            _gameplayData = gameplayData;
+            _stageData = stageData;
+            _runData = runData;
+            _input = servicesHandler.InputService;
+            _servicesHandler = servicesHandler;
             _unitsHandler = unitsHandler;
-            _modifiersResolver = modifiersResolver;
-            _ui = ui;
+            _ui = ui.Gameplay;
         }
 
         public void Dispose()
@@ -36,6 +46,8 @@ namespace Common.Gameplay.States
         
         public void Activate()
         {
+            _cameraService ??= _servicesHandler.GetSubService<ICameraService>();
+                
             AttachInput();
             SubscribeToEvents();
             
@@ -50,7 +62,7 @@ namespace Common.Gameplay.States
 
         private void SetDebugMultiplier(InputAction.CallbackContext obj)
         {
-            _player.AddModifier(_modifiersResolver.GetModifier(Enums.Modifier.Freeze));
+            _runData.ModifiersData.AddExperience(100);
         }
         
         private void DamageHero(InputAction.CallbackContext obj)
@@ -60,12 +72,20 @@ namespace Common.Gameplay.States
         
         private void SubscribeToEvents()
         {
-            _unitsHandler.Heroes[0].HealthUpdated += _ui.GetElementAndCastToType<GameplayUI>().HealthBarsView.UpdateHeroHealth;
+            _unitsHandler.Heroes[0].HealthUpdated += _ui.HeroView.UpdateHealth;
+
+            _stageData.HeroPositionChangeRequested += _player.SetPosition;
+            
+            _runData.ModifiersData.ModifiersSelectionRequested += OnModifierSelectionRequested;
         }
-        
+
         private void UnsubscribeToEvents()
         {
-            _unitsHandler.Heroes[0].HealthUpdated -= _ui.GetElementAndCastToType<GameplayUI>().HealthBarsView.UpdateHeroHealth;
+            _unitsHandler.Heroes[0].HealthUpdated -= _ui.HeroView.UpdateHealth;
+            
+            _stageData.HeroPositionChangeRequested -= _player.SetPosition;
+            
+            _runData.ModifiersData.ModifiersSelectionRequested -= OnModifierSelectionRequested;
         }
         
         private void AttachInput()
@@ -104,6 +124,14 @@ namespace Common.Gameplay.States
             _input.Input.Gameplay.Dash.performed -= _player.Dash;
             _input.Input.Gameplay.FirstLegacySkill.performed -= _player.FirstLegacySkill;
             _input.Input.Gameplay.SecondLegacySkill.performed -= _player.SecondLegacySkill;
+        }
+        
+        private void OnModifierSelectionRequested(IReadOnlyList<ModifierTemplate> templates)
+        {
+            _ui.CardsHandler.SetCardsData(templates);
+            _gameplayData.SetPauseType(Enums.PauseType.ModifierSelection);
+            
+            _stateChanger.ChangeState<GameplayPauseState>();
         }
     }
 }

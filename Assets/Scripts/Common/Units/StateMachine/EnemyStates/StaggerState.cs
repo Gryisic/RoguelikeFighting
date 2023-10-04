@@ -35,12 +35,9 @@ namespace Common.Units.StateMachine.EnemyStates
 
         public override void Exit()
         {
-            if (_isStaggered)
-            {
-                _isStaggered = false;
+            _isStaggered = false;
                 
-                _staggerTokenSource.Cancel();
-            }
+            _staggerTokenSource.Cancel();
         }
 
         public override void Update() { }
@@ -61,7 +58,6 @@ namespace Common.Units.StateMachine.EnemyStates
 
             await UniTask.WaitUntil(() => internalData.InAir == false, cancellationToken: _staggerTokenSource.Token);
             
-            _staggerTokenSource.Dispose();
             _isStaggered = false;
             
             unitStatesChanger.ChangeState<IdleState>();

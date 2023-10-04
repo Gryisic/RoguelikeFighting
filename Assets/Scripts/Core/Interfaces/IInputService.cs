@@ -3,7 +3,7 @@ using Core.PlayerInput;
 
 namespace Core.Interfaces
 {
-    public interface IInputService : IDisposable
+    public interface IInputService : IService, IDisposable
     {
         Input Input { get; }
     }

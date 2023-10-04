@@ -14,8 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _id: 10
   _name: Rinko
-  _maxHealth: 0
-  _damage: 0
-  _defence: 0
+  _maxHealth: 1000
   _type: 0
-  _actionTemplate: {fileID: 11400000, guid: e71717d1defafc6478adea0246670e82, type: 2}
+  _actionTemplates:
+  - {fileID: 11400000, guid: 5a0f399d7bd73744d86ca197de04b131, type: 2}

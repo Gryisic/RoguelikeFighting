@@ -13,9 +13,24 @@ MonoBehaviour:
   m_Name: CrouchAttack2
   m_EditorClassIdentifier: 
   _name: CrouchAttack2
+  _actionClip: {fileID: 7400000, guid: 5e16d68a0464a444e9dca6eb69196c55, type: 2}
+  _baseEffect: 0
+  _executeAfterClipPlayed: 0
+  _isChargeable: 0
+  _chargeTime: 0
+  _chargeClip: {fileID: 0}
+  _amount: 0
+  _knockback: 0
+  _knockbackForce: {x: 0, y: 0}
+  _knockbackTime: 0.3
+  _vector: {x: 0, y: 0}
+  _distance: 0
+  _movingTime: 0
+  _useClipLengthAsTime: 0
+  _animatorController: {fileID: 0}
+  _nextStanceTemplate: {fileID: 0}
   _extendsInto:
   - {fileID: 11400000, guid: 03dfb038622d69e46b09bac55770db38, type: 2}
   _extendsFrom: 1
   _direction: 2
   _executionPlacement: 0
-  _animationClip: {fileID: 7400000, guid: 5e16d68a0464a444e9dca6eb69196c55, type: 2}

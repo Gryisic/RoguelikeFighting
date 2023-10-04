@@ -12,10 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34902e8b38c543cb97342fc9f9dbc4db, type: 3}
   m_Name: RingOfFire
   m_EditorClassIdentifier: 
-  _name: Timer
-  _description: Tamer
+  _name: Ring of Fire
+  _description: Incinerate thy enemy
   _icon: {fileID: 0}
+  _executionCondition: 1
   _rarity: 0
+  _isBase: 1
+  _extendsFromAction: 0
   _time: 2
   _radius: 0.5
   _damage: 100

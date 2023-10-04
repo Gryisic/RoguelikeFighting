@@ -13,17 +13,23 @@ MonoBehaviour:
   m_Name: DashAttack
   m_EditorClassIdentifier: 
   _name: DashAttack
+  _actionClip: {fileID: 7400000, guid: 569d59c40f75b2d49a67f6f8bf46b30c, type: 2}
   _baseEffect: 0
+  _executeAfterClipPlayed: 0
+  _isChargeable: 0
+  _chargeTime: 0
+  _chargeClip: {fileID: 0}
   _amount: 100
   _knockback: 1
   _knockbackForce: {x: 0, y: 0}
   _knockbackTime: 0.3
   _vector: {x: 0, y: 0}
   _distance: 5
-  _time: 0
+  _movingTime: 0
   _useClipLengthAsTime: 1
+  _animatorController: {fileID: 0}
+  _nextStanceTemplate: {fileID: 0}
   _extendsInto: []
   _extendsFrom: 4
   _direction: 0
   _executionPlacement: 0
-  _animationClip: {fileID: 7400000, guid: 569d59c40f75b2d49a67f6f8bf46b30c, type: 2}

@@ -1,11 +1,13 @@
 ﻿using System;
 using Common.Gameplay;
+using Common.Gameplay.Data;
 using Common.Gameplay.Interfaces;
 using Common.Gameplay.Modifiers;
 using Common.Gameplay.States;
 using Core.GameStates;
 using Core.Interfaces;
 using Core.PlayerInput;
+using Core.Utils;
 using Infrastructure.Factories.GameplayStateFactory;
 using Infrastructure.Factories.GameplayStateFactory.Interfaces;
 using Infrastructure.Factories.GameStatesFactory;
@@ -26,10 +28,10 @@ namespace Core.Installers
 
         public override void InstallBindings()
         {
-            BindInput();
+            BindServices();
             BindSceneSwitcher();
-            BindRunData();
             BindModifiers();
+            BindRunData();
             BindFactories();
             BindGameStates();
             BindGame();
@@ -51,18 +53,18 @@ namespace Core.Installers
 
         private void BindModifiers()
         {
-            _modifiersDataBase.Initialize();
-            
             Container.Bind<ModifiersDataBase>().FromInstance(_modifiersDataBase).AsSingle();
             Container.Bind<ModifiersHandler>().AsSingle();
             Container.Bind<ModifiersResolver>().AsSingle();
+            Container.Bind<ModifiersData>().AsSingle();
         }
 
-        private void BindInput()
+        private void BindServices()
         {
             Container.Bind<Input>().WhenInjectedInto<InputService>();
-            
             Container.BindInterfacesTo<InputService>().AsSingle();
+
+            Container.BindInterfacesTo<ServicesHandler>().AsSingle().CopyIntoDirectSubContainers();
         }
         
         private void BindGame()

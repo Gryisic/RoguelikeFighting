@@ -11,6 +11,7 @@ namespace Common.Gameplay.Modifiers.Templates
         [SerializeField] private Sprite _icon;
         [SerializeField] private Enums.ModifierExecutionCondition _executionCondition;
         [SerializeField] private Enums.ModifierRarity _rarity;
+        [SerializeField] private bool _isBase;
 
         [Space, Header("Action Based Extension Data")]
         [SerializeField] private Enums.HeroActionType _extendsFromAction;
@@ -20,6 +21,7 @@ namespace Common.Gameplay.Modifiers.Templates
         public Sprite Icon => _icon;
         public Enums.ModifierExecutionCondition ExecutionCondition => _executionCondition;
         public Enums.ModifierRarity Rarity => _rarity;
+        public bool IsBase => _isBase;
         
         public Enums.HeroActionType ExtendsFromAction => _extendsFromAction;
         

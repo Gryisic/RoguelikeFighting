@@ -17,4 +17,5 @@ MonoBehaviour:
   _icon: {fileID: 0}
   _executionCondition: 0
   _rarity: 0
+  _isBase: 1
   _extendsFromAction: 1

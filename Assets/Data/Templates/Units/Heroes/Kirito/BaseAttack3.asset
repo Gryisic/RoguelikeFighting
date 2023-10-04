@@ -13,14 +13,19 @@ MonoBehaviour:
   m_Name: BaseAttack3
   m_EditorClassIdentifier: 
   _name: Attack3
+  _actionClip: {fileID: 7400000, guid: 6e022edf7784f3b44aa2f9c1ee95fe70, type: 2}
   _baseEffect: 0
+  _executeAfterClipPlayed: 0
+  _isChargeable: 0
+  _chargeTime: 0
+  _chargeClip: {fileID: 0}
   _amount: 0
   _knockback: 2
   _knockbackForce: {x: 8, y: 2}
   _knockbackTime: 1
   _vector: {x: 0, y: 0}
   _distance: 0
-  _time: 0
+  _movingTime: 0
   _useClipLengthAsTime: 0
   _animatorController: {fileID: 0}
   _nextStanceTemplate: {fileID: 0}
@@ -28,4 +33,3 @@ MonoBehaviour:
   _extendsFrom: 1
   _direction: 0
   _executionPlacement: 0
-  _animationClip: {fileID: 7400000, guid: 6e022edf7784f3b44aa2f9c1ee95fe70, type: 2}

@@ -17,16 +17,14 @@ namespace Common.Gameplay.Rooms
         private NextWaveRequirement _requirement;
         private int _currentWaveIndex;
 
-        private void Awake()
-        {
-            _requirement = DefineRequirement();
-            
-            SubscribeToEvents();
-        }
+        public override Enums.RoomType Type => Enums.RoomType.Battle;
 
         public override void Initialize(IStageData stageData)
         {
             _stageData = stageData;
+            _requirement = DefineRequirement();
+            
+            SubscribeToEvents();
 
             foreach (var map in _wavesMap)
             {
@@ -40,6 +38,16 @@ namespace Common.Gameplay.Rooms
             
             if (_requirement is IDisposable disposable)
                 disposable.Dispose();
+        }
+
+        public override void Enter()
+        {
+            foreach (var map in _wavesMap) 
+                map.Trigger.Activate();
+            
+            ChangeTrigger.Activate();
+
+            base.Enter();
         }
 
         private void ActivateWave()

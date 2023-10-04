@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Common.UI.Gameplay;
 using UnityEngine;
 
 namespace Common.UI
@@ -7,13 +8,8 @@ namespace Common.UI
     [Serializable]
     public class UI
     {
-        [SerializeField] private UIElement[] _uiElements;
+        [SerializeField] private GameplayUI _gameplay;
 
-        public T GetElementAndCastToType<T>() where T: UIElement
-        {
-            UIElement element = _uiElements.First(e => e is T);
-
-            return element as T;
-        }
+        public GameplayUI Gameplay => _gameplay;
     }
 }

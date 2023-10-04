@@ -7,7 +7,6 @@ using Common.Units.Interfaces;
 using Common.Units.StateMachine.HeroStates;
 using Infrastructure.Utils;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Common.Units
 {
@@ -58,7 +57,8 @@ namespace Common.Units
                 new MovingState(this, heroInternalData),
                 new DashState(this, heroInternalData),
                 new AirState(this, heroInternalData),
-                new ActionState(this, heroInternalData)
+                new ActionState(this, heroInternalData),
+                new StateMachine.StaggerState(this, heroInternalData)
             };
             
             heroInternalData.SetDashData(heroTemplate.DashDistance, heroTemplate.DashForce, heroTemplate.MaxDashesCount);

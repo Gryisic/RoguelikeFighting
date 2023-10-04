@@ -4,7 +4,9 @@ namespace Common.UI
 {
     public abstract class UIElement : MonoBehaviour
     {
-        public abstract void Activate();
-        public abstract void Deactivate();
+        public RectTransform Transform => transform as RectTransform;
+        
+        public virtual void Activate() => gameObject.SetActive(true);
+        public virtual void Deactivate() => gameObject.SetActive(false);
     }
 }

@@ -1,9 +1,10 @@
-﻿using Infrastructure.Utils;
+﻿using Core.Interfaces;
+using Infrastructure.Utils;
 using UnityEngine;
 
 namespace Common.Scene.Cameras.Interfaces
 {
-    public interface ICameraService
+    public interface ICameraService : IService
     {
         void FollowUnit(Transform unitTransform, Enums.CameraDistanceType cameraDistanceType = Enums.CameraDistanceType.Neutral);
 

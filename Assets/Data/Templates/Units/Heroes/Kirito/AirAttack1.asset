@@ -13,9 +13,24 @@ MonoBehaviour:
   m_Name: AirAttack1
   m_EditorClassIdentifier: 
   _name: AirAttack1
+  _actionClip: {fileID: 7400000, guid: e2d06a54a625b8046abd9e4588decb0a, type: 2}
+  _baseEffect: 0
+  _executeAfterClipPlayed: 0
+  _isChargeable: 0
+  _chargeTime: 0
+  _chargeClip: {fileID: 0}
+  _amount: 0
+  _knockback: 0
+  _knockbackForce: {x: 0, y: 0}
+  _knockbackTime: 0.3
+  _vector: {x: 0, y: 0}
+  _distance: 0
+  _movingTime: 0
+  _useClipLengthAsTime: 0
+  _animatorController: {fileID: 0}
+  _nextStanceTemplate: {fileID: 0}
   _extendsInto:
   - {fileID: 11400000, guid: 1444bdd2c5e6c434485d45187be1d51b, type: 2}
   _extendsFrom: 1
   _direction: 0
   _executionPlacement: 1
-  _animationClip: {fileID: 7400000, guid: e2d06a54a625b8046abd9e4588decb0a, type: 2}

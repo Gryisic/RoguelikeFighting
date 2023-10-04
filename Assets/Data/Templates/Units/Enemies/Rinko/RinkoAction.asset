@@ -9,19 +9,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3e1a5c2fa1344fdb157bee03fff34fe, type: 3}
+  m_Script: {fileID: 11500000, guid: 04ed4cbe4dab47e5a9853989bf1edc20, type: 3}
   m_Name: RinkoAction
   m_EditorClassIdentifier: 
-  _name: Projectile
-  _baseEffect: 1
-  _knockback: 0
-  _vector: {x: 0, y: 0}
-  _distance: 0
-  _time: 0
-  _useClipLengthAsTime: 1
-  _projectile: {fileID: 6477234976125162650, guid: 8f9918b53e47205408bfe5726b439667, type: 3}
-  _cooldownTime: 3
+  _name: Charge And Fire
   _actionClip: {fileID: 7400000, guid: 93da3ada0e401df4d85f2979cc50e33d, type: 2}
-  _requireCharge: 1
+  _baseEffect: 1
+  _executeAfterClipPlayed: 0
+  _isChargeable: 1
   _chargeTime: 1
   _chargeClip: {fileID: 7400000, guid: 1b90fb572c599464d9cd347867ad8715, type: 2}
+  _amount: 200
+  _knockback: 0
+  _knockbackForce: {x: 0, y: 0}
+  _knockbackTime: 0.3
+  _vector: {x: 0, y: 0}
+  _distance: 0
+  _movingTime: 0
+  _useClipLengthAsTime: 0
+  _animatorController: {fileID: 0}
+  _nextStanceTemplate: {fileID: 0}

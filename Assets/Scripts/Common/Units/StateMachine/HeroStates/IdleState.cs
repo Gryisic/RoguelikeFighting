@@ -1,10 +1,11 @@
-﻿using Common.Units.Interfaces;
+﻿using Common.Gameplay.Triggers;
+using Common.Units.Interfaces;
 using Infrastructure.Utils;
 using UnityEngine;
 
 namespace Common.Units.StateMachine.HeroStates
 {
-    public class IdleState : HeroState, IAttackExecutor, IDashExecutor, IJumpExecutor, ISkillExecutor
+    public class IdleState : HeroState, IAttackExecutor, IDashExecutor, IJumpExecutor, ISkillExecutor, IInteractExecutor
     {
         public IdleState(IUnitStatesChanger unitStatesChanger, IHeroInternalData internalData) : base(unitStatesChanger, internalData) { }
 
@@ -52,6 +53,24 @@ namespace Common.Units.StateMachine.HeroStates
                     internalData.RequestJump();
                 
                 unitStatesChanger.ChangeState<AirState>();
+            }
+        }
+        
+        public void Interact()
+        {
+            Collider2D[] colliders = new Collider2D[10];
+            int collidersCount = Physics2D.OverlapCircleNonAlloc(internalData.Transform.position, Constants.InteractionRadius, colliders);
+
+            for (int i = 0; i < collidersCount; i++)
+            {
+                Collider2D collider = colliders[i];
+                
+                if (collider.TryGetComponent(out Trigger trigger))
+                {
+                    trigger.Execute();
+                    
+                    return;
+                }
             }
         }
 

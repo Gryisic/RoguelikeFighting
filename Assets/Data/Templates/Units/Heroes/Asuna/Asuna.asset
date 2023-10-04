@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e331af0e423248f4a9b013b0acdae083, type: 3}
+  m_Name: Asuna
+  m_EditorClassIdentifier: 
+  _id: 2
+  _name: Asuna
+  _maxHealth: 800
+  _heroType: 0
+  _dashDistance: 0.7
+  _dashForce: 3
+  _maxDashesCount: 3
+  _jumpsCount: 3
+  _heroAnimationData:
+    _dashClip: {fileID: 7400000, guid: 1d5548de04eb2fe45b392170bc8253bf, type: 2}
+    _jumpAnimationData:
+      _riseClip: {fileID: 7400000, guid: 09d8a2a335ff79a4f88d64fe408466a5, type: 2}
+      _cycleClip: {fileID: 7400000, guid: 87601a1d05a8937469ebdb6ed8397038, type: 2}
+      _landingClip: {fileID: 7400000, guid: db5b073d5bfa36f4c8cdfb01203b6ea4, type: 2}
+  _actions:
+  - {fileID: 11400000, guid: 054d635793d2eaa489cf51134ca55578, type: 2}

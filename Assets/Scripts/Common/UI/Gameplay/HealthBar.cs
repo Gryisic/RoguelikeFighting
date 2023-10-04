@@ -1,23 +1,18 @@
 ﻿using System;
+using DG.Tweening;
+using Infrastructure.Utils;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Common.UI.Gameplay
 {
-    [Serializable]
-    public class HealthBar
+    public abstract class HealthBar
     {
-        [SerializeField] private Image _bar;
-
-        public virtual void UpdateValue(int maxHealth, int currentHealth)
+        public virtual void UpdateValue(int currentHealth, int maxHealth)
         {
-            if (maxHealth > currentHealth)
+            if (currentHealth > maxHealth)
                 throw new ArgumentException("Current health is greater then max health");
-            
-            maxHealth = Mathf.Min(maxHealth, 999);
-            currentHealth = Mathf.Max(0, currentHealth);
-            
-            _bar.fillAmount = (float)currentHealth / maxHealth;
         }
     }
 }

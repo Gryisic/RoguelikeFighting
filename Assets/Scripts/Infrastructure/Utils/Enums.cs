@@ -1,4 +1,6 @@
-﻿namespace Infrastructure.Utils
+﻿using System;
+
+namespace Infrastructure.Utils
 {
     public static class Enums
     {
@@ -21,6 +23,12 @@
             Close
         }
         
+        public enum PauseType
+        {
+            Menu,
+            ModifierSelection
+        }
+        
         public enum NextWaveRequirement
         {
             EnemiesDefeated,
@@ -30,12 +38,20 @@
         public enum Hero
         {
             Kirito,
-            Bro
+            Asuna
         }
         
         public enum Enemy
         {
-            Rinko
+            Rinko,
+            Ninja
+        }
+        
+        public enum ActionExecutionAwait
+        {
+            Everywhere,
+            OnLineOrHigher,
+            Near
         }
 
         public enum HeroActionType
@@ -117,7 +133,7 @@
             TakeHitHeavy,
             Death
         }
-        
+
         public enum EventTriggerType
         {
             Dialogue,
@@ -128,6 +144,13 @@
         {
             Automatic,
             Manual
+        }
+        
+        [Flags]
+        public enum RoomType
+        {
+            Selection,
+            Battle,
         }
     }
 }

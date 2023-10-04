@@ -30,6 +30,7 @@ namespace Common.Units.StateMachine.HeroStates
         {
             _currentAction = null;
             
+            internalData.Physics.UnSuppressManualVelocityChange();
             internalData.Physics.UnfreezeFalling();
             internalData.ActionsContainer.ResetAction();
             internalData.AnimationEventsReceiver.ResetSubscriptions();
@@ -63,7 +64,7 @@ namespace Common.Units.StateMachine.HeroStates
                         internalData.Physics.FreezeFalling();
                     
                     _currentAction = action;
-                    AnimationClip currentClip = action.Data.AnimationClip;
+                    AnimationClip currentClip = action.Data.ActionClip;
 
                     internalData.AnimationEventsReceiver.ActionExecutionRequested += action.Execute;
                     internalData.AnimationEventsReceiver.MovingRequested += OnMovingRequested;
@@ -92,13 +93,17 @@ namespace Common.Units.StateMachine.HeroStates
 
         private async UniTask MoveAsync()
         {
-            float time = _currentAction.Data.UseClipLengthAsTime ? _currentAction.Data.AnimationClip.length : _currentAction.Data.Time;
+            float time = _currentAction.Data.UseClipLengthAsTime ? _currentAction.Data.ActionClip.length : _currentAction.Data.MovingTime;
             float speed = (_currentAction.Data.Distance / time) * internalData.FaceDirection.x;
             
-            internalData.Physics.UpdateHorizontalVelocity(speed);
+            //Debug.Log($"Distance: {_currentAction.Data.Distance} Time: {time} Speed: {speed} Face: {internalData.FaceDirection}");
             
+            internalData.Physics.UpdateHorizontalVelocity(speed);
+            internalData.Physics.SuppressManualVelocityChange();
+
             await UniTask.Delay(TimeSpan.FromSeconds(time), cancellationToken: _actionTokenSource.Token);
             
+            internalData.Physics.UnSuppressManualVelocityChange();
             internalData.Physics.UpdateHorizontalVelocity(0);
         }
     }

@@ -26,5 +26,21 @@ namespace Common.Units.Stats
             
             return _statsMap[type];
         }
+
+        public void IncreaseStat(Enums.Stat type, int amount)
+        {
+            if (amount < 0)
+                throw new InvalidOperationException($"Trying to increase stat at negative value. Value: {amount}");
+
+            _statsMap[type] += amount;
+        }
+
+        public void DecreaseStat(Enums.Stat type, int amount)
+        {
+            if (amount < 0)
+                throw new InvalidOperationException($"Trying to decrease stat at negative value. Value: {amount}");
+
+            _statsMap[type] -= amount;
+        }
     }
 }

@@ -1,13 +1,19 @@
-﻿using Common.Models.Actions;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Common.Models.Actions;
+using Common.UI.Gameplay;
 using Common.Units.Enemies;
 using Common.Units.Interfaces;
 using Common.Units.StateMachine.EnemyStates;
 using Infrastructure.Utils;
+using UnityEngine;
 
 namespace Common.Units
 {
     public class Enemy : Unit
     {
+        [SerializeField] private EnemyHealthBar _healthBar;
+        
         public Enums.Enemy Type { get; private set; }
 
         public override void Initialize(UnitTemplate template)
@@ -16,20 +22,30 @@ namespace Common.Units
 
             Type = enemyTemplate.Type;
 
-            internalData = new EnemyInternalData(physics, Transform, animator, StatsData, actionsData, animationEventsReceiver, GetType());
-            EnemyAction action = new EnemyAction(enemyTemplate.ActionTemplate, internalData as EnemyInternalData);
+            internalData = new EnemyInternalData(enemyTemplate, physics, Transform, animator, StatsData, actionsData, animationEventsReceiver, GetType());
 
             EnemyInternalData enemyData = internalData as EnemyInternalData;
-            enemyData.SetAction(action);
+            List<EnemyAction> actions = enemyTemplate.ActionTemplates.Select(actionTemplate => new EnemyAction(actionTemplate, internalData as EnemyInternalData)).ToList();
+
+            enemyData.SetActions(actions);
 
             states = new IUnitState[]
             {
                 new IdleState(this, internalData as EnemyInternalData),
                 new ActionState(this, internalData as EnemyInternalData),
-                new StaggerState(this, internalData as EnemyInternalData)
+                new StateMachine.StaggerState(this, internalData as EnemyInternalData)
             };
             
+            HealthUpdated += _healthBar.UpdateValue;
+            
             base.Initialize(template);
+        }
+        
+        public override void Dispose()
+        {
+            HealthUpdated -= _healthBar.UpdateValue;
+            
+            base.Dispose();
         }
 
         public override void Activate()

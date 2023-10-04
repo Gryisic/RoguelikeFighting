@@ -1,4 +1,5 @@
 ﻿using Common.Gameplay.Modifiers;
+using Common.Models.Actions.Templates;
 using Common.Units.Interfaces;
 
 namespace Common.Models.Actions

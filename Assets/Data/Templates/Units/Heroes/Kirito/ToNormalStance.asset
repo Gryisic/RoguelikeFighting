@@ -13,14 +13,19 @@ MonoBehaviour:
   m_Name: ToNormalStance
   m_EditorClassIdentifier: 
   _name: NormalStance
+  _actionClip: {fileID: 7400000, guid: b7fc70bc166925b45afc2bb003b85cbf, type: 2}
   _baseEffect: 2
+  _executeAfterClipPlayed: 0
+  _isChargeable: 0
+  _chargeTime: 0
+  _chargeClip: {fileID: 0}
   _amount: 0
   _knockback: 0
   _knockbackForce: {x: 0, y: 0}
   _knockbackTime: 0.3
   _vector: {x: 0, y: 0}
   _distance: 0
-  _time: 0
+  _movingTime: 0
   _useClipLengthAsTime: 0
   _animatorController: {fileID: 9100000, guid: e3ef1e0372b855948845f8743bf9f164, type: 2}
   _nextStanceTemplate: {fileID: 11400000, guid: 5b47710e71ed6ae4daaf7dcca169a8ca, type: 2}
@@ -28,4 +33,3 @@ MonoBehaviour:
   _extendsFrom: 0
   _direction: 0
   _executionPlacement: 0
-  _animationClip: {fileID: 7400000, guid: b7fc70bc166925b45afc2bb003b85cbf, type: 2}

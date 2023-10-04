@@ -1,5 +1,7 @@
 ﻿using System;
 using Common.Gameplay;
+using Common.Gameplay.Data;
+using Common.Gameplay.Interfaces;
 using Common.Gameplay.States;
 using Common.Units;
 using Infrastructure.Factories.UnitsFactory;
@@ -16,6 +18,7 @@ namespace Core.Installers
         public override void InstallBindings()
         {
             BindSelf();
+            BindData();
             BindFactories();
             BindPlayer();
             BindStage();
@@ -25,14 +28,18 @@ namespace Core.Installers
         public void Dispose()
         {
             Container.Resolve<UnitsHandler>().Dispose();
-            Container.Resolve<Stage>().Dispose();
+            
+            Stage stage = Container.Resolve<IStageData>() as Stage;
+            stage.Dispose();
         }
 
         private void BindSelf() => Container.BindInterfacesAndSelfTo<GameplayInstaller>().FromInstance(this).AsSingle();
 
+        private void BindData() => Container.Bind<IGameplayData>().To<GameplayData>().AsSingle();
+
         private void BindPlayer() => Container.Bind<Player>().AsSingle();
         
-        private void BindStage() => Container.Bind<Stage>().FromInstance(_stage).AsSingle();
+        private void BindStage() => Container.Bind<IStageData>().To<Stage>().FromInstance(_stage).AsSingle();
         
         private void BindFactories()
         {
@@ -44,6 +51,7 @@ namespace Core.Installers
         {
             Container.BindInterfacesAndSelfTo<GameplayInitializeState>().AsSingle();
             Container.BindInterfacesAndSelfTo<GameplayActiveState>().AsSingle();
+            Container.BindInterfacesAndSelfTo<GameplayPauseState>().AsSingle();
         }
     }
 }

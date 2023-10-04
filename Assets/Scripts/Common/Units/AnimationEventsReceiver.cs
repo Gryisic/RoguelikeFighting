@@ -1,5 +1,6 @@
 ﻿using System;
 using Common.Units.Interfaces;
+using Infrastructure.Utils;
 using UnityEngine;
 
 namespace Common.Units
@@ -12,7 +13,7 @@ namespace Common.Units
         public void RequestActionExecution() => ActionExecutionRequested?.Invoke();
         
         public void RequestMoving() => MovingRequested?.Invoke();
-        
+
         public void ResetSubscriptions()
         {
             ActionExecutionRequested = null;

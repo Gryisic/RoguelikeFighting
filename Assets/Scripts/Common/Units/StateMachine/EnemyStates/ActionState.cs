@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
+using Common.Models.Actions;
 using Common.Units.Interfaces;
 using Cysharp.Threading.Tasks;
 using Infrastructure.Utils;
@@ -9,10 +11,10 @@ namespace Common.Units.StateMachine.EnemyStates
 {
     public class ActionState : EnemyState, IDisposable
     {
-        private CancellationTokenSource _executionToken;
+        private CancellationTokenSource _executionTokenSource;
 
         private bool _isExecuting;
-        
+
         public ActionState(IUnitStatesChanger unitStatesChanger, IEnemyInternalData internalData) : base(unitStatesChanger, internalData) { }
 
         public void Dispose()
@@ -21,14 +23,14 @@ namespace Common.Units.StateMachine.EnemyStates
             {
                 _isExecuting = false;
                 
-                _executionToken.Cancel();
-                _executionToken.Dispose();
+                _executionTokenSource.Cancel();
+                _executionTokenSource.Dispose();
             }
         }
         
         public override void Enter()
         {
-            _executionToken = new CancellationTokenSource();
+            _executionTokenSource = new CancellationTokenSource();
             
             ExecuteAsync().Forget();
         }
@@ -46,6 +48,23 @@ namespace Common.Units.StateMachine.EnemyStates
         private async UniTask ExecuteAsync()
         {
             _isExecuting = true;
+
+            for (var i = 0; i < internalData.Actions.Count; i++)
+            {
+                EnemyAction action = internalData.Actions[i];
+                await action.ExecuteAsync(_executionTokenSource.Token);
+            }
+
+            _executionTokenSource.Dispose();
+            
+            _isExecuting = false;
+            
+            unitStatesChanger.ChangeState<IdleState>();
+        }
+
+        /*private async UniTask ExecuteAsync()
+        {
+            _isExecuting = true;
             
             if (internalData.Action.Data.RequireCharge)
                 await PlayClipAndAwaitAsync(internalData.Action.Data.ChargeClip, internalData.Action.Data.ChargeTime);
@@ -61,12 +80,12 @@ namespace Common.Units.StateMachine.EnemyStates
             _isExecuting = false;
             
             unitStatesChanger.ChangeState<IdleState>();
-        }
+        }*/
         
         private async UniTask PlayClipAndAwaitAsync(AnimationClip clip, float time)
         {
             internalData.Animator.PlayAnimationClip(clip);
-            await UniTask.Delay(TimeSpan.FromSeconds(time), cancellationToken: _executionToken.Token);
+            await UniTask.Delay(TimeSpan.FromSeconds(time), cancellationToken: _executionTokenSource.Token);
         }
     }
 }

@@ -4,6 +4,7 @@ using System;
 using Common.Gameplay.Interfaces;
 using Common.Gameplay.Triggers;
 using Common.Gameplay.Waves;
+using Infrastructure.Utils;
 using UnityEngine;
 
 namespace Common.Gameplay.Rooms
@@ -11,6 +12,8 @@ namespace Common.Gameplay.Rooms
     public class DebugRoom : Room
     {
         [SerializeField] private TriggerWaveMap[] _wavesMap;
+
+        public override Enums.RoomType Type => Enums.RoomType.Battle;
         
         private void Awake()
         {

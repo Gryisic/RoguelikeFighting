@@ -13,8 +13,23 @@ MonoBehaviour:
   m_Name: CrouchAttack3
   m_EditorClassIdentifier: 
   _name: CrouchAttack3
+  _actionClip: {fileID: 7400000, guid: 8cd845afcca0df947920e2ce21ec7eb2, type: 2}
+  _baseEffect: 0
+  _executeAfterClipPlayed: 0
+  _isChargeable: 0
+  _chargeTime: 0
+  _chargeClip: {fileID: 0}
+  _amount: 0
+  _knockback: 0
+  _knockbackForce: {x: 0, y: 0}
+  _knockbackTime: 0.3
+  _vector: {x: 0, y: 0}
+  _distance: 0
+  _movingTime: 0
+  _useClipLengthAsTime: 0
+  _animatorController: {fileID: 0}
+  _nextStanceTemplate: {fileID: 0}
   _extendsInto: []
   _extendsFrom: 1
   _direction: 2
   _executionPlacement: 0
-  _animationClip: {fileID: 7400000, guid: 8cd845afcca0df947920e2ce21ec7eb2, type: 2}

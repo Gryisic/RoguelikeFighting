@@ -25,6 +25,7 @@ namespace Common.Units
         private bool _isDropping;
         private bool _isKnockbacking;
         private bool _isFrozen;
+        private bool _isVelocityChangeSuppressed;
         
         public bool IsGrounded => CheckGround(out Collider2D _) && VerticalVelocity == 0;
         public float VerticalVelocity => _rigidbody.velocity.y;
@@ -89,9 +90,13 @@ namespace Common.Units
             _isFrozen = false;
         }
 
+        public void SuppressManualVelocityChange() => _isVelocityChangeSuppressed = true;
+        
+        public void UnSuppressManualVelocityChange() => _isVelocityChangeSuppressed = false;
+
         public void UpdateHorizontalVelocity(float velocity)
         {
-            if (velocity == 0 && _rigidbody.velocity.y != 0)
+            if (velocity == 0 && _rigidbody.velocity.y != 0 || _isVelocityChangeSuppressed)
                 return;
             
             _rigidbody.velocity = new Vector2(velocity, _rigidbody.velocity.y);

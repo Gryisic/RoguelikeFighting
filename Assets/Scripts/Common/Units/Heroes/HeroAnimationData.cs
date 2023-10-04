@@ -9,13 +9,11 @@ namespace Common.Units.Heroes
         [SerializeField] private AnimationClip _dashClip;
         
         [SerializeField] private JumpAnimationData _jumpAnimationData;
-        [SerializeField] private AttackAnimationData _attackAnimationData;
 
         public AnimationClip DashClip => _dashClip;
         public AnimationClip RiseClip => _jumpAnimationData.RiseClip;
         public AnimationClip CycleClip => _jumpAnimationData.CycleClip;
         public AnimationClip LandingClip => _jumpAnimationData.LandingClip;
-        public AnimationClip GroundAttack1 => _attackAnimationData.GroundAttack1;
         
         [Serializable]
         private struct JumpAnimationData
@@ -27,14 +25,6 @@ namespace Common.Units.Heroes
             public AnimationClip RiseClip => _riseClip;
             public AnimationClip CycleClip => _cycleClip;
             public AnimationClip LandingClip => _landingClip;
-        }
-        
-        [Serializable]
-        private struct AttackAnimationData
-        {
-            [SerializeField] private AnimationClip _groundAttack1;
-
-            public AnimationClip GroundAttack1 => _groundAttack1;
         }
     }
 }

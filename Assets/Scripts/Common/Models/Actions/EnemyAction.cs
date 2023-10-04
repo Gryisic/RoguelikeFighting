@@ -1,4 +1,9 @@
-﻿using Common.Units.Interfaces;
+﻿using System;
+using System.Threading;
+using Common.Models.Actions.Templates;
+using Common.Units.Interfaces;
+using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 namespace Common.Models.Actions
 {
@@ -6,9 +11,9 @@ namespace Common.Models.Actions
     {
         private readonly IEnemyInternalData _internalData;
         
-        public new EnemyActionTemplate Data { get; }
+        public new ActionTemplate Data { get; }
 
-        public EnemyAction(EnemyActionTemplate template, IEnemyInternalData internalData) : base(template)
+        public EnemyAction(ActionTemplate template, IEnemyInternalData internalData) : base(template)
         {
             Data = template;
             _internalData = internalData;
@@ -19,6 +24,37 @@ namespace Common.Models.Actions
         public override void Execute()
         {
             executionBase.Execute();
+        }
+
+        public async UniTask ExecuteAsync(CancellationToken token)
+        {
+            SubscribeToEvents();
+
+            if (Data.IsChargeable)
+                await PlayClipAndAwaitAsync(Data.ChargeClip, Data.ChargeTime, token);
+            
+            await PlayClipAndAwaitAsync(Data.ActionClip, Data.ActionClip.length, token);
+            
+            UnsubscribeToEvents();
+            
+            if (Data.ExecuteAfterClipPlayed)
+                Execute();
+        }
+
+        private async UniTask PlayClipAndAwaitAsync(AnimationClip clip, float time, CancellationToken token)
+        {
+            _internalData.Animator.PlayAnimationClip(clip);
+            await UniTask.Delay(TimeSpan.FromSeconds(time), cancellationToken: token);
+        }
+        
+        private void SubscribeToEvents()
+        {
+            _internalData.AnimationEventsReceiver.ActionExecutionRequested += Execute;
+        }
+        
+        private void UnsubscribeToEvents()
+        {
+            _internalData.AnimationEventsReceiver.ActionExecutionRequested -= Execute;
         }
     }
 }

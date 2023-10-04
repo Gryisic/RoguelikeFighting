@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using Common.Gameplay.Interfaces;
 using Common.Units.Interfaces;
+using Common.Units.Stats;
 using UnityEngine;
 using Zenject;
 
@@ -10,7 +12,7 @@ namespace Common.Units.Enemies
     {
         [SerializeField] private EnemyTemplate _template;
         [SerializeField] private bool _isKicking;
-
+        
         private IRunData _runData;
         
         [Inject]
@@ -19,13 +21,12 @@ namespace Common.Units.Enemies
             _runData = runData;
         }
         
-        private void Awake()
+        private void Start()
         {
-            Initialize(_template);
-            
             if (_isKicking)
             {
-
+                Initialize(_template);
+                
                 Invoke(nameof(Activate), 0.5f);
                 Invoke(nameof(DebugInfo), 0.5f);
             }
@@ -33,7 +34,10 @@ namespace Common.Units.Enemies
 
         private void OnDestroy()
         {
-            Dispose();
+            if (_isKicking)
+            {
+                Dispose();
+            }
         }
 
         private void DebugInfo()

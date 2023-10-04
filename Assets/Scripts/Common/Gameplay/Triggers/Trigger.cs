@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Common.Gameplay.Triggers
 {
@@ -6,9 +7,6 @@ namespace Common.Gameplay.Triggers
     public abstract class Trigger : MonoBehaviour
     {
         [SerializeField] private BoxCollider2D _collider;
-        [SerializeField] private bool _isOneShot;
-
-        protected bool IsOneShot => _isOneShot;
         
         private void Awake()
         {
@@ -24,7 +22,12 @@ namespace Common.Gameplay.Triggers
 
         public abstract void Execute();
 
-        protected void Deactivate()
+        public virtual void Activate()
+        {
+            _collider.enabled = true;
+        }
+        
+        public virtual void Deactivate()
         {
             _collider.enabled = false;
         }

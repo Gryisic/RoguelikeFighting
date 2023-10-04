@@ -25,6 +25,8 @@ namespace Common.Gameplay
             hero.Invoke(nameof(hero.Activate), 1f);
         }
 
+        public void SetPosition(Vector2 position) => HeroTransform.position = position;
+
         public void StartMoving(InputAction.CallbackContext context)
         {
             Vector2 direction = context.ReadValue<Vector2>();

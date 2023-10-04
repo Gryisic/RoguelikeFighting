@@ -26,10 +26,7 @@ namespace Common.Units
             _animator.Play(_animationKeyMap[animation]);
         }
         
-        public void PlayAnimationClip(AnimationClip clip)
-        {
-            _animator.Play(clip.name);
-        }
+        public void PlayAnimationClip(AnimationClip clip) => _animator.Play(clip.name);
 
         public void UpdateAnimatorController(AnimatorController controller) =>
             _animator.runtimeAnimatorController = controller;

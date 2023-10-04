@@ -99,14 +99,17 @@ namespace Common.Units
 
         public void TakeDamage(int amount)
         {
+            amount = 200;
+            
             internalData.SetStaggerTime(0.3f);
+            StatsData.DecreaseStat(Enums.Stat.Health, amount);
 
             int currentHealth = StatsData.GetStatValue(Enums.Stat.Health);
             int maxHealth = StatsData.GetStatValue(Enums.Stat.MaxHealth);
-            
+
             HealthUpdated?.Invoke(currentHealth, maxHealth);
             
-            ChangeState<StaggerState>();
+            ChangeState<StateMachine.StaggerState>();
         }
 
         public void ApplyKnockBack(Collider2D hitbox, Vector2 force, float time, Enums.Knockback knockback)
@@ -123,10 +126,13 @@ namespace Common.Units
 
         protected void Flip(Vector2 direction)
         {
-            Vector2 faceDirection = new Vector2(Mathf.Ceil(direction.x), Mathf.Ceil(direction.y));
+            float directionX = direction.x == 0 ? internalData.FaceDirection.x : Mathf.Ceil(direction.x);
+            float directionY = Mathf.Ceil(direction.y);
+            
+            Vector2 faceDirection = new Vector2(directionX, directionY);
             internalData.SetFaceDirection(faceDirection);
             
-            float rotation = direction.x >= 0 ? 0 : 180;
+            float rotation = directionX > 0 ? 0 : 180;
             Quaternion quaternion = new Quaternion(0, rotation, 0, 0);
 
             transform.rotation = quaternion;

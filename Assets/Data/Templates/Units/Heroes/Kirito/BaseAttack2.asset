@@ -13,18 +13,24 @@ MonoBehaviour:
   m_Name: BaseAttack2
   m_EditorClassIdentifier: 
   _name: Attack2
+  _actionClip: {fileID: 7400000, guid: f9aa222469499554cadf01149bdff4c7, type: 2}
   _baseEffect: 0
+  _executeAfterClipPlayed: 0
+  _isChargeable: 0
+  _chargeTime: 0
+  _chargeClip: {fileID: 0}
   _amount: 100
   _knockback: 1
   _knockbackForce: {x: 0, y: 0}
   _knockbackTime: 0.3
   _vector: {x: 0, y: 0}
   _distance: 0
-  _time: 0
+  _movingTime: 0
   _useClipLengthAsTime: 0
+  _animatorController: {fileID: 0}
+  _nextStanceTemplate: {fileID: 0}
   _extendsInto:
   - {fileID: 11400000, guid: 0d4a3273b46b7e24e816241a78998199, type: 2}
   _extendsFrom: 1
   _direction: 0
   _executionPlacement: 0
-  _animationClip: {fileID: 7400000, guid: f9aa222469499554cadf01149bdff4c7, type: 2}

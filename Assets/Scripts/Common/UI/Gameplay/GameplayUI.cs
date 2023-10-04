@@ -5,18 +5,10 @@ namespace Common.UI.Gameplay
 {
     public class GameplayUI : UIElement
     {
-        [SerializeField] private HealthBarsView _healthBarsView;
-
-        public HealthBarsView HealthBarsView => _healthBarsView;
-
-        public override void Activate()
-        {
-            gameObject.SetActive(true);
-        }
-
-        public override void Deactivate()
-        {
-            gameObject.SetActive(false);
-        }
+        [SerializeField] private HeroView _heroView;
+        [SerializeField] private ModifierCardsHandler _cardsHandler;
+        
+        public HeroView HeroView => _heroView;
+        public ModifierCardsHandler CardsHandler => _cardsHandler;
     }
 }

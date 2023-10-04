@@ -1,4 +1,5 @@
-﻿using Common.Units.Interfaces;
+﻿using Common.Models.Actions.Templates;
+using Common.Units.Interfaces;
 
 namespace Common.Models.Actions
 {

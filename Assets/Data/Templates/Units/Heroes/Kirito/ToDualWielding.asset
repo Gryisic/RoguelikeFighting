@@ -13,14 +13,19 @@ MonoBehaviour:
   m_Name: ToDualWielding
   m_EditorClassIdentifier: 
   _name: DualWielding
+  _actionClip: {fileID: 7400000, guid: 5f18e7bcdc012c34f87bb45ef27dfbe0, type: 2}
   _baseEffect: 2
+  _executeAfterClipPlayed: 0
+  _isChargeable: 0
+  _chargeTime: 0
+  _chargeClip: {fileID: 0}
   _amount: 0
   _knockback: 0
   _knockbackForce: {x: 0, y: 0}
   _knockbackTime: 0.3
   _vector: {x: 0, y: 0}
   _distance: 0
-  _time: 0
+  _movingTime: 0
   _useClipLengthAsTime: 0
   _animatorController: {fileID: 9100000, guid: d8c3f37d21abd0b4f91dd78ae4464397, type: 2}
   _nextStanceTemplate: {fileID: 11400000, guid: 98c59b4ff197d06419aadb1ee17d0d43, type: 2}
@@ -28,4 +33,3 @@ MonoBehaviour:
   _extendsFrom: 2
   _direction: 0
   _executionPlacement: 0
-  _animationClip: {fileID: 7400000, guid: 5f18e7bcdc012c34f87bb45ef27dfbe0, type: 2}

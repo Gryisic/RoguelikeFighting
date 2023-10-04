@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using Common.Units.ActionExecution;
 using Common.Units.Interfaces;
 using Cysharp.Threading.Tasks;
 using Infrastructure.Utils;
@@ -9,12 +10,16 @@ namespace Common.Units.StateMachine.EnemyStates
 {
     public class IdleState : EnemyState, IDisposable
     {
+        private ExecutionAwaiter _awaiter;
         private CancellationTokenSource _waitingTokenSource;
 
         private float _distance;
         private bool _isWaiting;
-        
-        public IdleState(IUnitStatesChanger unitStatesChanger, IEnemyInternalData internalData) : base(unitStatesChanger, internalData) { }
+
+        public IdleState(IUnitStatesChanger unitStatesChanger, IEnemyInternalData internalData) : base(unitStatesChanger, internalData)
+        {
+            _awaiter = new ExecutionAwaiter(internalData);
+        }
 
         public void Dispose()
         {
@@ -51,9 +56,11 @@ namespace Common.Units.StateMachine.EnemyStates
         private async UniTask WaitAsync()
         {
             _isWaiting = true;
+
+            await _awaiter.AwaitAsync(_waitingTokenSource.Token);
             
-            await UniTask.Delay(TimeSpan.FromSeconds(internalData.Action.Data.CooldownTime), cancellationToken: _waitingTokenSource.Token);
-            await UniTask.WaitUntil(() => _distance < 1, cancellationToken: _waitingTokenSource.Token);
+            //await UniTask.Delay(TimeSpan.FromSeconds(Constants.DefaultEnemyAwaitTime), cancellationToken: _waitingTokenSource.Token);
+            //await UniTask.WaitUntil(() => _distance < 1, cancellationToken: _waitingTokenSource.Token);
             
             _waitingTokenSource.Dispose();
             
