@@ -35,7 +35,7 @@ namespace Common.Models.Actions
             ExtendsInto = actions;
         }
 
-        public bool IsConditionsFulfilled(Enums.HeroActionType extendsFrom, Enums.InputDirection direction, Enums.HeroActionExecutionPlacement placement) => 
+        public bool IsConditionsFulfilled(Enums.HeroActionType extendsFrom, Enums.InputDirection direction, Enums.ActionExecutionPlacement placement) => 
             extendsFrom == Data.ExtendsFrom && direction == Data.Direction && placement == Data.ExecutionPlacement;
 
         public IReadOnlyList<HeroAction> GetAllChildsExtendedFromActionType(Enums.HeroActionType type)

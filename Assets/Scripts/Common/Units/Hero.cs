@@ -12,6 +12,8 @@ namespace Common.Units
 {
     public class Hero : Unit, IManuallyMovable, IHeroActions
     {
+        public event Action<int> HealChargesUpdated; 
+
         public Enums.Hero HeroType { get; private set; }
         
         private IHeroInternalData HeroInternalData => internalData as IHeroInternalData;
@@ -27,8 +29,19 @@ namespace Common.Units
 
         public void Dash() => HeroState.Dash();
 
-        public void LegacySkill(Enums.LegacySkillType skillType) { }
+        public void LegacySkill(Enums.HeroActionType skillType) { }
         
+        public void Heal()
+        {
+            if (HeroInternalData.CanHeal == false)
+                return;
+
+            HeroInternalData.UseHealCharge();
+            HeroState.Heal();
+            
+            HealChargesUpdated?.Invoke(HeroInternalData.HealCharges);
+        }
+
         public void AddModifier(Modifier modifier)
         {
             HeroInternalData.ActionsContainer.AddModifier(modifier);
@@ -63,6 +76,7 @@ namespace Common.Units
             
             heroInternalData.SetDashData(heroTemplate.DashDistance, heroTemplate.DashForce, heroTemplate.MaxDashesCount);
             heroInternalData.SetJumpData(heroTemplate.JumpsCount);
+            heroInternalData.SetHealCharges(1);
 
             base.Initialize(template);
         }

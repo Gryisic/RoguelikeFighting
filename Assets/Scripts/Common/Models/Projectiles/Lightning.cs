@@ -26,6 +26,9 @@ namespace Common.Models.Projectiles
 
             await UniTask.WhenAny(collideTask, strategyTask);
 
+            if (launchTokenSource.IsCancellationRequested)
+                return;
+            
             localRigidbody.velocity = Vector2.zero;
             isCollided = true;
             

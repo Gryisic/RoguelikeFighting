@@ -7,11 +7,14 @@ namespace Common.Units.Interfaces
     public interface IHeroInternalData : IUnitInternalData
     {
         Enums.InputDirection InputDirection { get; }
-        Enums.HeroActionExecutionPlacement Placement { get; }
+        Enums.ActionExecutionPlacement Placement { get; }
         Enums.HeroActionType LastActionType { get; }
         HeroAnimationData AnimationData { get; }
         HeroActionsContainer ActionsContainer { get; }
 
+        int HealCharges { get; }
+        bool CanHeal { get; }
+        
         float DashDistance { get; }
         float DashForce { get; }
         int MaxDashesCount { get; }
@@ -22,6 +25,10 @@ namespace Common.Units.Interfaces
         public int RemainingJumps { get; }
         public bool JumpRequested { get; }
 
+        void SetHealCharges(int amount);
+        void UseHealCharge();
+        void RestoreHealCharge();
+        
         void SetDashData(float distance, float force, int maxDashesCount);
         void IncreaseRemainingDashes();
         void DecreaseRemainingDashes();

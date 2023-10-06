@@ -15,6 +15,7 @@ MonoBehaviour:
   _name: Vorpal Strike
   _actionClip: {fileID: 7400000, guid: ebd59c16313adef478cef7b5fe711b48, type: 2}
   _baseEffect: 0
+  _executionPlacement: 0
   _executeAfterClipPlayed: 0
   _isChargeable: 0
   _chargeTime: 0
@@ -23,13 +24,14 @@ MonoBehaviour:
   _knockback: 2
   _knockbackForce: {x: 20, y: 0}
   _knockbackTime: 0.3
-  _vector: {x: 0, y: 0}
+  _vector: {x: 1, y: 0}
   _distance: 5
   _movingTime: 0.3
   _useClipLengthAsTime: 0
   _animatorController: {fileID: 0}
   _nextStanceTemplate: {fileID: 0}
+  _positionRelativeToTarget: {x: 0, y: 0}
   _extendsInto: []
   _extendsFrom: 2
   _direction: 1
-  _executionPlacement: 0
+  _icon: {fileID: 2514988542215765323, guid: cedfabc2a5d0a404bac3b6c3ecdc519b, type: 3}

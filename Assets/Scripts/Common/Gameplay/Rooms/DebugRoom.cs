@@ -20,7 +20,7 @@ namespace Common.Gameplay.Rooms
             SubscribeToEvents();
         }
 
-        public override void Initialize(IStageData stageData)
+        public override void Initialize(IStageData stageData, IRunData runData)
         {
             
         }

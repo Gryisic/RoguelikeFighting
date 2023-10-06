@@ -42,9 +42,6 @@ namespace Common.Models.Actions
             AffectMultiplier *= percent;
         }
 
-        protected void ThrowInvalidTemplateException(string actionName) =>
-            throw new InvalidOperationException($"Trying to create {actionName} via non {actionName} template");
-
         private void ThrowException(string message, float value) => 
             throw new InvalidOperationException($"Trying to {message} multiplier on negative value. Value: {value}");
         

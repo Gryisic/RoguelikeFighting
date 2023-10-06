@@ -16,7 +16,7 @@ namespace Common.Gameplay.Rooms
         
         public abstract Enums.RoomType Type { get; }
 
-        public abstract void Initialize(IStageData stageData);
+        public abstract void Initialize(IStageData stageData, IRunData runData);
         public abstract void Dispose();
 
         public virtual void Enter() => gameObject.SetActive(true);

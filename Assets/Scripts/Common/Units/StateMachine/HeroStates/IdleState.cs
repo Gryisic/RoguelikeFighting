@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Common.Units.StateMachine.HeroStates
 {
-    public class IdleState : HeroState, IAttackExecutor, IDashExecutor, IJumpExecutor, ISkillExecutor, IInteractExecutor
+    public class IdleState : HeroState, IAttackExecutor, IDashExecutor, IJumpExecutor, ISkillExecutor, IInteractExecutor, IHealExecutor
     {
         public IdleState(IUnitStatesChanger unitStatesChanger, IHeroInternalData internalData) : base(unitStatesChanger, internalData) { }
 
@@ -36,6 +36,8 @@ namespace Common.Units.StateMachine.HeroStates
         public void Attack() => SetActionAndChangeState(Enums.HeroActionType.BasicAttack);
 
         public void Skill() => SetActionAndChangeState(Enums.HeroActionType.Skill);
+        
+        public void Heal() => SetActionAndChangeState(Enums.HeroActionType.Heal);
 
         public void Dash()
         {

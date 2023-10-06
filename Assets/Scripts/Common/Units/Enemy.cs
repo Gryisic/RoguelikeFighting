@@ -13,6 +13,8 @@ namespace Common.Units
     public class Enemy : Unit
     {
         [SerializeField] private EnemyHealthBar _healthBar;
+
+        private ISharedUnitData _heroData;
         
         public Enums.Enemy Type { get; private set; }
 
@@ -25,6 +27,9 @@ namespace Common.Units
             internalData = new EnemyInternalData(enemyTemplate, physics, Transform, animator, StatsData, actionsData, animationEventsReceiver, GetType());
 
             EnemyInternalData enemyData = internalData as EnemyInternalData;
+            
+            enemyData.SetHeroData(_heroData);
+            
             List<EnemyAction> actions = enemyTemplate.ActionTemplates.Select(actionTemplate => new EnemyAction(actionTemplate, internalData as EnemyInternalData)).ToList();
 
             enemyData.SetActions(actions);
@@ -54,5 +59,7 @@ namespace Common.Units
             
             base.Activate();
         }
+
+        public void SetHeroData(ISharedUnitData heroData) => _heroData = heroData;
     }
 }

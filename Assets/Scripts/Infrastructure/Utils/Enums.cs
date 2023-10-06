@@ -59,8 +59,10 @@ namespace Infrastructure.Utils
             None,
             BasicAttack,
             Skill,
-            LegacySkill,
+            FirstLegacySkill,
+            SecondLegacySkill,
             Dash,
+            Heal,
             TakeDamage
         }
         
@@ -71,7 +73,7 @@ namespace Infrastructure.Utils
             Down
         }
 
-        public enum HeroActionExecutionPlacement
+        public enum ActionExecutionPlacement
         {
             Ground,
             Air
@@ -81,7 +83,9 @@ namespace Infrastructure.Utils
         {
             MeleeAttack,
             Projectile,
-            ChangeStance
+            ChangeStance,
+            Teleportation,
+            Heal
         }
         
         public enum Knockback
@@ -95,12 +99,6 @@ namespace Infrastructure.Utils
         {
             MaxHealth,
             Health
-        }
-
-        public enum LegacySkillType
-        {
-            First,
-            Second
         }
 
         public enum Modifier

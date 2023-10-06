@@ -67,12 +67,13 @@ namespace Common.Gameplay.States
         
         private void DamageHero(InputAction.CallbackContext obj)
         {
-            _unitsHandler.Heroes[0].TakeDamage(10);
+            _unitsHandler.Hero.TakeDamage(200);
         }
         
         private void SubscribeToEvents()
         {
-            _unitsHandler.Heroes[0].HealthUpdated += _ui.HeroView.UpdateHealth;
+            _unitsHandler.Hero.HealthUpdated += _ui.HeroView.UpdateHealth;
+            _unitsHandler.Hero.HealChargesUpdated += _ui.HeroView.UpdateHealCharges;
 
             _stageData.HeroPositionChangeRequested += _player.SetPosition;
             
@@ -81,8 +82,9 @@ namespace Common.Gameplay.States
 
         private void UnsubscribeToEvents()
         {
-            _unitsHandler.Heroes[0].HealthUpdated -= _ui.HeroView.UpdateHealth;
-            
+            _unitsHandler.Hero.HealthUpdated -= _ui.HeroView.UpdateHealth;
+            _unitsHandler.Hero.HealChargesUpdated -= _ui.HeroView.UpdateHealCharges;
+
             _stageData.HeroPositionChangeRequested -= _player.SetPosition;
             
             _runData.ModifiersData.ModifiersSelectionRequested -= OnModifierSelectionRequested;
@@ -99,6 +101,7 @@ namespace Common.Gameplay.States
             _input.Input.Gameplay.Dash.performed += _player.Dash;
             _input.Input.Gameplay.FirstLegacySkill.performed += _player.FirstLegacySkill;
             _input.Input.Gameplay.SecondLegacySkill.performed += _player.SecondLegacySkill;
+            _input.Input.Gameplay.Heal.performed += _player.Heal;
             
             _input.Input.Debug.SetDebugModifier.performed += SetDebugMultiplier;
             _input.Input.Debug.DamageHero.performed += DamageHero;
@@ -124,6 +127,7 @@ namespace Common.Gameplay.States
             _input.Input.Gameplay.Dash.performed -= _player.Dash;
             _input.Input.Gameplay.FirstLegacySkill.performed -= _player.FirstLegacySkill;
             _input.Input.Gameplay.SecondLegacySkill.performed -= _player.SecondLegacySkill;
+            _input.Input.Gameplay.Heal.performed -= _player.Heal;
         }
         
         private void OnModifierSelectionRequested(IReadOnlyList<ModifierTemplate> templates)

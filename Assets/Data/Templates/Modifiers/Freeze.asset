@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Freeze
   _description: Freeze thy enemy
-  _icon: {fileID: 0}
+  _icon: {fileID: -1863859237976802683, guid: cedfabc2a5d0a404bac3b6c3ecdc519b, type: 3}
   _executionCondition: 0
   _rarity: 0
   _isBase: 1

@@ -38,7 +38,8 @@ namespace Common.Units.StateMachine.EnemyStates
         public override void Exit()
         {
             internalData.AnimationEventsReceiver.ResetSubscriptions();
-            
+            internalData.Physics.UnfreezeFalling();
+
             if (_isExecuting) 
                 Dispose();
         }
@@ -60,32 +61,6 @@ namespace Common.Units.StateMachine.EnemyStates
             _isExecuting = false;
             
             unitStatesChanger.ChangeState<IdleState>();
-        }
-
-        /*private async UniTask ExecuteAsync()
-        {
-            _isExecuting = true;
-            
-            if (internalData.Action.Data.RequireCharge)
-                await PlayClipAndAwaitAsync(internalData.Action.Data.ChargeClip, internalData.Action.Data.ChargeTime);
-            
-            internalData.AnimationEventsReceiver.ActionExecutionRequested += internalData.Action.Execute;
-            
-            await PlayClipAndAwaitAsync(internalData.Action.Data.ActionClip, internalData.Action.Data.ActionClip.length);
-            
-            internalData.AnimationEventsReceiver.ActionExecutionRequested -= internalData.Action.Execute;
-            
-            _executionToken.Dispose();
-
-            _isExecuting = false;
-            
-            unitStatesChanger.ChangeState<IdleState>();
-        }*/
-        
-        private async UniTask PlayClipAndAwaitAsync(AnimationClip clip, float time)
-        {
-            internalData.Animator.PlayAnimationClip(clip);
-            await UniTask.Delay(TimeSpan.FromSeconds(time), cancellationToken: _executionTokenSource.Token);
         }
     }
 }

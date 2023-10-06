@@ -51,6 +51,13 @@ namespace Common.Units.StateMachine.HeroStates
 
         public void Attack()
         {
+            if (_isJumping)
+            {
+                _isJumping = false;
+                
+                _jumpTokenSource.Cancel();
+            }
+            
             internalData.SetAction(Enums.HeroActionType.BasicAttack);
             
             unitStatesChanger.ChangeState<ActionState>();
@@ -60,7 +67,7 @@ namespace Common.Units.StateMachine.HeroStates
         {
             if (internalData.RemainingJumps > 0)
             {
-                Dispose();
+                _jumpTokenSource.Cancel();
 
                 _jumpTokenSource = new CancellationTokenSource();
             
@@ -95,7 +102,6 @@ namespace Common.Units.StateMachine.HeroStates
             if (internalData.MoveDirection.x != 0)
             {
                 _jumpTokenSource.Cancel();
-                _jumpTokenSource.Dispose();
                 
                 _isJumping = false;
                 
@@ -110,7 +116,6 @@ namespace Common.Units.StateMachine.HeroStates
 
             await UniTask.Delay(TimeSpan.FromSeconds(currentClip.length), cancellationToken: _jumpTokenSource.Token);
 
-            _jumpTokenSource.Dispose();
             _isJumping = false;
             
             unitStatesChanger.ChangeState<IdleState>();

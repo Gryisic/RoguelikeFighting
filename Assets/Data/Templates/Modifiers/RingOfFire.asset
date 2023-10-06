@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Ring of Fire
   _description: Incinerate thy enemy
-  _icon: {fileID: 0}
+  _icon: {fileID: 5543941588292853863, guid: cedfabc2a5d0a404bac3b6c3ecdc519b, type: 3}
   _executionCondition: 1
   _rarity: 0
   _isBase: 1

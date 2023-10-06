@@ -26,8 +26,6 @@ MonoBehaviour:
       _riseClip: {fileID: 7400000, guid: 7b744569af082fc4382f748fe1b5cf22, type: 2}
       _cycleClip: {fileID: 7400000, guid: 80c017aefd79e904eb5043a8f52d9812, type: 2}
       _landingClip: {fileID: 7400000, guid: 495daea75e6e4634dace85fb8170d0d2, type: 2}
-    _attackAnimationData:
-      _groundAttack1: {fileID: 7400000, guid: c82772993c402ca4a9ebdb76b575150b, type: 2}
   _actions:
   - {fileID: 11400000, guid: e7c40cee70d258944aacdac92f18277b, type: 2}
   - {fileID: 11400000, guid: 137186e8005e6634886ef0698c162075, type: 2}
@@ -35,3 +33,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 82f2d125d7d8cd042bcfd09a924fc4c0, type: 2}
   - {fileID: 11400000, guid: 5b47710e71ed6ae4daaf7dcca169a8ca, type: 2}
   - {fileID: 11400000, guid: df232b829e5a9294f91d7d02bddd9a21, type: 2}
+  - {fileID: 11400000, guid: 351ad68b39e812f4d994ebcd3f36967e, type: 2}

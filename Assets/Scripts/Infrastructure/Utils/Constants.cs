@@ -24,6 +24,9 @@
         
         public const int MaxStatValue = 9999;
         public const int MinStatValue = 0;
+
+        public const int MaxHealCharges = 5;
+        public const int MinHealCharges = 0;
         
         public const float InteractionRadius = 2f;
         public const float PlayerMovementSpeed = 5f;

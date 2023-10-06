@@ -15,6 +15,7 @@ MonoBehaviour:
   _name: DualWielding
   _actionClip: {fileID: 7400000, guid: 5f18e7bcdc012c34f87bb45ef27dfbe0, type: 2}
   _baseEffect: 2
+  _executionPlacement: 0
   _executeAfterClipPlayed: 0
   _isChargeable: 0
   _chargeTime: 0
@@ -29,7 +30,8 @@ MonoBehaviour:
   _useClipLengthAsTime: 0
   _animatorController: {fileID: 9100000, guid: d8c3f37d21abd0b4f91dd78ae4464397, type: 2}
   _nextStanceTemplate: {fileID: 11400000, guid: 98c59b4ff197d06419aadb1ee17d0d43, type: 2}
+  _positionRelativeToTarget: {x: 0, y: 0}
   _extendsInto: []
   _extendsFrom: 2
   _direction: 0
-  _executionPlacement: 0
+  _icon: {fileID: 3052315535316524931, guid: cedfabc2a5d0a404bac3b6c3ecdc519b, type: 3}

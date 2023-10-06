@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Common.Scene;
 using Common.Units;
 using Common.Units.Enemies;
@@ -7,14 +8,18 @@ using UnityEngine;
 namespace Common.Gameplay.Waves
 {
     [Serializable]
-    public class Wave
+    public class Wave : IDisposable
     {
         [SerializeField] private SpawnPoint[] _spawnPoints;
         [SerializeField] private Wave[] _subWaves;
 
-        private UnitsHandler _unitsHandler;
+        private List<Enemy> _enemies = new List<Enemy>();
         
+        private UnitsHandler _unitsHandler;
+
         private int _currentSubWaveIndex;
+
+        public event Action EnemiesDefeated;
         
         public bool HasNextSubWave => _currentSubWaveIndex < _subWaves.Length;
 
@@ -26,6 +31,15 @@ namespace Common.Gameplay.Waves
                 wave.Initialize(unitsHandler);
         }
         
+        public void Dispose()
+        {
+            foreach (var enemy in _enemies) 
+                enemy.Defeated -= EnemyDefeated;
+
+            foreach (var wave in _subWaves) 
+                wave.Dispose();
+        }
+        
         public void Activate()
         {
             foreach (var spawnPoint in _spawnPoints)
@@ -34,6 +48,10 @@ namespace Common.Gameplay.Waves
 
                 if (_unitsHandler.TryGetEnemy(enemyTemplate.Type, out Enemy enemy))
                 {
+                    _enemies.Add(enemy);
+                    
+                    enemy.Defeated += EnemyDefeated;
+                    
                     enemy.transform.position = spawnPoint.Position;
 
                     enemy.gameObject.SetActive(true);
@@ -47,6 +65,16 @@ namespace Common.Gameplay.Waves
             _subWaves[_currentSubWaveIndex].Activate();
 
             _currentSubWaveIndex++;
+        }
+        
+        private void EnemyDefeated(Unit unit)
+        {
+            Enemy enemy = unit as Enemy;
+
+            _enemies.Remove(enemy);
+
+            if (_enemies.Count <= 0)
+                EnemiesDefeated?.Invoke();
         }
     }
 }

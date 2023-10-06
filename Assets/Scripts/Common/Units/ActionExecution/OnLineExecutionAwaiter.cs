@@ -11,13 +11,11 @@ namespace Common.Units.ActionExecution
     {
         private readonly Transform _innerTransform;
         private readonly Transform _targetTransform;
-        private readonly float _executionDistance;
 
-        public OnLineExecutionAwaiter(Transform innerTransform, Transform targetTransform, float executionDistance)
+        public OnLineExecutionAwaiter(Transform innerTransform, Transform targetTransform)
         {
             _innerTransform = innerTransform;
             _targetTransform = targetTransform;
-            _executionDistance = Mathf.Pow(executionDistance, 2);
         }
 
         public async UniTask AwaitAsync(CancellationToken token)
@@ -26,12 +24,9 @@ namespace Common.Units.ActionExecution
             
             while (token.IsCancellationRequested == false)
             {
-                Vector3 innerPosition = _innerTransform.position;
-                Vector3 targetPosition = _targetTransform.position;
-                float distance = (targetPosition - innerPosition).sqrMagnitude;
-                bool isOnLineOrHigher = innerPosition.y <= targetPosition.y;
+                bool isOnLineOrHigher = _innerTransform.position.y <= _targetTransform.position.y;
 
-                if (distance < _executionDistance && isOnLineOrHigher)
+                if (isOnLineOrHigher)
                     break;
 
                 await UniTask.WaitForFixedUpdate();

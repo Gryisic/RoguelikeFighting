@@ -14,6 +14,7 @@ namespace Common.Models.Actions.Templates
 
         [Space, Header("Base Data")]
         [SerializeField] private Enums.ActionEffect _baseEffect;
+        [SerializeField] private Enums.ActionExecutionPlacement _executionPlacement;
         [SerializeField] private bool _executeAfterClipPlayed;
         [SerializeField] private bool _isChargeable;
         [SerializeField] private float _chargeTime;
@@ -28,18 +29,27 @@ namespace Common.Models.Actions.Templates
         [Space, Header("Moving Data")]
         [SerializeField] private Vector2 _vector;
         [SerializeField] private float _distance;
-        [FormerlySerializedAs("_time")] [SerializeField] private float _movingTime;
+        [SerializeField] private float _movingTime;
+        [SerializeField] private float _freezeAfterMoving;
         [SerializeField] private bool _useClipLengthAsTime;
 
         [Space, Header("Stance Change Data")]
         [SerializeField] private AnimatorController _animatorController;
         [SerializeField] private ActionTemplate _nextStanceTemplate;
 
+        [Space, Header("Teleportation Data")] 
+        [SerializeField] private Vector2 _positionRelativeToTarget;
+
+        [Space, Header("Heal Data")]
+        [SerializeField] private float _healPercent;
+        [SerializeField] private float _healTime;
+
         public string Name => _name;
         
         public AnimationClip ActionClip => _actionClip;
 
         public Enums.ActionEffect BaseEffect => _baseEffect;
+        public Enums.ActionExecutionPlacement ExecutionPlacement => _executionPlacement;
         
         public bool ExecuteAfterClipPlayed => _executeAfterClipPlayed;
         public bool IsChargeable => _isChargeable;
@@ -58,5 +68,11 @@ namespace Common.Models.Actions.Templates
         
         public AnimatorController AnimatorController => _animatorController;
         public ActionTemplate NextStanceTemplate => _nextStanceTemplate;
+        
+        public Vector2 PositionRelativeToTarget => _positionRelativeToTarget;
+        public float FreezeAfterMoving => _freezeAfterMoving;
+
+        public float HealPercent => _healPercent;
+        public float HealTime => _healTime;
     }
 }

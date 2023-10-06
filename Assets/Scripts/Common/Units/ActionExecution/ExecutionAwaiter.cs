@@ -27,7 +27,7 @@ namespace Common.Units.ActionExecution
                     return new EverywhereAwaitStrategy();
                 
                 case Enums.ActionExecutionAwait.OnLineOrHigher:
-                    return new OnLineExecutionAwaiter(_internalData.Transform, _internalData.HeroData.Transform, _internalData.Data.AttackDistance);
+                    return new OnLineExecutionAwaiter(_internalData.Transform, _internalData.HeroData.Transform);
                 
                 case Enums.ActionExecutionAwait.Near:
                     return new NearAwaitStrategy(_internalData.Transform, _internalData.HeroData.Transform, _internalData.Data.AttackDistance);

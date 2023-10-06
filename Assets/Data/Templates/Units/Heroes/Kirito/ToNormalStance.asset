@@ -15,6 +15,7 @@ MonoBehaviour:
   _name: NormalStance
   _actionClip: {fileID: 7400000, guid: b7fc70bc166925b45afc2bb003b85cbf, type: 2}
   _baseEffect: 2
+  _executionPlacement: 0
   _executeAfterClipPlayed: 0
   _isChargeable: 0
   _chargeTime: 0
@@ -29,7 +30,8 @@ MonoBehaviour:
   _useClipLengthAsTime: 0
   _animatorController: {fileID: 9100000, guid: e3ef1e0372b855948845f8743bf9f164, type: 2}
   _nextStanceTemplate: {fileID: 11400000, guid: 5b47710e71ed6ae4daaf7dcca169a8ca, type: 2}
+  _positionRelativeToTarget: {x: 0, y: 0}
   _extendsInto: []
-  _extendsFrom: 0
+  _extendsFrom: 2
   _direction: 0
-  _executionPlacement: 0
+  _icon: {fileID: 1161201145128540330, guid: cedfabc2a5d0a404bac3b6c3ecdc519b, type: 3}

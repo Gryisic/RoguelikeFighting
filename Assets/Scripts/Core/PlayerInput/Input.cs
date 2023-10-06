@@ -83,6 +83,14 @@ namespace Core.PlayerInput
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Heal"",
+                    ""type"": ""Button"",
+                    ""id"": ""88a53b87-c015-44e1-b536-b8ad12ad3261"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -217,6 +225,17 @@ namespace Core.PlayerInput
                     ""action"": ""SecondLegacySkill"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a70c028d-3c89-4f3d-b81e-b68cb51289e2"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Heal"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -306,6 +325,7 @@ namespace Core.PlayerInput
             m_Gameplay_Dash = m_Gameplay.FindAction("Dash", throwIfNotFound: true);
             m_Gameplay_FirstLegacySkill = m_Gameplay.FindAction("FirstLegacySkill", throwIfNotFound: true);
             m_Gameplay_SecondLegacySkill = m_Gameplay.FindAction("SecondLegacySkill", throwIfNotFound: true);
+            m_Gameplay_Heal = m_Gameplay.FindAction("Heal", throwIfNotFound: true);
             // Menu
             m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
             m_Menu_Select = m_Menu.FindAction("Select", throwIfNotFound: true);
@@ -370,6 +390,7 @@ namespace Core.PlayerInput
         private readonly InputAction m_Gameplay_Dash;
         private readonly InputAction m_Gameplay_FirstLegacySkill;
         private readonly InputAction m_Gameplay_SecondLegacySkill;
+        private readonly InputAction m_Gameplay_Heal;
         public struct GameplayActions
         {
             private @Input m_Wrapper;
@@ -382,6 +403,7 @@ namespace Core.PlayerInput
             public InputAction @Dash => m_Wrapper.m_Gameplay_Dash;
             public InputAction @FirstLegacySkill => m_Wrapper.m_Gameplay_FirstLegacySkill;
             public InputAction @SecondLegacySkill => m_Wrapper.m_Gameplay_SecondLegacySkill;
+            public InputAction @Heal => m_Wrapper.m_Gameplay_Heal;
             public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -415,6 +437,9 @@ namespace Core.PlayerInput
                     @SecondLegacySkill.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSecondLegacySkill;
                     @SecondLegacySkill.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSecondLegacySkill;
                     @SecondLegacySkill.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSecondLegacySkill;
+                    @Heal.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHeal;
+                    @Heal.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHeal;
+                    @Heal.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHeal;
                 }
                 m_Wrapper.m_GameplayActionsCallbackInterface = instance;
                 if (instance != null)
@@ -443,6 +468,9 @@ namespace Core.PlayerInput
                     @SecondLegacySkill.started += instance.OnSecondLegacySkill;
                     @SecondLegacySkill.performed += instance.OnSecondLegacySkill;
                     @SecondLegacySkill.canceled += instance.OnSecondLegacySkill;
+                    @Heal.started += instance.OnHeal;
+                    @Heal.performed += instance.OnHeal;
+                    @Heal.canceled += instance.OnHeal;
                 }
             }
         }
@@ -531,6 +559,7 @@ namespace Core.PlayerInput
             void OnDash(InputAction.CallbackContext context);
             void OnFirstLegacySkill(InputAction.CallbackContext context);
             void OnSecondLegacySkill(InputAction.CallbackContext context);
+            void OnHeal(InputAction.CallbackContext context);
         }
         public interface IMenuActions
         {

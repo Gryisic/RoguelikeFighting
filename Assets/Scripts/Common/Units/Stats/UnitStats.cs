@@ -10,6 +10,8 @@ namespace Common.Units.Stats
     {
         private Dictionary<Enums.Stat, int> _statsMap;
 
+        public event Action<int, int> HealthChanged;
+        
         public void SetData(UnitTemplate template)
         {
             _statsMap = new Dictionary<Enums.Stat, int>()
@@ -18,7 +20,7 @@ namespace Common.Units.Stats
                 { Enums.Stat.Health, template.MaxHealth },
             };
         }
-        
+
         public int GetStatValue(Enums.Stat type)
         {
             if (_statsMap.ContainsKey(type) == false)
@@ -33,6 +35,9 @@ namespace Common.Units.Stats
                 throw new InvalidOperationException($"Trying to increase stat at negative value. Value: {amount}");
 
             _statsMap[type] += amount;
+
+            if (type == Enums.Stat.Health) 
+                RaiseHealthChangedEvent();
         }
 
         public void DecreaseStat(Enums.Stat type, int amount)
@@ -41,6 +46,23 @@ namespace Common.Units.Stats
                 throw new InvalidOperationException($"Trying to decrease stat at negative value. Value: {amount}");
 
             _statsMap[type] -= amount;
+            
+            if (type == Enums.Stat.Health) 
+                RaiseHealthChangedEvent();
+        }
+        
+        private void RaiseHealthChangedEvent()
+        {
+            int currentHealth = _statsMap[Enums.Stat.Health];
+            int maxHealth = _statsMap[Enums.Stat.MaxHealth];
+
+            if (currentHealth > maxHealth)
+            {
+                _statsMap[Enums.Stat.Health] = maxHealth;
+                currentHealth = maxHealth;
+            }
+
+            HealthChanged?.Invoke(currentHealth, maxHealth);
         }
     }
 }

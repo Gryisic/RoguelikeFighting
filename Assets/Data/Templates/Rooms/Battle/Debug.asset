@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dac525f9f53542aa85213695bdf9efc1, type: 3}
   m_Name: Debug
   m_EditorClassIdentifier: 
-  _requirement: 1
+  _requirement: 0
   _timer: 5

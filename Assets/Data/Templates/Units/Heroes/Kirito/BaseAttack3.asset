@@ -15,11 +15,12 @@ MonoBehaviour:
   _name: Attack3
   _actionClip: {fileID: 7400000, guid: 6e022edf7784f3b44aa2f9c1ee95fe70, type: 2}
   _baseEffect: 0
+  _executionPlacement: 0
   _executeAfterClipPlayed: 0
   _isChargeable: 0
   _chargeTime: 0
   _chargeClip: {fileID: 0}
-  _amount: 0
+  _amount: 200
   _knockback: 2
   _knockbackForce: {x: 8, y: 2}
   _knockbackTime: 1
@@ -29,7 +30,12 @@ MonoBehaviour:
   _useClipLengthAsTime: 0
   _animatorController: {fileID: 0}
   _nextStanceTemplate: {fileID: 0}
-  _extendsInto: []
+  _positionRelativeToTarget: {x: 0, y: 0}
+  _freezeAfterTeleport: 0
+  _healPercent: 0
+  _healTime: 0
+  _extendsInto:
+  - {fileID: 11400000, guid: df232b829e5a9294f91d7d02bddd9a21, type: 2}
   _extendsFrom: 1
   _direction: 0
-  _executionPlacement: 0
+  _icon: {fileID: 0}

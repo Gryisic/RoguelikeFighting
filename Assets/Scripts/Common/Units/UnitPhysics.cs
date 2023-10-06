@@ -94,6 +94,14 @@ namespace Common.Units
         
         public void UnSuppressManualVelocityChange() => _isVelocityChangeSuppressed = false;
 
+        public void UpdateVelocity(Vector2 velocityVector)
+        {
+            if (_isVelocityChangeSuppressed)
+                return;
+            
+            _rigidbody.velocity = velocityVector;
+        }
+        
         public void UpdateHorizontalVelocity(float velocity)
         {
             if (velocity == 0 && _rigidbody.velocity.y != 0 || _isVelocityChangeSuppressed)

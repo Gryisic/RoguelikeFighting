@@ -11,7 +11,8 @@ namespace Common.Units.Interfaces
         void Interact();
         void Jump();
         void Dash();
-        void LegacySkill(Enums.LegacySkillType skillType);
+        void LegacySkill(Enums.HeroActionType actionType);
+        void Heal();
         void StartMoving(Vector2 direction);
         void StopMoving();
         void AddModifier(Modifier modifier);

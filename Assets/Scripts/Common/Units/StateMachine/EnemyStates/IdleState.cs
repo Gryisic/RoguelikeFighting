@@ -10,10 +10,9 @@ namespace Common.Units.StateMachine.EnemyStates
 {
     public class IdleState : EnemyState, IDisposable
     {
-        private ExecutionAwaiter _awaiter;
+        private readonly ExecutionAwaiter _awaiter;
         private CancellationTokenSource _waitingTokenSource;
 
-        private float _distance;
         private bool _isWaiting;
 
         public IdleState(IUnitStatesChanger unitStatesChanger, IEnemyInternalData internalData) : base(unitStatesChanger, internalData)
@@ -25,6 +24,8 @@ namespace Common.Units.StateMachine.EnemyStates
         {
             if (_isWaiting)
             {
+                _isWaiting = false;
+                
                 _waitingTokenSource.Cancel();
                 _waitingTokenSource.Dispose();
             }
@@ -45,24 +46,13 @@ namespace Common.Units.StateMachine.EnemyStates
                 Dispose();
         }
 
-        public override void Update()
-        {
-            if (internalData.HeroData == null)
-                return;
-            
-            _distance = (internalData.HeroData.Transform.position - internalData.Transform.position).sqrMagnitude;
-        }
+        public override void Update() { }
 
         private async UniTask WaitAsync()
         {
             _isWaiting = true;
 
             await _awaiter.AwaitAsync(_waitingTokenSource.Token);
-            
-            //await UniTask.Delay(TimeSpan.FromSeconds(Constants.DefaultEnemyAwaitTime), cancellationToken: _waitingTokenSource.Token);
-            //await UniTask.WaitUntil(() => _distance < 1, cancellationToken: _waitingTokenSource.Token);
-            
-            _waitingTokenSource.Dispose();
             
             _isWaiting = false;
             

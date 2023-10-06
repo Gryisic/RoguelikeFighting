@@ -46,9 +46,11 @@ namespace Common.Gameplay
 
         public void Interact(InputAction.CallbackContext context) => _hero.Interact();
 
-        public void FirstLegacySkill(InputAction.CallbackContext context) => _hero.LegacySkill(Enums.LegacySkillType.First);
+        public void FirstLegacySkill(InputAction.CallbackContext context) => _hero.LegacySkill(Enums.HeroActionType.FirstLegacySkill);
 
-        public void SecondLegacySkill(InputAction.CallbackContext context) => _hero.LegacySkill(Enums.LegacySkillType.Second);
+        public void SecondLegacySkill(InputAction.CallbackContext context) => _hero.LegacySkill(Enums.HeroActionType.SecondLegacySkill);
+
+        public void Heal(InputAction.CallbackContext context) => _hero.Heal();
 
         public void AddModifier(Modifier modifier) => _hero.AddModifier(modifier);
     }

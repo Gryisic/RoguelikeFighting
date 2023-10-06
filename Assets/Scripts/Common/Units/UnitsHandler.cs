@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Common.Units.Interfaces;
 using Infrastructure.Utils;
 using UnityEngine;
 
@@ -8,11 +9,10 @@ namespace Common.Units
     public class UnitsHandler : IDisposable
     {
         private readonly List<Unit> _units = new List<Unit>();
-        private readonly List<Hero> _heroes = new List<Hero>();
         private readonly Dictionary<Enums.Enemy, UnitPack<Enemy>> _enemiesPack = new Dictionary<Enums.Enemy, UnitPack<Enemy>>();
 
         public IReadOnlyList<Unit> Units => _units;
-        public IReadOnlyList<Hero> Heroes => _heroes;
+        public Hero Hero { get; private set; }
 
         public void Dispose()
         {
@@ -30,8 +30,8 @@ namespace Common.Units
             
             switch (unit)
             {
-                case Hero partyMember:
-                    _heroes.Add(partyMember);
+                case Hero hero:
+                    Hero = hero;
                     break;
                 
                 case Enemy enemy:
@@ -57,7 +57,7 @@ namespace Common.Units
                     break;
             }
         }
-        
+
         public bool TryGetEnemy(Enums.Enemy type, out Enemy enemy)
         {
             enemy = null;
@@ -78,7 +78,6 @@ namespace Common.Units
             switch (unit)
             {
                 case Hero partyMember:
-                    _heroes.Remove(partyMember);
                     break;
                 
                 case Enemy enemy:

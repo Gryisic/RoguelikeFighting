@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Common.UI.Gameplay.Hero;
+using UnityEngine;
 using UnityEngine.Serialization;
 
 namespace Common.UI.Gameplay

@@ -11,11 +11,13 @@ namespace Common.Models.Actions.Templates
         [SerializeField] private HeroActionTemplate[] _extendsInto;
         [SerializeField] private Enums.HeroActionType _extendsFrom;
         [SerializeField] private Enums.InputDirection _direction;
-        [SerializeField] private Enums.HeroActionExecutionPlacement _executionPlacement;
         
+        [SerializeField] private Sprite _icon;
+
         public IReadOnlyList<HeroActionTemplate> ExtendsInto => _extendsInto;
         public Enums.HeroActionType ExtendsFrom => _extendsFrom;
         public Enums.InputDirection Direction => _direction;
-        public Enums.HeroActionExecutionPlacement ExecutionPlacement => _executionPlacement;
+        
+        public Sprite Icon => _icon;
     }
 }

@@ -39,5 +39,11 @@ namespace Common.Units.Extensions
             if (state is IInteractExecutor interactExecutor)
                 interactExecutor.Interact();
         }
+
+        public static void Heal(this IHeroState state)
+        {
+            if (state is IHealExecutor healExecutor)
+                healExecutor.Heal();
+        }
     }
 }

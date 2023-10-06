@@ -36,6 +36,12 @@ namespace Common.Models.Actions
 
                 case Enums.ActionEffect.ChangeStance:
                     return new ChangeStance(internalData, Data);
+
+                case Enums.ActionEffect.Teleportation:
+                    return new TeleportationAction(internalData, Data);
+                
+                case Enums.ActionEffect.Heal:
+                    return new HealAction(internalData, Data);
                 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(effect), effect, null);

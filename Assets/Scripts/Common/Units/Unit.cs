@@ -23,7 +23,8 @@ namespace Common.Units
         
         [SerializeField] private BoxCollider2D _collider;
 
-        public event Action<int, int> HealthUpdated; 
+        public event Action<int, int> HealthUpdated;
+        public event Action<Unit> Defeated; 
 
         protected IUnitInternalData internalData;
         protected UnitPhysics physics;
@@ -80,6 +81,8 @@ namespace Common.Units
                     disposable.Dispose();
             }
             
+            StatsData.HealthChanged -= OnHealthChanged;
+
             internalData.Dispose();
             physics.Dispose();
         }
@@ -88,6 +91,8 @@ namespace Common.Units
         {
             UnitStats stats = StatsData as UnitStats;
             stats.SetData(template);
+            
+            StatsData.HealthChanged += OnHealthChanged;
             
             physics.StartUpdating();
             
@@ -99,15 +104,20 @@ namespace Common.Units
 
         public void TakeDamage(int amount)
         {
-            amount = 200;
-            
             internalData.SetStaggerTime(0.3f);
             StatsData.DecreaseStat(Enums.Stat.Health, amount);
 
-            int currentHealth = StatsData.GetStatValue(Enums.Stat.Health);
-            int maxHealth = StatsData.GetStatValue(Enums.Stat.MaxHealth);
-
-            HealthUpdated?.Invoke(currentHealth, maxHealth);
+            //Debug.Log($"Damage Taken: {amount}");
+            
+            if (StatsData.GetStatValue(Enums.Stat.Health) <= 0)
+            {
+                Defeated?.Invoke(this);
+                
+                activeState?.Exit();
+                gameObject.SetActive(false);
+                
+                return;
+            }
             
             ChangeState<StateMachine.StaggerState>();
         }
@@ -137,6 +147,8 @@ namespace Common.Units
 
             transform.rotation = quaternion;
         }
+
+        private void OnHealthChanged(int currentHealth, int maxHealth) => HealthUpdated?.Invoke(currentHealth, maxHealth);
 
         private async UniTask UpdateInnerState()
         {

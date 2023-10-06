@@ -18,7 +18,7 @@ namespace Common.Gameplay.Rooms
         
         public override Enums.RoomType Type => Enums.RoomType.Selection;
 
-        public override void Initialize(IStageData stageData)
+        public override void Initialize(IStageData stageData, IRunData runData)
         {
             if (ChangeTrigger is SelectionRoomTrigger == false)
                 throw new Exception("Selection Room doesn't have 'Selection Room Trigger'");

@@ -15,6 +15,7 @@ namespace Common.Gameplay
     {
         [SerializeField] private Room[] _roomPrefabs;
 
+        private IRunData _runData;
         private Room _currentRoom;
 
         public event Action<Vector2> HeroPositionChangeRequested; 
@@ -22,10 +23,11 @@ namespace Common.Gameplay
         public UnitsHandler UnitsHandler { get; private set; }
 
         [Inject]
-        private void Construct(UnitsHandler unitsHandler)
+        private void Construct(IRunData runData, UnitsHandler unitsHandler)
         {
+            _runData = runData;
             UnitsHandler = unitsHandler;
-
+            
             InitializeRooms();
             
             _currentRoom = _roomPrefabs[0]; 
@@ -37,6 +39,7 @@ namespace Common.Gameplay
             foreach (var room in _roomPrefabs)
             {
                 room.ChangeTrigger.Triggered -= ChangeRoom;
+                
                 room.Dispose();
             }
         }
@@ -46,7 +49,8 @@ namespace Common.Gameplay
             foreach (var room in _roomPrefabs)
             {
                 room.ChangeTrigger.Triggered += ChangeRoom;
-                room.Initialize(this);
+                
+                room.Initialize(this, _runData);
 
                 if (room.gameObject.activeSelf)
                     room.gameObject.SetActive(false);

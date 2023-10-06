@@ -25,10 +25,8 @@ namespace Common.Units.Enemies
         {
             if (_isKicking)
             {
-                Initialize(_template);
-                
-                Invoke(nameof(Activate), 0.5f);
                 Invoke(nameof(DebugInfo), 0.5f);
+                Invoke(nameof(Activate), 0.5f);
             }
         }
 
@@ -42,11 +40,8 @@ namespace Common.Units.Enemies
 
         private void DebugInfo()
         {
-            var enemyData = internalData as EnemyInternalData;
-            
-            enemyData.SetHeroData(_runData.SharedHeroData);
-            
-            //Debug.Log(_runData.SharedHeroData.Transform.position);
+            SetHeroData(_runData.SharedHeroData);
+            Initialize(_template);
         }
     }
 }
