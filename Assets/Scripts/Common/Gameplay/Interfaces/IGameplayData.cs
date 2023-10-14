@@ -4,8 +4,8 @@ namespace Common.Gameplay.Interfaces
 {
     public interface IGameplayData
     {
-        Enums.PauseType PauseType { get; }
+        Enums.MenuType MenuType { get; }
 
-        void SetPauseType(Enums.PauseType pauseType);
+        void SetPauseType(Enums.MenuType menuType);
     }
 }

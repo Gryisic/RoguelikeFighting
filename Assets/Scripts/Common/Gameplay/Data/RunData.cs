@@ -1,24 +1,28 @@
-﻿using Common.Gameplay.Interfaces;
+﻿using System.Collections.Generic;
+using Common.Gameplay.Interfaces;
 using Common.Units.Interfaces;
 using Core.Interfaces;
+using Infrastructure.Utils;
 
 namespace Common.Gameplay.Data
 {
     public class RunData : IRunData
     {
+        private Dictionary<Enums.RunDataType, IConcreteRunData> _dataMap;
+
 #if UNITY_EDITOR
 
         public IInitialHeroData InitialHeroData { get; }
 #endif
         
         public ISharedUnitData SharedHeroData { get; private set; }
-        public ModifiersData ModifiersData { get; }
 
 #if UNITY_EDITOR
         public RunData(IInitialHeroData initialData, ModifiersData modifiersData)
         {
             InitialHeroData = initialData;
-            ModifiersData = modifiersData;
+
+            Initialize(modifiersData);
         }
 #endif
 
@@ -26,15 +30,31 @@ namespace Common.Gameplay.Data
         // {
         //     ModifiersData = modifiersData;
         // }
+        
+        private void Initialize(ModifiersData modifiersData)
+        {
+            _dataMap = new Dictionary<Enums.RunDataType, IConcreteRunData>()
+            {
+                { Enums.RunDataType.Modifiers, modifiersData },
+                { Enums.RunDataType.Gald, new GaldData() },
+                { Enums.RunDataType.Heal, new HealData() },
+                { Enums.RunDataType.Experience, new ExperienceData() }
+            };
+        }
 
         public void SetHeroData(ISharedUnitData heroData)
         {
             SharedHeroData = heroData;
         }
 
-        public void Reset()
+        public T Get<T>(Enums.RunDataType type) where T : IConcreteRunData => (T) _dataMap[type];
+
+        public void Clear()
         {
             SharedHeroData = null;
+
+            foreach (var data in _dataMap.Values) 
+                data.Clear();
         }
     }
 }

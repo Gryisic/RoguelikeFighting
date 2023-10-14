@@ -7,7 +7,7 @@ namespace Common.Gameplay.Triggers
     public abstract class Trigger : MonoBehaviour
     {
         [SerializeField] private BoxCollider2D _collider;
-        
+
         private void Awake()
         {
             if (_collider == null)

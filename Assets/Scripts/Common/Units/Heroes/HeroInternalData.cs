@@ -15,9 +15,6 @@ namespace Common.Units.Heroes
         
         public HeroAnimationData AnimationData { get; }
         public HeroActionsContainer ActionsContainer { get; private set; }
-        
-        public int HealCharges { get; private set; }
-        public bool CanHeal => HealCharges > 0;
 
         public float DashDistance { get; private set; }
         public float DashForce { get; private set; }
@@ -30,12 +27,11 @@ namespace Common.Units.Heroes
 
         public Enums.HeroActionType LastActionType { get; private set; }
         
-        //public Enums.InputDirection InputDirection => DefineInputDirection();
         public Enums.InputDirection InputDirection { get; private set; }
         public Enums.ActionExecutionPlacement Placement => DefinePlacement();
         public bool CanDash => RemainingDashes > 0;
         
-        public HeroInternalData(Transform transform, UnitPhysics physics, HeroAnimationData heroAnimationData, UnitAnimator animator, IUnitStatsData statsData, IActionsData actionsData, IAnimationEventsReceiver animationEventsReceiver, Type type) : base(transform, physics, animator, statsData, actionsData, animationEventsReceiver, type)
+        public HeroInternalData(Transform transform, UnitPhysics physics, HeroAnimationData heroAnimationData, IUnitRendererData rendererData, IUnitStatsData statsData, IActionsData actionsData, Type type) : base(transform, physics, rendererData, statsData, actionsData, type)
         {
             AnimationData = heroAnimationData;
         }
@@ -53,28 +49,6 @@ namespace Common.Units.Heroes
 
         public void SetActionsContainer(HeroActionsContainer container) => ActionsContainer = container;
 
-        public void SetHealCharges(int amount)
-        {
-            if (amount > Constants.MaxHealCharges || amount < Constants.MinHealCharges)
-                throw new InvalidOperationException($"Trying to set invalid amount of health charges. Amount: {amount}");
-
-            HealCharges = amount;
-        }
-
-        public void UseHealCharge()
-        {
-            if (CanHeal == false)
-                throw new InvalidOperationException($"Trying to heal while heal charges is less than 0. Amount {HealCharges}");
-
-            HealCharges--;
-        }
-
-        public void RestoreHealCharge()
-        {
-            if (HealCharges < Constants.MaxHealCharges)
-                HealCharges++;
-        }
-        
         public void SetDashData(float distance, float force, int maxDashesCount)
         {
             DashDistance = distance;

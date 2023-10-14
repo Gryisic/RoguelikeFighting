@@ -74,6 +74,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _game: {fileID: 2987485936005772538, guid: f92b042cfe3eee046afaf41cfec38aaa, type: 3}
+  _ui: {fileID: 307659142570141565, guid: 85bc15d818889a541aec4eb2560dd7c6, type: 3}
   _debugHeroTemplate:
     _template: {fileID: 11400000, guid: 402dda5585f19f546844573440bd1101, type: 2}
   _modifiersDataBase:

@@ -1,11 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Common.Models.Actions;
+using Common.Models.Particles;
+using Common.Models.Particles.Interfaces;
 using Common.UI.Gameplay;
 using Common.Units.Enemies;
 using Common.Units.Interfaces;
 using Common.Units.StateMachine.EnemyStates;
 using Infrastructure.Utils;
+using Ink.Parsed;
 using UnityEngine;
 
 namespace Common.Units
@@ -24,7 +27,13 @@ namespace Common.Units
 
             Type = enemyTemplate.Type;
 
-            internalData = new EnemyInternalData(enemyTemplate, physics, Transform, animator, StatsData, actionsData, animationEventsReceiver, GetType());
+            List<IParticleData> particlesData = (from actionTemplate in enemyTemplate.ActionTemplates where actionTemplate.ParticleForCopy != null 
+                select new ParticleData(actionTemplate.ParticleForCopy, actionTemplate.ParticleID, actionTemplate.Rotation)).Cast<IParticleData>().ToList();
+
+            UnitParticlesPlayer particlesPlayer = new UnitParticlesPlayer(transform, particlesData);
+            IUnitRendererData rendererData = new UnitRendererData(particlesPlayer, animator, animationEventsReceiver);
+            
+            internalData = new EnemyInternalData(enemyTemplate, physics, Transform, rendererData, StatsData, actionsData, GetType());
 
             EnemyInternalData enemyData = internalData as EnemyInternalData;
             

@@ -15,10 +15,14 @@ MonoBehaviour:
   _name: Attack1
   _actionClip: {fileID: 7400000, guid: c82772993c402ca4a9ebdb76b575150b, type: 2}
   _baseEffect: 0
+  _executionPlacement: 0
   _executeAfterClipPlayed: 0
   _isChargeable: 0
   _chargeTime: 0
   _chargeClip: {fileID: 0}
+  _particleForCopy: {fileID: 3301989189972598655, guid: 7342b5ba098833a488c198d4df400489, type: 3}
+  _particleID: 0
+  _rotation: 180
   _amount: 100
   _knockback: 1
   _knockbackForce: {x: 0, y: 0}
@@ -26,11 +30,15 @@ MonoBehaviour:
   _vector: {x: 0, y: 0}
   _distance: 0.3
   _movingTime: 0
+  _freezeAfterMoving: 0
   _useClipLengthAsTime: 1
   _animatorController: {fileID: 0}
   _nextStanceTemplate: {fileID: 0}
+  _positionRelativeToTarget: {x: 0, y: 0}
+  _healPercent: 0
+  _healTime: 0
   _extendsInto:
   - {fileID: 11400000, guid: 0dca0d91fffdf3a4b8c588d7347f82c8, type: 2}
   _extendsFrom: 1
   _direction: 0
-  _executionPlacement: 0
+  _icon: {fileID: 0}

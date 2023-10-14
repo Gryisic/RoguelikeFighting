@@ -23,10 +23,12 @@ namespace Infrastructure.Utils
             Close
         }
         
-        public enum PauseType
+        public enum MenuType
         {
             Menu,
-            ModifierSelection
+            ModifierSelection,
+            Trade,
+            Storage
         }
         
         public enum NextWaveRequirement
@@ -143,12 +145,30 @@ namespace Infrastructure.Utils
             Automatic,
             Manual
         }
+
+        public enum RunDataType
+        {
+            Gald,
+            Heal,
+            Experience,
+            Modifiers,
+            None
+        }
         
+        public enum RunDataChange
+        {
+            Increase,
+            Decrease
+        }
+
         [Flags]
         public enum RoomType
         {
             Selection,
             Battle,
+            Trade,
+            Storage,
+            ExtensiveBattle
         }
     }
 }

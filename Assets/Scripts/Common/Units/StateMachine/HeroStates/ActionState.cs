@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Threading;
 using Common.Models.Actions;
+using Common.Models.Actions.Templates;
+using Common.Models.Particles;
+using Common.Models.Particles.Interfaces;
 using Common.Units.Heroes;
 using Common.Units.Interfaces;
 using Cysharp.Threading.Tasks;
@@ -68,6 +71,7 @@ namespace Common.Units.StateMachine.HeroStates
 
                     internalData.AnimationEventsReceiver.ActionExecutionRequested += action.Execute;
                     internalData.AnimationEventsReceiver.MovingRequested += OnMovingRequested;
+                    internalData.AnimationEventsReceiver.ParticlesEmitRequested += OnParticlesEmitRequested;
                     
                     internalData.Animator.PlayAnimationClip(currentClip);
                     internalData.ResetAction();
@@ -86,6 +90,14 @@ namespace Common.Units.StateMachine.HeroStates
             unitStatesChanger.ChangeState<IdleState>();
 
             _isExecuting = false;
+        }
+
+        private void OnParticlesEmitRequested()
+        {
+            HeroActionTemplate data = _currentAction.Data;
+            IParticleData particleData = new ParticleData(data.ParticleForCopy, data.ParticleID, data.Rotation);
+            
+            internalData.ParticlesPlayer.Play(particleData);
         }
 
         private void OnMovingRequested() => MoveAsync().Forget();

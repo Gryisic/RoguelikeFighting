@@ -5,6 +5,7 @@ using Common.Gameplay.Interfaces;
 using Common.Models.Actions.Templates;
 using Common.Scene;
 using Common.UI.Gameplay;
+using Common.UI.Gameplay.Hero;
 using Common.Units;
 using Common.Utils.Interfaces;
 using Infrastructure.Factories.UnitsFactory.Interfaces;
@@ -22,7 +23,7 @@ namespace Common.Gameplay.States
         private readonly SpawnInfo _spawnInfo;
         private readonly UnitsHandler _unitsHandler;
         private readonly RunData _runData;
-        private readonly GameplayUI _ui;
+        private readonly HeroView _heroView;
 
         public GameplayInitializeState(IStateChanger<IGameplayState> stateChanger, Player player, SceneInfo sceneInfo, IUnitFactory unitFactory, UnitsHandler unitsHandler, IRunData runData, UI.UI ui)
         {
@@ -32,7 +33,7 @@ namespace Common.Gameplay.States
             _player = player;
             _unitsHandler = unitsHandler;
 
-            _ui = ui.Gameplay;
+            _heroView = ui.Get<HeroView>();
             
             _spawnInfo = sceneInfo.SpawnInfo;
             
@@ -87,7 +88,7 @@ namespace Common.Gameplay.States
         {
             int currentHealth = _unitsHandler.Hero.StatsData.GetStatValue(Enums.Stat.Health);
             int maxHealth = _unitsHandler.Hero.StatsData.GetStatValue(Enums.Stat.MaxHealth);
-            _ui.HeroView.UpdateHealth(currentHealth, maxHealth);
+            _heroView.UpdateHealth(currentHealth, maxHealth);
 
             List<HeroActionTemplate> baseSkills = _runData.InitialHeroData.HeroTemplate.Actions.Where(a =>
                 a.ExtendsFrom == Enums.HeroActionType.Skill || a.ExtendsFrom == Enums.HeroActionType.FirstLegacySkill ||
@@ -96,10 +97,10 @@ namespace Common.Gameplay.States
             foreach (var template in baseSkills)
             {
                 if (template.Direction == Enums.InputDirection.Horizontal)
-                    _ui.HeroView.UpdateSkillIcon(template.ExtendsFrom, template.Icon);
+                    _heroView.UpdateSkillIcon(template.ExtendsFrom, template.Icon);
             }
             
-            _ui.HeroView.UpdateHealCharges(1);
+            _heroView.UpdateHealCharges(1);
         }
     }
 }

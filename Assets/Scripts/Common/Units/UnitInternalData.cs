@@ -1,4 +1,5 @@
 ﻿using System;
+using Common.Models.Particles;
 using Common.Units.Interfaces;
 using UnityEngine;
 
@@ -14,6 +15,8 @@ namespace Common.Units
 
         public float StaggerTime { get; private set; }
         public IUnitStatsData StatsData { get; }
+        
+        public UnitParticlesPlayer ParticlesPlayer { get; }
         public UnitPhysics Physics { get; }
 
         public IAnimationEventsReceiver AnimationEventsReceiver { get; }
@@ -22,13 +25,14 @@ namespace Common.Units
         
         public UnitAnimator Animator { get; }
 
-        protected UnitInternalData(Transform transform, UnitPhysics physics, UnitAnimator animator, IUnitStatsData statsData, IActionsData actionsData, IAnimationEventsReceiver animationEventsReceiver, Type type)
+        protected UnitInternalData(Transform transform, UnitPhysics physics, IUnitRendererData rendererData, IUnitStatsData statsData, IActionsData actionsData, Type type)
         {
             Transform = transform;
+            ParticlesPlayer = rendererData.ParticlesPlayer;
             Physics = physics;
-            Animator = animator;
+            Animator = rendererData.Animator;
             ActionsData = actionsData;
-            AnimationEventsReceiver = animationEventsReceiver;
+            AnimationEventsReceiver = rendererData.AnimationEventsReceiver;
             Type = type;
             StatsData = statsData;
         }

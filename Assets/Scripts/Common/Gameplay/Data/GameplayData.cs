@@ -5,8 +5,8 @@ namespace Common.Gameplay.Data
 {
     public class GameplayData : IGameplayData
     {
-        public Enums.PauseType PauseType { get; private set; }
+        public Enums.MenuType MenuType { get; private set; }
 
-        public void SetPauseType(Enums.PauseType pauseType) => PauseType = pauseType;
+        public void SetPauseType(Enums.MenuType menuType) => MenuType = menuType;
     }
 }

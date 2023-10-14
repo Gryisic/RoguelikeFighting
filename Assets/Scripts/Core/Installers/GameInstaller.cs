@@ -1,9 +1,9 @@
 ﻿using System;
-using Common.Gameplay;
 using Common.Gameplay.Data;
 using Common.Gameplay.Interfaces;
 using Common.Gameplay.Modifiers;
-using Common.Gameplay.States;
+using Common.UI;
+using Common.UI.Gameplay;
 using Core.GameStates;
 using Core.Interfaces;
 using Core.PlayerInput;
@@ -21,6 +21,7 @@ namespace Core.Installers
     public class GameInstaller : MonoInstaller, IInitializable, IDisposable
     {
         [SerializeField] private Game _game;
+        [SerializeField] private UI _ui;
         [SerializeField] private DebugHeroTemplate _debugHeroTemplate;
         [SerializeField] private ModifiersDataBase _modifiersDataBase;
         
@@ -34,10 +35,11 @@ namespace Core.Installers
             BindRunData();
             BindFactories();
             BindGameStates();
+            BindUI();
             BindGame();
             BindSelf();
         }
-
+        
         public void Dispose()
         {
             Container.Resolve<IInputService>().Dispose();
@@ -49,7 +51,7 @@ namespace Core.Installers
 
         private void BindSceneSwitcher() => Container.Bind<SceneSwitcher>().AsSingle();
 
-        private void BindRunData() => Container.Bind<IRunData>().To<RunData>().AsSingle();
+        private void BindRunData() => Container.Bind<IRunData>().To<RunData>().AsSingle().CopyIntoDirectSubContainers();
 
         private void BindModifiers()
         {
@@ -65,6 +67,13 @@ namespace Core.Installers
             Container.BindInterfacesTo<InputService>().AsSingle();
 
             Container.BindInterfacesTo<ServicesHandler>().AsSingle().CopyIntoDirectSubContainers();
+        }
+        
+        private void BindUI()
+        {
+            _ui = Container.InstantiatePrefabForComponent<UI>(_ui);
+            
+            Container.Bind<UI>().FromInstance(_ui).AsSingle();
         }
         
         private void BindGame()

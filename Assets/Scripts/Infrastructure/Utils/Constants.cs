@@ -18,6 +18,17 @@
 
         public const int ExperienceNeededToRequestNextModifier = 100;
         public const int DefaultAmountOfModifiersToRequest = 100;
+
+        public const int DefaultAmountOfGald = 100;
+        public const int MaxAmountOfGald = 9999;
+        public const int MinAmountOfGald = 0;
+
+        public const int DefaultHealCharges = 2;
+        public const int MaxHealCharges = 5;
+        public const int MinHealCharges = 0;
+
+        public const int MaxTradeItemsAmount = 4;
+        public const int MinTradeItemsAmount = 0;
         
         public const int InitialCopiesOfUnit = 5;
         public const int InitialCopiesOfProjectiles = 15;
@@ -25,9 +36,6 @@
         public const int MaxStatValue = 9999;
         public const int MinStatValue = 0;
 
-        public const int MaxHealCharges = 5;
-        public const int MinHealCharges = 0;
-        
         public const float InteractionRadius = 2f;
         public const float PlayerMovementSpeed = 5f;
         public const float FallMultiplier = 3f;
@@ -37,6 +45,10 @@
         public const float DropThroughPlatformTime = 0.25f;
 
         public const float DefaultEnemyAwaitTime = 2f;
+
+        public const float StorageSpinPrewarmTime = 1f;
+        public const float StorageSpinTime = 3f;
+        public const float StorageSpinAfterimageTime = 1f;
         
         public const float ModifierCardVerticalOffset = 110;
 

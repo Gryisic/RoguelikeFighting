@@ -1,4 +1,5 @@
 ﻿using System;
+using Common.Models.Particles;
 using UnityEngine;
 
 namespace Common.Units.Interfaces
@@ -14,6 +15,7 @@ namespace Common.Units.Interfaces
         float StaggerTime { get; }
         IUnitStatsData StatsData { get; }
         
+        UnitParticlesPlayer ParticlesPlayer { get; }
         UnitPhysics Physics { get; }
         
         IAnimationEventsReceiver AnimationEventsReceiver { get; }

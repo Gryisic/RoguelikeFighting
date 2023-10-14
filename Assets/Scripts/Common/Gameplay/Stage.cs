@@ -7,13 +7,14 @@ using Common.Units;
 using Core.Extensions;
 using Infrastructure.Utils;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 namespace Common.Gameplay
 {
     public class Stage : MonoBehaviour, IStageData, IDisposable
     {
-        [SerializeField] private Room[] _roomPrefabs;
+        [FormerlySerializedAs("_roomPrefabs")] [SerializeField] private Room[] _rooms;
 
         private IRunData _runData;
         private Room _currentRoom;
@@ -21,6 +22,7 @@ namespace Common.Gameplay
         public event Action<Vector2> HeroPositionChangeRequested; 
 
         public UnitsHandler UnitsHandler { get; private set; }
+        public IReadOnlyList<Room> Rooms => _rooms;
 
         [Inject]
         private void Construct(IRunData runData, UnitsHandler unitsHandler)
@@ -30,13 +32,13 @@ namespace Common.Gameplay
             
             InitializeRooms();
             
-            _currentRoom = _roomPrefabs[0]; 
+            _currentRoom = _rooms[0]; 
             _currentRoom.Enter();
         }
 
         public void Dispose()
         {
-            foreach (var room in _roomPrefabs)
+            foreach (var room in _rooms)
             {
                 room.ChangeTrigger.Triggered -= ChangeRoom;
                 
@@ -46,7 +48,7 @@ namespace Common.Gameplay
         
         private void InitializeRooms()
         {
-            foreach (var room in _roomPrefabs)
+            foreach (var room in _rooms)
             {
                 room.ChangeTrigger.Triggered += ChangeRoom;
                 
@@ -59,7 +61,7 @@ namespace Common.Gameplay
         
         private void ChangeRoom(Enums.RoomType roomType)
         {
-            List<Room> possibleRooms = _roomPrefabs.Where(r => r.Type == roomType).ToList();
+            List<Room> possibleRooms = _rooms.Where(r => r.Type == roomType).ToList();
             Room nextRoom = possibleRooms.Random();
             
             _currentRoom.Exit();

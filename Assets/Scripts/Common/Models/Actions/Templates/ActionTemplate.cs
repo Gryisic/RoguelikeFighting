@@ -20,6 +20,11 @@ namespace Common.Models.Actions.Templates
         [SerializeField] private float _chargeTime;
         [SerializeField] private AnimationClip _chargeClip;
 
+        [Space, Header("Particle Data")] 
+        [SerializeField] private ParticleSystem _particleForCopy;
+        [SerializeField] private int _particleID;
+        [SerializeField] private float _rotation;
+
         [Space, Header("Damage Data")]
         [SerializeField] private float _amount;
         [SerializeField] private Enums.Knockback _knockback;
@@ -55,6 +60,10 @@ namespace Common.Models.Actions.Templates
         public bool IsChargeable => _isChargeable;
         public float ChargeTime => _chargeTime;
         public AnimationClip ChargeClip => _chargeClip;
+        
+        public ParticleSystem ParticleForCopy => _particleForCopy;
+        public int ParticleID => _particleID;
+        public float Rotation => _rotation;
         
         public float Amount => _amount;
         public Enums.Knockback Knockback => _knockback;

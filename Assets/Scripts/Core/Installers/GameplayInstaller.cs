@@ -51,7 +51,7 @@ namespace Core.Installers
         {
             Container.BindInterfacesAndSelfTo<GameplayInitializeState>().AsSingle();
             Container.BindInterfacesAndSelfTo<GameplayActiveState>().AsSingle();
-            Container.BindInterfacesAndSelfTo<GameplayPauseState>().AsSingle();
+            Container.BindInterfacesAndSelfTo<GameplayMenuState>().AsSingle();
         }
     }
 }

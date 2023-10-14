@@ -47,9 +47,6 @@ namespace Common.UI.Gameplay
             }
         }
 
-        private void SelectCard(int index)
-        {
-            CardSelected?.Invoke(index);
-        }
+        private void SelectCard(int index) => CardSelected?.Invoke(index);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Common.Gameplay.Interfaces;
 using Common.Gameplay.Modifiers;
 using Common.Gameplay.Modifiers.Templates;
 using Infrastructure.Utils;
@@ -7,14 +8,11 @@ using UnityEngine;
 
 namespace Common.Gameplay.Data
 {
-    public class ModifiersData
+    public class ModifiersData : IConcreteRunData
     {
         private readonly ModifiersResolver _modifiersResolver;
         private readonly List<Modifier> _bufferedModifiers;
-
-        private float _experience;
         
-        public event Action<float> ExperienceChanged;
         public event Action<IReadOnlyList<ModifierTemplate>> ModifiersSelectionRequested;
         public event Action<Modifier> ModifierAdded; 
 
@@ -27,26 +25,8 @@ namespace Common.Gameplay.Data
         
         public void Clear()
         {
-            _experience = 0;
             _modifiersResolver.Clear();
             _bufferedModifiers.Clear();
-        }
-        
-        public void AddExperience(float amount)
-        {
-            if (amount < 0)
-                throw new InvalidOperationException($"Trying to add negative amount of experience. Amount: {amount}");
-
-            _experience += amount;
-            
-            if (_experience >= Constants.ExperienceNeededToRequestNextModifier)
-            {
-                _experience -= Constants.ExperienceNeededToRequestNextModifier;
-                
-                RequestModifiersSelection();
-            }
-            
-            ExperienceChanged?.Invoke(_experience);
         }
 
         public void GetModifierFromBuffer(int index)
@@ -60,6 +40,8 @@ namespace Common.Gameplay.Data
             
             ModifierAdded?.Invoke(modifier);
         }
+
+        public void OnExperienceOverflowed() => RequestModifiersSelection();
 
         private void RequestModifiersSelection()
         {

@@ -12,7 +12,7 @@ namespace Common.Units.Enemies
         public EnemyTemplate Data { get; }
         public IReadOnlyList<EnemyAction> Actions { get; private set; }
 
-        public EnemyInternalData(EnemyTemplate data, UnitPhysics physics, Transform transform, UnitAnimator animator, IUnitStatsData statsData, IActionsData actionsData, IAnimationEventsReceiver animationEventsReceiver, Type type) : base(transform, physics, animator, statsData, actionsData, animationEventsReceiver, type)
+        public EnemyInternalData(EnemyTemplate data, UnitPhysics physics, Transform transform, IUnitRendererData rendererData, IUnitStatsData statsData, IActionsData actionsData, Type type) : base(transform, physics, rendererData, statsData, actionsData, type)
         {
             Data = data;
         }
