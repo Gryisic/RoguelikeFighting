@@ -16,6 +16,12 @@ namespace Infrastructure.Utils
             Arena
         }
 
+        public enum CameraEasingType
+        {
+            Smooth, 
+            Instant
+        }
+
         public enum CameraDistanceType
         {
             Neutral,

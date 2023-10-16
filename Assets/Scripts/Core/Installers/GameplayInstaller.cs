@@ -11,7 +11,7 @@ using Zenject;
 
 namespace Core.Installers
 {
-    public class GameplayInstaller : MonoInstaller, IDisposable
+    public class GameplayInstaller : MonoInstaller, IInitializable, IDisposable
     {
         [SerializeField] private Stage _stage;
 
@@ -25,6 +25,11 @@ namespace Core.Installers
             BindStates();
         }
 
+        public void Initialize()
+        {
+            //_stage.Initialize();
+        }
+        
         public void Dispose()
         {
             Container.Resolve<UnitsHandler>().Dispose();

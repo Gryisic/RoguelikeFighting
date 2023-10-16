@@ -49,7 +49,7 @@ namespace Common.Units.StateMachine.HeroStates
         {
             if (internalData.InAir == false)
             {
-                if (internalData.InputDirection == Enums.InputDirection.Down)
+                if (internalData.PassiveInputDirection == Enums.InputDirection.Down)
                     internalData.Physics.DropThroughPlatform();
                 else
                     internalData.RequestJump();

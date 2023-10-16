@@ -95,9 +95,9 @@ namespace Common.Units.StateMachine.HeroStates
         private void OnParticlesEmitRequested()
         {
             HeroActionTemplate data = _currentAction.Data;
-            IParticleData particleData = new ParticleData(data.ParticleForCopy, data.ParticleID, data.Rotation);
+            IParticleData particleData = new ParticleData(data.ParticleForCopy, data.ParticleID);
             
-            internalData.ParticlesPlayer.Play(particleData);
+            internalData.ParticlesPlayer.Play(particleData, internalData.FaceDirection.x);
         }
 
         private void OnMovingRequested() => MoveAsync().Forget();

@@ -3,6 +3,7 @@ using System.Threading;
 using Common.Gameplay.Interfaces;
 using Common.Gameplay.Triggers;
 using Common.Gameplay.Waves;
+using Common.Scene.Cameras.Interfaces;
 using Infrastructure.Utils;
 using UnityEngine;
 
@@ -14,18 +15,23 @@ namespace Common.Gameplay.Rooms
         [SerializeField] private TriggerWaveMap[] _wavesMap;
 
         private IStageData _stageData;
+        private IRunData _runData;
 
         private CancellationTokenSource _requirementCheckTokenSource;
         private NextWaveRequirement _requirement;
         private int _currentWaveIndex;
 
+        protected override ICameraService CameraService { get; set; }
+        
         public override Enums.RoomType Type => Enums.RoomType.Battle;
 
-        public override void Initialize(IStageData stageData, IRunData runData)
+        public override void Initialize(IStageData stageData, IRunData runData, ICameraService cameraService)
         {
             _stageData = stageData;
+            _runData = runData;
+            CameraService = cameraService;
             _requirement = DefineRequirement();
-            
+
             SubscribeToEvents();
 
             foreach (var map in _wavesMap) 
@@ -51,6 +57,7 @@ namespace Common.Gameplay.Rooms
                 map.Trigger.Activate();
             
             ChangeTrigger.Activate();
+            CameraService.FollowUnit(_runData.SharedHeroData.Transform);
 
             base.Enter();
         }

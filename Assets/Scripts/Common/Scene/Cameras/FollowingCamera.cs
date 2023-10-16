@@ -11,7 +11,7 @@ namespace Common.Scene.Cameras
 
             camera.Follow = unitTransform;
         }
-
+        
         protected override float DistanceToSize(Enums.CameraDistanceType distanceType)
         {
             float size = distanceType switch

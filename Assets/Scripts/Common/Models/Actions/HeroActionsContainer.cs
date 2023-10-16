@@ -16,6 +16,8 @@ namespace Common.Models.Actions
         private readonly List<Modifier> _timeBasedModifiers;
 
         private HeroAction _currentAction;
+        
+        
 
         public HeroActionsContainer(IReadOnlyList<HeroActionTemplate> actionTemplates, IHeroInternalData internalData)
         {
@@ -56,7 +58,7 @@ namespace Common.Models.Actions
             {
                 HeroAction action = cycleThrough[i];
                 
-                if (action.IsConditionsFulfilled(_internalData.LastActionType, _internalData.InputDirection, _internalData.Placement) == false)
+                if (action.IsConditionsFulfilled(_internalData.LastActionType, _internalData.ActionInputDirection, _internalData.Placement) == false)
                     continue;
 
                 heroAction = action;
@@ -68,6 +70,21 @@ namespace Common.Models.Actions
             heroAction = null;
             
             return false;
+        }
+        
+        public IReadOnlyList<HeroAction> GetAllActions()
+        {
+            List<HeroAction> actions = new List<HeroAction>();
+
+            for (var i = 0; i < _actions.Count; i++)
+            {
+                HeroAction action = _actions[i];
+                
+                actions.Add(action);
+                actions.AddRange(action.GetAllChilds());
+            }
+
+            return actions;
         }
 
         private void DefineModifier(Modifier modifier)

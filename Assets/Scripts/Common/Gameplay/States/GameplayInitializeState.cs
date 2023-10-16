@@ -23,21 +23,23 @@ namespace Common.Gameplay.States
         private readonly SpawnInfo _spawnInfo;
         private readonly UnitsHandler _unitsHandler;
         private readonly RunData _runData;
+        private readonly Stage _stage;
         private readonly HeroView _heroView;
 
-        public GameplayInitializeState(IStateChanger<IGameplayState> stateChanger, Player player, SceneInfo sceneInfo, IUnitFactory unitFactory, UnitsHandler unitsHandler, IRunData runData, UI.UI ui)
+        public GameplayInitializeState(IStateChanger<IGameplayState> stateChanger, Player player, SceneInfo sceneInfo, IUnitFactory unitFactory, UnitsHandler unitsHandler, IStageData stageData, IRunData runData, UI.UI ui)
         {
             _stateChanger = stateChanger;
             _unitFactory = unitFactory;
             
             _player = player;
             _unitsHandler = unitsHandler;
-
+            
             _heroView = ui.Get<HeroView>();
             
             _spawnInfo = sceneInfo.SpawnInfo;
             
             _runData = runData as RunData;
+            _stage = stageData as Stage;
         }
 
         public void Activate()
@@ -45,6 +47,8 @@ namespace Common.Gameplay.States
             CreatePlayer();
             CreateEnemies();
             SetUI();
+            
+            _stage.Initialize();
             
             _stateChanger.ChangeState<GameplayActiveState>();
         }

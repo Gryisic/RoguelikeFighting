@@ -85,8 +85,8 @@ namespace Common.Units
                 return;
             
             _rigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
-            _rigidbody.velocity = Vector2.down;
-
+            _rigidbody.velocity = IsGrounded ? Vector2.zero : Vector2.down;
+            
             _isFrozen = false;
         }
 

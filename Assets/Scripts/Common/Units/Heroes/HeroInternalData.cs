@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Common.Units.Heroes
 {
-    public class HeroInternalData : UnitInternalData, IHeroInternalData, IDisposable
+    public class HeroInternalData : UnitInternalData, IHeroInternalData
     {
         private CancellationTokenSource _actionUpdateTokenSource;
         private bool _isActionUpdating;
@@ -26,8 +26,9 @@ namespace Common.Units.Heroes
         public bool JumpRequested { get; private set; }
 
         public Enums.HeroActionType LastActionType { get; private set; }
-        
-        public Enums.InputDirection InputDirection { get; private set; }
+
+        public Enums.InputDirection ActionInputDirection { get; private set; }
+        public Enums.InputDirection PassiveInputDirection => DefineInputDirection();
         public Enums.ActionExecutionPlacement Placement => DefinePlacement();
         public bool CanDash => RemainingDashes > 0;
         
@@ -92,7 +93,7 @@ namespace Common.Units.Heroes
         public void SetAction(Enums.HeroActionType actionType)
         {
             LastActionType = actionType;
-            InputDirection = DefineInputDirection();
+            ActionInputDirection = DefineInputDirection();
             
             if (_isActionUpdating)
             {

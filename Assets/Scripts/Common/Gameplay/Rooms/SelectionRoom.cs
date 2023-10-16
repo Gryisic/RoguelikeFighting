@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using Common.Gameplay.Interfaces;
 using Common.Gameplay.Triggers;
+using Common.Scene.Cameras.Interfaces;
 using Common.UI.Gameplay.Rooms;
 using Core.Extensions;
 using Infrastructure.Utils;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace Common.Gameplay.Rooms
@@ -21,11 +21,15 @@ namespace Common.Gameplay.Rooms
         [Space, Header("Room View")]
         [SerializeField] private SelectionRoomView _roomView;
 
+        [Space, Header("Additional Data")]
+        [SerializeField] private Transform _cameraFocusPoint;
+
         private IReadOnlyList<Enums.RoomType> _roomTypes;
-        
+
+        protected override ICameraService CameraService { get; set; }
         public override Enums.RoomType Type => Enums.RoomType.Selection;
 
-        public override void Initialize(IStageData stageData, IRunData runData)
+        public override void Initialize(IStageData stageData, IRunData runData, ICameraService cameraService)
         {
             if (ChangeTrigger is SelectionRoomTrigger == false)
                 throw new Exception("Selection Room doesn't have 'Selection Room Trigger'");
@@ -43,6 +47,8 @@ namespace Common.Gameplay.Rooms
                 trigger.HeroEntered += OnHeroEnteredTrigger;
                 trigger.HeroExited += OnHeroExitedTrigger;
             }
+
+            CameraService = cameraService;
         }
 
         public override void Dispose()
@@ -61,6 +67,7 @@ namespace Common.Gameplay.Rooms
             
             _roomView.Activate();
             ChangeTrigger.Deactivate();
+            CameraService.FocusOn(_cameraFocusPoint);
 
             base.Enter();
         }
@@ -110,9 +117,15 @@ namespace Common.Gameplay.Rooms
             SelectionRoomTrigger changeTrigger = ChangeTrigger as SelectionRoomTrigger;
             changeTrigger.UpdateType(type);
             changeTrigger.Activate();
+
+            Sprite icon = _generalTemplates.First(t => t.Type == type).Icon;
+            _roomView.SetIcon(icon);
+            _roomView.SelectionMarkersHandler.Deactivate();
             
             foreach (var trigger in _selectionTriggers) 
                 trigger.Deactivate();
+            
+            animator.PlayNext();
         }
         
         private void OnHeroEnteredTrigger(int index) => _roomView.SelectionMarkersHandler.Expand(index);

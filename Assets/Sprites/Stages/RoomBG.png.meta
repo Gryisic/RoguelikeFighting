@@ -1,34 +1,40 @@
 fileFormatVersion: 2
-guid: df0f94e84df39834ba853257c87f2646
+guid: 209cefde2b11da74abfc795610a05179
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6347263486255969293
-    second: StorageBG_0
+      213: -8827986048235635988
+    second: RoomBG_0
   - first:
-      213: -1592318071391532767
-    second: StorageBG_18
+      213: -4961372008695673293
+    second: RoomBG_18
   - first:
-      213: -8372786375417868962
-    second: StorageBG_38
+      213: -2101716948801751327
+    second: RoomBG_22
   - first:
-      213: 9118416377947616429
-    second: StorageBG_40
+      213: 4912020962944280399
+    second: RoomBG_38
   - first:
-      213: 1302666488377231397
-    second: StorageBG_68
+      213: 5482743407916758122
+    second: RoomBG_78
   - first:
-      213: 6570539523839721236
-    second: StorageBG_69
+      213: 4416625042532974065
+    second: RoomBG_79
   - first:
-      213: 3516095097196748473
-    second: StorageBG_70
+      213: -5014894269271215620
+    second: RoomBG_96
   - first:
-      213: 5754862668527435576
-    second: StorageBG_71
+      213: 6031353890584432721
+    second: RoomBG_107
   - first:
-      213: 5524108037449638174
-    second: StorageBG_72
+      213: -6517629457414531837
+    second: RoomBG_108
+  - first:
+      213: 7557175140663177636
+    second: RoomBG_110
+  - first:
+      213: -6193636924327211163
+    second: RoomBG_111
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -154,12 +160,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: StorageBG_0
+      name: RoomBG_0
       rect:
         serializedVersion: 2
-        x: 23
-        y: 1806
-        width: 817
+        x: 13
+        y: 1849
+        width: 816
         height: 52
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -168,18 +174,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d043812f282061850800000000000000
-      internalID: 6347263486255969293
+      spriteID: cea7fc83671bc7580800000000000000
+      internalID: -8827986048235635988
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StorageBG_18
+      name: RoomBG_18
       rect:
         serializedVersion: 2
-        x: 980
-        y: 1806
+        x: 865
+        y: 1849
         width: 802
         height: 52
       alignment: 0
@@ -189,20 +195,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 129c5498623f6e9e0800000000000000
-      internalID: -1592318071391532767
+      spriteID: 33ec02fc17aa52bb0800000000000000
+      internalID: -4961372008695673293
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StorageBG_38
+      name: RoomBG_38
       rect:
         serializedVersion: 2
-        x: 27
-        y: 1653
-        width: 1315
-        height: 70
+        x: 17
+        y: 1711
+        width: 1187
+        height: 55
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -210,14 +216,77 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e5dccf80723edcb80800000000000000
-      internalID: -8372786375417868962
+      spriteID: f47e0917a010b2440800000000000000
+      internalID: 4912020962944280399
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StorageBG_68
+      name: RoomBG_78
+      rect:
+        serializedVersion: 2
+        x: 1237
+        y: 1711
+        width: 644
+        height: 52
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a643e77a41e961c40800000000000000
+      internalID: 5482743407916758122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RoomBG_79
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 1573
+        width: 764
+        height: 52
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1fdb54e63110b4d30800000000000000
+      internalID: 4416625042532974065
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RoomBG_96
+      rect:
+        serializedVersion: 2
+        x: 809
+        y: 1573
+        width: 476
+        height: 52
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf172fd6b34876ab0800000000000000
+      internalID: -5014894269271215620
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RoomBG_107
       rect:
         serializedVersion: 2
         x: 27
@@ -231,14 +300,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 528c784f440041210800000000000000
-      internalID: 1302666488377231397
+      spriteID: 15094f2786ca3b350800000000000000
+      internalID: 6031353890584432721
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StorageBG_69
+      name: RoomBG_108
       rect:
         serializedVersion: 2
         x: 1258
@@ -252,14 +321,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 41f712d72ee3f2b50800000000000000
-      internalID: 6570539523839721236
+      spriteID: 3055f255a8abc85a0800000000000000
+      internalID: -6517629457414531837
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StorageBG_71
+      name: RoomBG_110
       rect:
         serializedVersion: 2
         x: 0
@@ -273,14 +342,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 83ffbb04b116ddf40800000000000000
-      internalID: 5754862668527435576
+      spriteID: 4a134a430ca70e860800000000000000
+      internalID: 7557175140663177636
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: StorageBG_72
+      name: RoomBG_111
       rect:
         serializedVersion: 2
         x: 0
@@ -294,8 +363,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e11e019fdf299ac40800000000000000
-      internalID: 5524108037449638174
+      spriteID: 56fcbb95808cb0aa0800000000000000
+      internalID: -6193636924327211163
       vertices: []
       indices: 
       edges: []

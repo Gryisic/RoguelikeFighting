@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: GeneralTrade
   m_EditorClassIdentifier: 
   _type: 2
-  _icon: {fileID: 3932821979254265264, guid: 5fdd50d549065c74ca644a7f4def3e09, type: 3}
+  _icon: {fileID: -8819260104624834040, guid: 5fdd50d549065c74ca644a7f4def3e09, type: 3}
   _description: Trade for your life

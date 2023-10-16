@@ -6,7 +6,8 @@ namespace Common.Units.Interfaces
 {
     public interface IHeroInternalData : IUnitInternalData
     {
-        Enums.InputDirection InputDirection { get; }
+        Enums.InputDirection PassiveInputDirection { get; }
+        Enums.InputDirection ActionInputDirection { get; }
         Enums.ActionExecutionPlacement Placement { get; }
         Enums.HeroActionType LastActionType { get; }
         HeroAnimationData AnimationData { get; }

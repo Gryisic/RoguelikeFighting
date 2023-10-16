@@ -4,6 +4,7 @@ using System.Threading;
 using Common.Gameplay.Interfaces;
 using Common.Gameplay.Triggers;
 using Common.Models.Items;
+using Common.Scene.Cameras.Interfaces;
 using Core.Extensions;
 using Cysharp.Threading.Tasks;
 using Infrastructure.Utils;
@@ -26,13 +27,13 @@ namespace Common.Gameplay.Rooms
 
         public override Enums.RoomType Type => Enums.RoomType.Storage;
 
-        public override void Initialize(IStageData stageData, IRunData runData)
+        public override void Initialize(IStageData stageData, IRunData runData, ICameraService cameraService)
         {
             _rangeItemMap = new Dictionary<int, ItemsPack>();
             
             InitializePacks();
             
-            base.Initialize(stageData, runData);
+            base.Initialize(stageData, runData, cameraService);
         }
 
         public override void Dispose()
@@ -46,6 +47,8 @@ namespace Common.Gameplay.Rooms
         public override void Enter()
         {
             _menuTrigger.Triggered += OnMenuTriggerTriggered;
+
+            CameraService.FocusOn(cameraFocusPoint);
 
             base.Enter();
         }
@@ -150,13 +153,14 @@ namespace Common.Gameplay.Rooms
             await UniTask.Delay(TimeSpan.FromSeconds(delay), cancellationToken: _awaitTokenSource.Token);
             
             animator.PlayNext();
+            ChangeTrigger.Activate();
         }
         
         private class ItemsPack
         {
             private readonly List<StorageItemData> _items;
 
-            public List<StorageItemData> Items => _items;
+            public IReadOnlyList<StorageItemData> Items => _items;
 
             public ItemsPack()
             {

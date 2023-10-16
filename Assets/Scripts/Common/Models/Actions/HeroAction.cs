@@ -38,6 +38,21 @@ namespace Common.Models.Actions
         public bool IsConditionsFulfilled(Enums.HeroActionType extendsFrom, Enums.InputDirection direction, Enums.ActionExecutionPlacement placement) => 
             extendsFrom == Data.ExtendsFrom && direction == Data.Direction && placement == Data.ExecutionPlacement;
 
+        public IReadOnlyList<HeroAction> GetAllChilds()
+        {
+            List<HeroAction> actions = new List<HeroAction>();
+
+            if (ExtendsInto.Count > 0)
+            {
+                actions.AddRange(ExtendsInto);
+                
+                foreach (var action in ExtendsInto) 
+                    actions.AddRange(action.GetAllChilds());
+            }
+
+            return actions;
+        }
+        
         public IReadOnlyList<HeroAction> GetAllChildsExtendedFromActionType(Enums.HeroActionType type)
         {
             List<HeroAction> actions = new List<HeroAction>();

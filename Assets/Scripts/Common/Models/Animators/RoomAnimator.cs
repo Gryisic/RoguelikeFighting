@@ -13,18 +13,20 @@ namespace Common.Models.Animators
 
         public void Activate()
         {
+            _index = 0;
+
             if (_index >= _backgroundsQueue.Length)
                 return;
             
-            _backgroundsQueue[_index]?.Activate();
+            _backgroundsQueue[_index].Activate();
         }
 
         public void Deactivate()
         {
             if (_index >= _backgroundsQueue.Length)
                 return;
-            
-            _backgroundsQueue[_index]?.Deactivate();
+
+            _backgroundsQueue[_index].Deactivate();
         }
 
         public void PlayNext()

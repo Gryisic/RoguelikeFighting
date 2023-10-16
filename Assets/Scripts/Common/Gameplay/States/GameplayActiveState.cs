@@ -58,12 +58,8 @@ namespace Common.Gameplay.States
         
         public void Activate()
         {
-            _cameraService ??= _servicesHandler.GetSubService<ICameraService>();
-                
             AttachInput();
             SubscribeToEvents();
-            
-            _cameraService.FollowUnit(_player.HeroTransform);
         }
         
         public void Deactivate()

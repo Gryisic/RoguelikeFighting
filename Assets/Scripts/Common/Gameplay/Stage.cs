@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Common.Gameplay.Interfaces;
 using Common.Gameplay.Rooms;
+using Common.Scene.Cameras.Interfaces;
 using Common.Units;
 using Core.Extensions;
+using Core.Interfaces;
 using Infrastructure.Utils;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -14,9 +16,10 @@ namespace Common.Gameplay
 {
     public class Stage : MonoBehaviour, IStageData, IDisposable
     {
-        [FormerlySerializedAs("_roomPrefabs")] [SerializeField] private Room[] _rooms;
+        [SerializeField] private Room[] _rooms;
 
         private IRunData _runData;
+        private IServicesHandler _servicesHandler;
         private Room _currentRoom;
 
         public event Action<Vector2> HeroPositionChangeRequested; 
@@ -25,12 +28,18 @@ namespace Common.Gameplay
         public IReadOnlyList<Room> Rooms => _rooms;
 
         [Inject]
-        private void Construct(IRunData runData, UnitsHandler unitsHandler)
+        private void Construct(IRunData runData, IServicesHandler servicesHandler, UnitsHandler unitsHandler)
         {
             _runData = runData;
+            _servicesHandler = servicesHandler;
             UnitsHandler = unitsHandler;
             
-            InitializeRooms();
+            //InitializeRooms(servicesHandler.GetSubService<ICameraService>());
+        }
+        
+        public void Initialize()
+        {
+            InitializeRooms(_servicesHandler.GetSubService<ICameraService>());
             
             _currentRoom = _rooms[0]; 
             _currentRoom.Enter();
@@ -46,13 +55,13 @@ namespace Common.Gameplay
             }
         }
         
-        private void InitializeRooms()
+        private void InitializeRooms(ICameraService cameraService)
         {
             foreach (var room in _rooms)
             {
                 room.ChangeTrigger.Triggered += ChangeRoom;
                 
-                room.Initialize(this, _runData);
+                room.Initialize(this, _runData, cameraService);
 
                 if (room.gameObject.activeSelf)
                     room.gameObject.SetActive(false);

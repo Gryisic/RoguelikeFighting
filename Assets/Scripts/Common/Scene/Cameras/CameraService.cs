@@ -1,4 +1,6 @@
-﻿using Common.Scene.Cameras.Interfaces;
+﻿using System;
+using Cinemachine;
+using Common.Scene.Cameras.Interfaces;
 using Infrastructure.Utils;
 using UnityEngine;
 
@@ -6,6 +8,7 @@ namespace Common.Scene.Cameras
 {
     public class CameraService : MonoBehaviour, ICameraService
     {
+        [SerializeField] private CinemachineBrain _brain;
         [SerializeField] private FollowingCamera _followingCamera;
         [SerializeField] private FocusCamera _focusCamera;
 
@@ -28,6 +31,14 @@ namespace Common.Scene.Cameras
             _focusCamera.FocusOn(positionToFocusOn, distanceType);
         }
 
+        public void SetEasingAndConfiner(Enums.CameraEasingType easingType, Collider2D confiner)
+        {
+            _brain.m_DefaultBlend = DefineBlend(easingType);
+            
+            _focusCamera.SetConfiner(confiner);
+            _followingCamera.SetConfiner(confiner);
+        }
+
         private void ChangeCamera(Camera newCamera)
         {
             if (_activeCamera != null) 
@@ -35,6 +46,21 @@ namespace Common.Scene.Cameras
             
             _activeCamera = newCamera;
             _activeCamera.Activate();
+        }
+
+        private CinemachineBlendDefinition DefineBlend(Enums.CameraEasingType easingType)
+        {
+            switch (easingType)
+            {
+                case Enums.CameraEasingType.Smooth:
+                    return new CinemachineBlendDefinition(CinemachineBlendDefinition.Style.EaseIn, Constants.CamerasBlendTime);
+                
+                case Enums.CameraEasingType.Instant:
+                    return new CinemachineBlendDefinition(CinemachineBlendDefinition.Style.Cut, 0);
+                
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(easingType), easingType, null);
+            }
         }
     }
 }

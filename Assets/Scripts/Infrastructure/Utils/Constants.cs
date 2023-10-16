@@ -7,6 +7,8 @@
 
         public const int ActivatedCameraPriority = 100;
         public const int DeactivatedCameraPriority = 0;
+
+        public const float CamerasBlendTime = 2f;
         
         public const float NeutralFollowCameraSize = 5f;
         public const float CloseFollowCameraSize = 3.5f;

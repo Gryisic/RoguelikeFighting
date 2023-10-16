@@ -1,5 +1,6 @@
-﻿using System;
+﻿using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Common.UI.Gameplay.Rooms
 {
@@ -8,6 +9,9 @@ namespace Common.UI.Gameplay.Rooms
     {
         [SerializeField] private Canvas _canvas;
         [SerializeField] private SelectionMarkersHandler _selectionMarkersHandler;
+        [SerializeField] private Image _finalIcon;
+        [SerializeField] private Color _defaultColor;
+        [SerializeField] private Color _filledColor;
 
         public SelectionMarkersHandler SelectionMarkersHandler => _selectionMarkersHandler;
 
@@ -33,6 +37,19 @@ namespace Common.UI.Gameplay.Rooms
             _canvas.enabled = false;
             
             _selectionMarkersHandler.Deactivate();
+            
+            _finalIcon.gameObject.SetActive(false);
+        }
+
+        public void SetIcon(Sprite icon)
+        {
+            _finalIcon.sprite = icon;
+
+            _finalIcon.gameObject.SetActive(true);
+
+            DOTween.Sequence()
+                .Append(_finalIcon.rectTransform.DOScale(1f, 0.2f).SetEase(Ease.InQuart).From(2f))
+                .Join(_finalIcon.DOColor(_filledColor, 0.5f).From(_defaultColor));
         }
     }
 }

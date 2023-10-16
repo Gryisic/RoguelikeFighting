@@ -20,6 +20,9 @@ MonoBehaviour:
   _isChargeable: 0
   _chargeTime: 0
   _chargeClip: {fileID: 0}
+  _particleForCopy: {fileID: 4628376129943322910, guid: a04debeabf26f014196b4397fa164990, type: 3}
+  _particleID: 11
+  _rotation: 180
   _amount: 100
   _knockback: 1
   _knockbackForce: {x: 0, y: 0}
@@ -27,10 +30,13 @@ MonoBehaviour:
   _vector: {x: 0, y: 0}
   _distance: 5
   _movingTime: 0
+  _freezeAfterMoving: 0
   _useClipLengthAsTime: 1
   _animatorController: {fileID: 0}
   _nextStanceTemplate: {fileID: 0}
   _positionRelativeToTarget: {x: 0, y: 0}
+  _healPercent: 0
+  _healTime: 0
   _extendsInto: []
   _extendsFrom: 5
   _direction: 0

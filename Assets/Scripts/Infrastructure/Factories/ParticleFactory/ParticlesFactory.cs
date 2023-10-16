@@ -5,6 +5,13 @@ namespace Infrastructure.Factories.ParticleFactory
 {
     public class ParticlesFactory : IParticlesFactory
     {
-        public ParticleSystem Create(ParticleSystem original, Transform parent) => Object.Instantiate(original, parent);
+        public ParticleSystem Create(ParticleSystem original, Transform parent)
+        {
+            ParticleSystem particleSystem = Object.Instantiate(original, parent);
+            
+            particleSystem.gameObject.SetActive(false);
+            
+            return particleSystem;
+        }
     }
 }

@@ -10,12 +10,12 @@ namespace Common.Models.Particles
     public class UnitParticlesHandler
     {
         private readonly IParticlesFactory _factory;
-        private readonly Dictionary<int, ParticleSystem> _particlesMap;
+        private readonly Dictionary<int, LocalParticlesData> _particlesMap;
 
         public UnitParticlesHandler(Transform parent, IReadOnlyList<IParticleData> particlesData)
         {
             _factory = new ParticlesFactory();
-            _particlesMap = new Dictionary<int, ParticleSystem>();
+            _particlesMap = new Dictionary<int, LocalParticlesData>();
             
             Initialize(parent, particlesData);
         }
@@ -24,10 +24,20 @@ namespace Common.Models.Particles
         {
             for (var i = 0; i < particlesData.Count; i++)
             {
-                var data = particlesData[i];
-                ParticleSystem particle = _factory.Create(data.ParticleForCopy, parent);
+                IParticleData data = particlesData[i];
 
-                _particlesMap.Add(data.ID, particle);
+                if (_particlesMap.ContainsKey(data.ID))
+                    continue;
+                
+                ParticleSystem particle = _factory.Create(data.ParticleForCopy, parent);
+                List<ParticleSystem> childs = new List<ParticleSystem>();
+                
+                if (particle.transform.childCount > 0)
+                    childs.AddRange(particle.GetComponentsInChildren<ParticleSystem>());
+
+                LocalParticlesData localData = new LocalParticlesData(particle, childs);
+
+                _particlesMap.Add(data.ID, localData);
             }
         }
 
@@ -36,7 +46,28 @@ namespace Common.Models.Particles
             if (_particlesMap.ContainsKey(id) == false)
                 throw new NullReferenceException($"Particle with ID {id} isn't presented in particles map");
 
-            return _particlesMap[id];
+            return _particlesMap[id].ParticleSystem;
+        }
+
+        public IReadOnlyList<ParticleSystem> GetChildsOfParticle(int id)
+        {
+            if (_particlesMap.ContainsKey(id) == false)
+                throw new NullReferenceException($"Particle with ID {id} isn't presented in particles map");
+
+            return _particlesMap[id].Childs;
+        }
+
+        private struct LocalParticlesData
+        {
+            
+            public ParticleSystem ParticleSystem { get; }
+            public IReadOnlyList<ParticleSystem> Childs { get; }
+            
+            public LocalParticlesData(ParticleSystem particleSystem, IReadOnlyList<ParticleSystem> childs)
+            {
+                ParticleSystem = particleSystem;
+                Childs = childs;
+            }
         }
     }
 }
