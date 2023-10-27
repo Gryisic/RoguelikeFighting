@@ -1,7 +1,6 @@
 ﻿using Infrastructure.Utils;
 using UnityEditor.Animations;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Common.Models.Actions.Templates
 {
@@ -26,7 +25,7 @@ namespace Common.Models.Actions.Templates
         [SerializeField] private float _rotation;
 
         [Space, Header("Damage Data")]
-        [SerializeField] private float _amount;
+        [SerializeField] private int _amount;
         [SerializeField] private Enums.Knockback _knockback;
         [SerializeField] private Vector2 _knockbackForce;
         [SerializeField] private float _knockbackTime = 0.3f;
@@ -65,7 +64,7 @@ namespace Common.Models.Actions.Templates
         public int ParticleID => _particleID;
         public float Rotation => _rotation;
         
-        public float Amount => _amount;
+        public int Amount => _amount;
         public Enums.Knockback Knockback => _knockback;
         public Vector2 KnockbackForce => _knockbackForce;
         public float KnockbackTime => _knockbackTime;

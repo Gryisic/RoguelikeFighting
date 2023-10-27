@@ -1,6 +1,4 @@
 ﻿using System;
-using Common.Gameplay.Data;
-using Common.Gameplay.Interfaces;
 using Common.Gameplay.Modifiers;
 using Common.Units;
 using Common.Units.Interfaces;

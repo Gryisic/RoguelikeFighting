@@ -15,17 +15,25 @@ MonoBehaviour:
   _name: Charge And Fire
   _actionClip: {fileID: 7400000, guid: 93da3ada0e401df4d85f2979cc50e33d, type: 2}
   _baseEffect: 1
+  _executionPlacement: 0
   _executeAfterClipPlayed: 0
   _isChargeable: 1
   _chargeTime: 1
   _chargeClip: {fileID: 7400000, guid: 1b90fb572c599464d9cd347867ad8715, type: 2}
-  _amount: 200
+  _particleForCopy: {fileID: 0}
+  _particleID: 0
+  _rotation: 0
+  _amount: 100
   _knockback: 0
   _knockbackForce: {x: 0, y: 0}
   _knockbackTime: 0.3
   _vector: {x: 0, y: 0}
   _distance: 0
   _movingTime: 0
+  _freezeAfterMoving: 0
   _useClipLengthAsTime: 0
   _animatorController: {fileID: 0}
   _nextStanceTemplate: {fileID: 0}
+  _positionRelativeToTarget: {x: 0, y: 0}
+  _healPercent: 0
+  _healTime: 0

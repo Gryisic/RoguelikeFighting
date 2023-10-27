@@ -64,6 +64,7 @@ namespace Common.Units.StateMachine.HeroStates
         {
             _isDashing = true;
             
+            internalData.ParticlesPlayer.PlayGenericParticle(Enums.GenericParticle.Dash, internalData.FaceDirection.x);
             internalData.Animator.PlayAnimationClip(internalData.AnimationData.DashClip);
             internalData.SetAction(Enums.HeroActionType.Dash);
             internalData.DecreaseRemainingDashes();

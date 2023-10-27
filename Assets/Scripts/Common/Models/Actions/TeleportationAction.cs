@@ -14,12 +14,15 @@ namespace Common.Models.Actions
         private readonly Transform _innerTransform;
         private readonly Transform _targetTransform;
 
+        private readonly IUnitInternalData _internalData;
+
         private CancellationTokenSource _teleportationTokenSource;
 
         public TeleportationAction(IUnitInternalData internalData, ActionTemplate data, ActionBase wrappedBase = null) : base(data, wrappedBase)
         {
             _physics = internalData.Physics;
             _innerTransform = internalData.Transform;
+            _internalData = internalData;
             
             if (internalData is IEnemyInternalData enemyInternalData)
                 _targetTransform = enemyInternalData.HeroData.Transform;
@@ -41,8 +44,8 @@ namespace Common.Models.Actions
         private async UniTask TeleportAsync()
         {
             Vector2 newPosition = _targetTransform == null 
-                ? (Vector2) _innerTransform.position + data.PositionRelativeToTarget 
-                : (Vector2) _targetTransform.position + data.PositionRelativeToTarget;
+                ? (Vector2) _innerTransform.position - data.PositionRelativeToTarget * _internalData.FaceDirection.x 
+                : (Vector2) _targetTransform.position - data.PositionRelativeToTarget * _internalData.FaceDirection.x;
 
             _innerTransform.position = newPosition;
 

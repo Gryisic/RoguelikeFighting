@@ -3,8 +3,10 @@ using System.Linq;
 using System.Threading;
 using Common.Gameplay.Interfaces;
 using Common.Models.Actions;
+using Common.Models.Particles;
+using Common.Models.StatusEffects;
+using Common.Models.StatusEffects.Interfaces;
 using Common.Units.Interfaces;
-using Common.Units.StateMachine.EnemyStates;
 using Common.Units.Stats;
 using Cysharp.Threading.Tasks;
 using Infrastructure.Utils;
@@ -20,10 +22,11 @@ namespace Common.Units
         [SerializeField] protected UnitAnimator animator;
         [SerializeField] protected AnimationEventsReceiver animationEventsReceiver; 
         [SerializeField] protected ActionsData actionsData;
-        
-        [SerializeField] private BoxCollider2D _collider;
+        [SerializeField] protected GenericParticlesData genericParticlesData;
+        [SerializeField] protected new BoxCollider2D collider;
 
         public event Action<int, int> HealthUpdated;
+        public event Action<Vector3, int> DamageTaken; 
         public event Action<Unit> Defeated; 
 
         protected IUnitInternalData internalData;
@@ -36,7 +39,8 @@ namespace Common.Units
         private bool _isActive;
 
         public IUnitStatsData StatsData { get; private set; }
-        
+        public IStatusEffectsHandler EffectsHandler { get; private set; }
+
         public Transform Transform => transform;
 
         [Inject]
@@ -49,11 +53,11 @@ namespace Common.Units
                 rigidbody = GetComponent<Rigidbody2D>();
             }
             
-            if (_collider == null)
+            if (collider == null)
             {
                 Debug.LogWarning($"Collider of unit(Name: {name}, ID: {GetInstanceID()}) isn't assigned");
 
-                _collider = GetComponent<BoxCollider2D>();
+                collider = GetComponent<BoxCollider2D>();
             }
             
             if (animationEventsReceiver == null)
@@ -63,7 +67,7 @@ namespace Common.Units
                 animationEventsReceiver = GetComponent<AnimationEventsReceiver>();
             }
 
-            physics = new UnitPhysics(rigidbody, _collider);
+            physics = new UnitPhysics(rigidbody, collider);
             StatsData = new UnitStats();
         }
         
@@ -83,12 +87,15 @@ namespace Common.Units
             
             StatsData.HealthChanged -= OnHealthChanged;
 
+            EffectsHandler.Dispose();
             internalData.Dispose();
             physics.Dispose();
         }
 
         public virtual void Initialize(UnitTemplate template)
         {
+            EffectsHandler = new StatusEffectsHandler();
+            
             UnitStats stats = StatsData as UnitStats;
             stats.SetData(template);
             
@@ -104,27 +111,56 @@ namespace Common.Units
 
         public void TakeDamage(int amount)
         {
+            if (internalData.IsInvincible)
+                return;
+            
             internalData.SetStaggerTime(0.3f);
             StatsData.DecreaseStat(Enums.Stat.Health, amount);
 
-            //Debug.Log($"Damage Taken: {amount}");
-            
             if (StatsData.GetStatValue(Enums.Stat.Health) <= 0)
             {
                 Defeated?.Invoke(this);
                 
                 activeState?.Exit();
+                EffectsHandler.Clear();
                 gameObject.SetActive(false);
                 
                 return;
             }
             
+            DamageTaken?.Invoke(Transform.position, amount);
+            
             ChangeState<StateMachine.StaggerState>();
+        }
+
+        public void TakeDamageWithoutStagger(int amount)
+        {
+            if (internalData.IsInvincible)
+                return;
+
+            int currentHealth = StatsData.GetStatValue(Enums.Stat.Health);
+            
+            if (currentHealth - amount <= 0) 
+                amount = Mathf.Clamp(currentHealth - amount, currentHealth, amount);
+
+            StatsData.DecreaseStat(Enums.Stat.Health, amount);
+            DamageTaken?.Invoke(Transform.position, amount);
         }
 
         public void ApplyKnockBack(Collider2D hitbox, Vector2 force, float time, Enums.Knockback knockback)
         {
             physics.AddKnockback(hitbox, force, time, knockback);
+        }
+
+        public void ApplyStatusEffect(StatusEffect effect)
+        {
+            if (internalData.IsInvincible || _isActive == false)
+                return;
+            
+            effect.EffectEnded += RemoveStatusEffect;
+
+            EffectsHandler.AddEffect(effect);
+            effect.Affect(this);
         }
 
         public void ChangeState<T>() where T : IUnitState
@@ -134,18 +170,11 @@ namespace Common.Units
             activeState.Enter();
         }
 
-        protected void Flip(Vector2 direction)
+        private void RemoveStatusEffect(StatusEffect effect)
         {
-            float directionX = direction.x == 0 ? internalData.FaceDirection.x : Mathf.Ceil(direction.x);
-            float directionY = Mathf.Ceil(direction.y);
+            effect.EffectEnded -= RemoveStatusEffect;
             
-            Vector2 faceDirection = new Vector2(directionX, directionY);
-            internalData.SetFaceDirection(faceDirection);
-            
-            float rotation = directionX > 0 ? 0 : 180;
-            Quaternion quaternion = new Quaternion(0, rotation, 0, 0);
-
-            transform.rotation = quaternion;
+            EffectsHandler.RemoveEffect(effect);
         }
 
         private void OnHealthChanged(int currentHealth, int maxHealth) => HealthUpdated?.Invoke(currentHealth, maxHealth);

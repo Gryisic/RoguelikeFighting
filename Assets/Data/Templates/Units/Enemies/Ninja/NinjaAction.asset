@@ -15,10 +15,14 @@ MonoBehaviour:
   _name: Strike
   _actionClip: {fileID: 7400000, guid: 38ec935f480c8a945af3d1d469a67fff, type: 2}
   _baseEffect: 0
+  _executionPlacement: 0
   _executeAfterClipPlayed: 0
   _isChargeable: 0
   _chargeTime: 0
   _chargeClip: {fileID: 0}
+  _particleForCopy: {fileID: 2078821034972464922, guid: 2e07be2358d2a8b48ae9eca8829190a9, type: 3}
+  _particleID: 1
+  _rotation: 0
   _amount: 100
   _knockback: 2
   _knockbackForce: {x: 15, y: 0}
@@ -26,6 +30,10 @@ MonoBehaviour:
   _vector: {x: 0, y: 0}
   _distance: 0
   _movingTime: 0
+  _freezeAfterMoving: 0
   _useClipLengthAsTime: 0
   _animatorController: {fileID: 0}
   _nextStanceTemplate: {fileID: 0}
+  _positionRelativeToTarget: {x: 0, y: 0}
+  _healPercent: 0
+  _healTime: 0

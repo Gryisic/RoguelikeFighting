@@ -2,11 +2,14 @@
 using System.Linq;
 using Common.Gameplay.Data;
 using Common.Gameplay.Interfaces;
+using Common.Models.Actions;
 using Common.Models.Actions.Templates;
 using Common.Scene;
 using Common.UI.Gameplay;
 using Common.UI.Gameplay.Hero;
+using Common.UI.Gameplay.RunData;
 using Common.Units;
+using Common.Units.Legacy;
 using Common.Utils.Interfaces;
 using Infrastructure.Factories.UnitsFactory.Interfaces;
 using Infrastructure.Utils;
@@ -23,6 +26,11 @@ namespace Common.Gameplay.States
         private readonly SpawnInfo _spawnInfo;
         private readonly UnitsHandler _unitsHandler;
         private readonly RunData _runData;
+<<<<<<< Updated upstream
+=======
+        private readonly Stage _stage;
+        private readonly RunDatasView _runDataView;
+>>>>>>> Stashed changes
         private readonly HeroView _heroView;
 
         public GameplayInitializeState(IStateChanger<IGameplayState> stateChanger, Player player, SceneInfo sceneInfo, IUnitFactory unitFactory, UnitsHandler unitsHandler, IRunData runData, UI.UI ui)
@@ -33,6 +41,10 @@ namespace Common.Gameplay.States
             _player = player;
             _unitsHandler = unitsHandler;
 
+<<<<<<< Updated upstream
+=======
+            _runDataView = ui.Get<RunDatasView>();
+>>>>>>> Stashed changes
             _heroView = ui.Get<HeroView>();
             
             _spawnInfo = sceneInfo.SpawnInfo;
@@ -51,15 +63,37 @@ namespace Common.Gameplay.States
 
         private void CreatePlayer()
         {
-            IReadOnlyList<int> pID = new List<int> { _runData.InitialHeroData.HeroTemplate.ID };
-            _unitFactory.Load(pID);
-            
-            Hero hero = _unitFactory.Create(_runData.InitialHeroData.HeroTemplate, _spawnInfo.PlayerSpawnPoint.position) as Hero;
-            hero.Initialize(_runData.InitialHeroData.HeroTemplate);
+            _unitFactory.Load(_runData.InitialHeroData.HeroTemplate.ID);
 
+            Vector3 playerSpawnPointPosition = _spawnInfo.PlayerSpawnPoint.position;
+            
+            Hero hero = _unitFactory.Create(_runData.InitialHeroData.HeroTemplate, playerSpawnPointPosition) as Hero;
+            hero.Initialize(_runData.InitialHeroData.HeroTemplate);
+            
+            if (TryCreateLegacyUnit(_runData.InitialLegacyUnitData.FirstLegacyUnitTemplate, playerSpawnPointPosition, out LegacyUnit firstLegacyUnit))
+                hero.AddLegacyUnit(firstLegacyUnit, Enums.HeroActionType.FirstLegacySkill);
+            if (TryCreateLegacyUnit(_runData.InitialLegacyUnitData.SecondLegacyUnitTemplate, playerSpawnPointPosition, out LegacyUnit secondLegacyUnit))
+                hero.AddLegacyUnit(secondLegacyUnit, Enums.HeroActionType.SecondLegacySkill);
+            
             _runData.SetHeroData(hero);
             _unitsHandler.Add(hero);
             _player.UpdateHero(hero);
+        }
+
+        private bool TryCreateLegacyUnit(LegacyUnitTemplate template, Vector2 position, out LegacyUnit unit)
+        {
+            unit = null;
+            
+            if (template == null)
+                return false;
+            
+            _unitFactory.Load(template.ID);
+
+            unit = _unitFactory.Create(_runData.InitialLegacyUnitData.FirstLegacyUnitTemplate, position) as LegacyUnit;
+            unit.Initialize(template);
+            unit.Deactivate();
+
+            return true;
         }
 
         private void CreateEnemies()
@@ -99,8 +133,14 @@ namespace Common.Gameplay.States
                 if (template.Direction == Enums.InputDirection.Horizontal)
                     _heroView.UpdateSkillIcon(template.ExtendsFrom, template.Icon);
             }
+
+            int healCharges = _runData.Get<HealData>(Enums.RunDataType.Heal).HealCharges;
+            int xpAmount = _runData.Get<ExperienceData>(Enums.RunDataType.Experience).Amount;
+            int galdAmount = _runData.Get<GaldData>(Enums.RunDataType.Gald).Amount;
             
-            _heroView.UpdateHealCharges(1);
+            _runDataView.SetAmount(Enums.RunDataType.Heal, healCharges);
+            _runDataView.SetAmount(Enums.RunDataType.Experience, xpAmount);
+            _runDataView.SetAmount(Enums.RunDataType.Gald, galdAmount);
         }
     }
 }

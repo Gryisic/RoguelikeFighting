@@ -1,17 +1,17 @@
 ﻿using System;
+using Common.UI.Gameplay.Hero;
 using Infrastructure.Utils;
 using UnityEngine;
 
-namespace Common.UI.Gameplay.Hero
+namespace Common.UI.Gameplay.RunData
 {
-    [Serializable]
-    public class HealChargesView
+    public class HealChargesView : RunDataView
     {
         [SerializeField] private HealChargeView[] _chargesView;
 
         private int _activeCharges;
-        
-        public void UpdateCharges(int amount)
+
+        public override void SetAmount(int amount)
         {
             if (amount > Constants.MaxHealCharges || amount < Constants.MinHealCharges)
                 throw new ArgumentOutOfRangeException($"Amount of heal charges is greater or less than bounds. Amount: {amount}");
@@ -41,7 +41,7 @@ namespace Common.UI.Gameplay.Hero
                 return;
             }
             
-            for (int i = _activeCharges - 1; i > amount; i--)
+            for (int i = _activeCharges - 1; i >= amount; i--)
             {
                 _chargesView[i].Deactivate();
             }

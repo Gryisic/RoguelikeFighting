@@ -9,7 +9,7 @@ namespace Common.Gameplay.Data
     {
         public int Amount { get; private set; }
 
-        public event Action<int> AmountChanged; 
+        public event Action<Enums.RunDataType, int> AmountChanged; 
 
         public GaldData()
         {
@@ -25,7 +25,7 @@ namespace Common.Gameplay.Data
 
             Amount = Mathf.Min(Amount + amount, Constants.MaxAmountOfGald);
             
-            AmountChanged?.Invoke(Amount);
+            AmountChanged?.Invoke(Enums.RunDataType.Gald, Amount);
         }
 
         public void Decrease(int amount)
@@ -35,14 +35,14 @@ namespace Common.Gameplay.Data
 
             Amount = Mathf.Max(Amount - amount, Constants.MinAmountOfGald);
             
-            AmountChanged?.Invoke(Amount);
+            AmountChanged?.Invoke(Enums.RunDataType.Gald, Amount);
         }
         
         public void Clear()
         {
             Amount = Constants.DefaultAmountOfGald;
             
-            AmountChanged?.Invoke(Amount);
+            AmountChanged?.Invoke(Enums.RunDataType.Gald, Amount);
         }
     }
 }

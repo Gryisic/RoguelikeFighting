@@ -9,11 +9,16 @@ namespace Common.Units
     public class UnitsHandler : IDisposable
     {
         private readonly List<Unit> _units = new List<Unit>();
-        private readonly Dictionary<Enums.Enemy, UnitPack<Enemy>> _enemiesPack = new Dictionary<Enums.Enemy, UnitPack<Enemy>>();
+        private readonly Dictionary<Enums.Enemy, UnitPack<Enemy>> _enemiesPack;
 
         public IReadOnlyList<Unit> Units => _units;
         public Hero Hero { get; private set; }
 
+        public UnitsHandler()
+        {
+            _enemiesPack = new Dictionary<Enums.Enemy, UnitPack<Enemy>>();
+        }
+        
         public void Dispose()
         {
             foreach (var u in _units)
@@ -40,7 +45,7 @@ namespace Common.Units
                     
                     _enemiesPack[enemy.Type].Add(enemy);
                     break;
-                
+
                 default:
                     throw new InvalidOperationException($"Type of unit {unit.name} with id {unit.GetInstanceID()} is invalid");
             }

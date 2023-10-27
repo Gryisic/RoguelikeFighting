@@ -7,6 +7,11 @@ using Common.UI;
 using Common.UI.Gameplay;
 using Common.UI.Gameplay.Hero;
 using Common.UI.Gameplay.Rooms;
+<<<<<<< Updated upstream
+=======
+using Common.UI.Gameplay.RunData;
+using Common.UI.Interfaces;
+>>>>>>> Stashed changes
 using Common.Utils.Interfaces;
 using Core.Interfaces;
 using Infrastructure.Utils;
@@ -78,6 +83,12 @@ namespace Common.Gameplay.States
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+<<<<<<< Updated upstream
+=======
+
+            if (_activeUI is ISelectableUIElement selectable)
+                selectable.Exited += ToActiveState;
+>>>>>>> Stashed changes
             
             _activeUI.Activate();
         }
@@ -95,18 +106,73 @@ namespace Common.Gameplay.States
             
             _modifierCardsHandler.CardSelected += OnModifierCardSelected;
             _tradeCardsHandler.CardSelected += OnTradeCardSelected;
+            _tradeCardsHandler.RequestGaldAmount += OnGaldAmountRequested;
             _storageSpinView.SpinEnded += OnStorageSpinEnded;
+            
+            foreach (var room in _stageData.Rooms)
+            {
+                if (room is TradeRoom tradeRoom)
+                {
+                    tradeRoom.ItemPurchased += _tradeCardsHandler.ConfirmSelection;
+                    tradeRoom.ItemNotPurchased += _tradeCardsHandler.UndoSelection;
+                }
+                
+                // if (room is StorageRoom storageRoom)
+                //     storageRoom.StorageSpinRequested -= OnSpinRequested;
+            }
         }
-
+        
         private void UnsubscribeToEvents()
         {
             _runData.Get<ModifiersData>(Enums.RunDataType.Modifiers).ModifierAdded -= _player.AddModifier;
             
             _modifierCardsHandler.CardSelected -= OnModifierCardSelected;
             _tradeCardsHandler.CardSelected -= OnTradeCardSelected;
+            _tradeCardsHandler.RequestGaldAmount -= OnGaldAmountRequested;
             _storageSpinView.SpinEnded -= OnStorageSpinEnded;
+
+            foreach (var room in _stageData.Rooms)
+            {
+                if (room is TradeRoom tradeRoom)
+                {
+                    tradeRoom.ItemPurchased -= _tradeCardsHandler.ConfirmSelection;
+                    tradeRoom.ItemNotPurchased -= _tradeCardsHandler.UndoSelection;
+                }
+                
+                // if (room is StorageRoom storageRoom)
+                //     storageRoom.StorageSpinRequested -= OnSpinRequested;
+            }
         }
         
+<<<<<<< Updated upstream
+=======
+        private void AttachInput()
+        {
+            _input.Input.Menu.Select.performed += _activeUI.Select;
+            _input.Input.Menu.Back.performed += _activeUI.Undo;
+            _input.Input.Menu.Up.performed += _activeUI.MoveUp;
+            _input.Input.Menu.Down.performed += _activeUI.MoveDown;
+            _input.Input.Menu.Left.performed += _activeUI.MoveLeft;
+            _input.Input.Menu.Right.performed += _activeUI.MoveRight;
+
+            _input.Input.Menu.Enable();
+            _input.Input.Debug.Enable();
+        }
+
+        private void DeAttachInput()
+        {
+            _input.Input.Menu.Disable();
+            _input.Input.Debug.Disable();
+            
+            _input.Input.Menu.Select.performed -= _activeUI.Select;
+            _input.Input.Menu.Back.performed -= _activeUI.Undo;
+            _input.Input.Menu.Up.performed -= _activeUI.MoveUp;
+            _input.Input.Menu.Down.performed -= _activeUI.MoveDown;
+            _input.Input.Menu.Left.performed -= _activeUI.MoveLeft;
+            _input.Input.Menu.Right.performed -= _activeUI.MoveRight;
+        }
+        
+>>>>>>> Stashed changes
         private void OnModifierCardSelected(int index)
         {
             _runData.Get<ModifiersData>(Enums.RunDataType.Modifiers).GetModifierFromBuffer(index);
@@ -122,6 +188,8 @@ namespace Common.Gameplay.States
             ToActiveState();
         }
         
+        private int OnGaldAmountRequested() => _runData.Get<GaldData>(Enums.RunDataType.Gald).Amount;
+
         private void OnStorageSpinEnded()
         {
             ToActiveState();

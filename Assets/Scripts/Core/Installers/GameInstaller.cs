@@ -51,7 +51,7 @@ namespace Core.Installers
 
         private void BindSceneSwitcher() => Container.Bind<SceneSwitcher>().AsSingle();
 
-        private void BindRunData() => Container.Bind<IRunData>().To<RunData>().AsSingle().CopyIntoDirectSubContainers();
+        private void BindRunData() => Container.Bind<IRunData>().To<RunData>().AsSingle();
 
         private void BindModifiers()
         {
@@ -81,7 +81,7 @@ namespace Core.Installers
             _game = Container.InstantiatePrefabForComponent<Game>(_game);
 
             Container.BindInterfacesTo<Game>().FromInstance(_game).AsSingle();
-            Container.Bind<IInitialHeroData>().To<DebugHeroTemplate>().FromInstance(_debugHeroTemplate).AsSingle();
+            Container.BindInterfacesTo<DebugHeroTemplate>().FromInstance(_debugHeroTemplate).AsSingle();
         }
 
         private void BindFactories()

@@ -16,7 +16,7 @@ namespace Common.Models.Actions
         {
             var test = _internalData as IEnemyInternalData;
             
-            _internalData.ActionsData.Projectile.Launch(test.Transform.position, test.HeroData.Transform.position, _internalData.Type);
+            _internalData.ActionsData.Projectile.Launch(test.HeroData.Transform.position, test.HeroData.Transform.position, data.Amount, _internalData.Type);
             
             wrappedBase?.Execute();
         }

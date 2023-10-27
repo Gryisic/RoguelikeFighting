@@ -4,6 +4,7 @@ using Common.Units.Interfaces;
 using Cysharp.Threading.Tasks;
 using Infrastructure.Utils;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Common.Units.ActionExecution
 {
@@ -22,7 +23,9 @@ namespace Common.Units.ActionExecution
 
         public async UniTask AwaitAsync(CancellationToken token)
         {
-            await UniTask.Delay(TimeSpan.FromSeconds(Constants.DefaultEnemyAwaitTime), cancellationToken: token);
+            float delay = Random.Range(Constants.DefaultEnemyAwaitTime - 0.5f, Constants.DefaultEnemyAwaitTime + 0.5f);
+
+            await UniTask.Delay(TimeSpan.FromSeconds(delay), cancellationToken: token);
             
             while (token.IsCancellationRequested == false)
             {

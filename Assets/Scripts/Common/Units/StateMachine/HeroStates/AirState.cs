@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using Common.Models.Actions;
 using Common.Units.Interfaces;
 using Cysharp.Threading.Tasks;
 using Infrastructure.Utils;
@@ -7,7 +8,7 @@ using UnityEngine;
 
 namespace Common.Units.StateMachine.HeroStates
 {
-    public class AirState : HeroState, IAttackExecutor, IJumpExecutor, IDisposable
+    public class AirState : HeroState, IAttackExecutor, IJumpExecutor, ILegacySkillExecutor, IDisposable
     {
         private CancellationTokenSource _jumpTokenSource;
 
@@ -63,11 +64,18 @@ namespace Common.Units.StateMachine.HeroStates
             unitStatesChanger.ChangeState<ActionState>();
         }
         
+        public void LegacySkill(Enums.HeroActionType skillType)
+        {
+            if (internalData.ActionsContainer.TryGetLegacyAction(skillType, out LegacyAction action))
+                action.Start();
+        }
+        
         public void Jump()
         {
             if (internalData.RemainingJumps > 0)
             {
                 _jumpTokenSource.Cancel();
+                internalData.ParticlesPlayer.PlayGenericParticle(Enums.GenericParticle.MidAirJump, internalData.FaceDirection.x, false);
 
                 _jumpTokenSource = new CancellationTokenSource();
             
@@ -98,6 +106,8 @@ namespace Common.Units.StateMachine.HeroStates
             internalData.Animator.PlayAnimationClip(internalData.AnimationData.CycleClip);
 
             await UniTask.WaitUntil(() => internalData.InAir == false, cancellationToken: _jumpTokenSource.Token);
+
+            internalData.ParticlesPlayer.PlayGenericParticle(Enums.GenericParticle.Landing, internalData.FaceDirection.x, false);
 
             if (internalData.MoveDirection.x != 0)
             {

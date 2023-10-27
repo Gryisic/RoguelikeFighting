@@ -3,6 +3,7 @@ using Common.Gameplay.Interfaces;
 using Common.Units.Interfaces;
 using Core.Interfaces;
 using Infrastructure.Utils;
+using UnityEngine;
 
 namespace Common.Gameplay.Data
 {
@@ -13,14 +14,16 @@ namespace Common.Gameplay.Data
 #if UNITY_EDITOR
 
         public IInitialHeroData InitialHeroData { get; }
+        public IInitialLegacyUnitData InitialLegacyUnitData { get; }
 #endif
         
         public ISharedUnitData SharedHeroData { get; private set; }
 
 #if UNITY_EDITOR
-        public RunData(IInitialHeroData initialData, ModifiersData modifiersData)
+        public RunData(IInitialHeroData initialData, IInitialLegacyUnitData initialLegacyUnitData, ModifiersData modifiersData)
         {
             InitialHeroData = initialData;
+            InitialLegacyUnitData = initialLegacyUnitData;
 
             Initialize(modifiersData);
         }

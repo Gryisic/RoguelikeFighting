@@ -27,7 +27,7 @@ namespace Common.Gameplay.Rooms
 
         public override void Dispose()
         {
-            
+            base.Dispose();
         }
         
         private void SubscribeToEvents()

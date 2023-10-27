@@ -53,7 +53,7 @@ namespace Common.Units.StateMachine.EnemyStates
             _isWaiting = true;
 
             await _awaiter.AwaitAsync(_waitingTokenSource.Token);
-            
+
             _isWaiting = false;
             
             unitStatesChanger.ChangeState<ActionState>();

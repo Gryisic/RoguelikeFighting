@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Common.UI.Gameplay.Hero
+namespace Common.UI.Gameplay.RunData
 {
     public class HealChargeView : UIElement
     {

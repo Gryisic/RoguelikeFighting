@@ -53,6 +53,8 @@ namespace Common.Gameplay.Rooms
                 trigger.HeroEntered -= OnHeroEnteredTrigger;
                 trigger.HeroExited -= OnHeroExitedTrigger;
             }
+            
+            base.Dispose();
         }
 
         public override void Enter()
@@ -75,20 +77,20 @@ namespace Common.Gameplay.Rooms
         private void SetTriggers()
         {
             int backupIterations = 3;
-            int triggersAmount = Random.Range(1, _selectionTriggers.Length);
+            int triggersAmount = Random.Range(1, _selectionTriggers.Length + 1);
             HashSet<Enums.RoomType> usedTypes = new HashSet<Enums.RoomType>();
             
             _layout.SetTriggersAmount(triggersAmount);
 
             for (int i = 0; i < backupIterations; i++)
             {
-                if (usedTypes.Count >= 2)
+                if (usedTypes.Count >= triggersAmount)
                     break;
 
                 for (int j = usedTypes.Count; j < triggersAmount; j++)
                 {
                     Enums.RoomType type = _roomTypes.Random();
-                
+                    
                     if (usedTypes.Add(type) == false)
                         continue;
                 
@@ -113,6 +115,14 @@ namespace Common.Gameplay.Rooms
             
             foreach (var trigger in _selectionTriggers) 
                 trigger.Deactivate();
+<<<<<<< Updated upstream
+=======
+            
+            CameraService.Shake();
+            animator.PlayNext();
+            
+            ActivateExitParticles();
+>>>>>>> Stashed changes
         }
         
         private void OnHeroEnteredTrigger(int index) => _roomView.SelectionMarkersHandler.Expand(index);

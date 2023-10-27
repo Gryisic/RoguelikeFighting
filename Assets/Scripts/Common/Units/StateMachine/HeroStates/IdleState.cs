@@ -1,11 +1,12 @@
 ﻿using Common.Gameplay.Triggers;
+using Common.Models.Actions;
 using Common.Units.Interfaces;
 using Infrastructure.Utils;
 using UnityEngine;
 
 namespace Common.Units.StateMachine.HeroStates
 {
-    public class IdleState : HeroState, IAttackExecutor, IDashExecutor, IJumpExecutor, ISkillExecutor, IInteractExecutor, IHealExecutor
+    public class IdleState : HeroState, IAttackExecutor, IDashExecutor, IJumpExecutor, ISkillExecutor, IInteractExecutor, IHealExecutor, ILegacySkillExecutor
     {
         public IdleState(IUnitStatesChanger unitStatesChanger, IHeroInternalData internalData) : base(unitStatesChanger, internalData) { }
 
@@ -38,6 +39,12 @@ namespace Common.Units.StateMachine.HeroStates
         public void Skill() => SetActionAndChangeState(Enums.HeroActionType.Skill);
         
         public void Heal() => SetActionAndChangeState(Enums.HeroActionType.Heal);
+        
+        public void LegacySkill(Enums.HeroActionType skillType)
+        {
+            if (internalData.ActionsContainer.TryGetLegacyAction(skillType, out LegacyAction action))
+                action.Start();
+        }
 
         public void Dash()
         {

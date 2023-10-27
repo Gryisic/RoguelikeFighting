@@ -45,7 +45,8 @@ namespace Common.Units.Stats
             if (amount < 0)
                 throw new InvalidOperationException($"Trying to decrease stat at negative value. Value: {amount}");
 
-            _statsMap[type] -= amount;
+            //_statsMap[type] -= amount;
+            _statsMap[type] = Mathf.Max(0, _statsMap[type] - amount);
             
             if (type == Enums.Stat.Health) 
                 RaiseHealthChangedEvent();

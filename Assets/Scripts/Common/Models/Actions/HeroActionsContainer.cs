@@ -5,6 +5,7 @@ using Common.Models.Actions.Templates;
 using Common.Units.Interfaces;
 using Infrastructure.Utils;
 using UnityEngine;
+using ModifierType = Infrastructure.Utils.Enums.Modifier;
 
 namespace Common.Models.Actions
 {
@@ -12,14 +13,16 @@ namespace Common.Models.Actions
     {
         private readonly IReadOnlyList<HeroAction> _actions;
         private readonly IHeroInternalData _internalData;
+        private readonly Dictionary<Enums.HeroActionType, LegacyAction> _legacyActionsMap;
 
-        private readonly List<Modifier> _timeBasedModifiers;
+        private readonly Dictionary<ModifierType, Modifier> _timeBasedModifiers;
 
         private HeroAction _currentAction;
 
         public HeroActionsContainer(IReadOnlyList<HeroActionTemplate> actionTemplates, IHeroInternalData internalData)
         {
-            _timeBasedModifiers = new List<Modifier>();
+            _legacyActionsMap = new Dictionary<Enums.HeroActionType, LegacyAction>();
+            _timeBasedModifiers = new Dictionary<ModifierType, Modifier>();
             _internalData = internalData;
             
             List<HeroAction> actions = new List<HeroAction>();
@@ -36,6 +39,8 @@ namespace Common.Models.Actions
         }
 
         public void ResetAction() => _currentAction = null;
+
+        public void AddLegacyAction(LegacyAction action, Enums.HeroActionType actionType) => _legacyActionsMap[actionType] = action;
 
         public void AddModifier(Modifier modifier)
         {
@@ -69,12 +74,35 @@ namespace Common.Models.Actions
             
             return false;
         }
+<<<<<<< Updated upstream
+=======
+
+        public bool TryGetLegacyAction(Enums.HeroActionType actionType, out LegacyAction action) => _legacyActionsMap.TryGetValue(actionType, out action);
+
+        public IReadOnlyList<HeroAction> GetAllActions()
+        {
+            List<HeroAction> actions = new List<HeroAction>();
+
+            for (var i = 0; i < _actions.Count; i++)
+            {
+                HeroAction action = _actions[i];
+                
+                actions.Add(action);
+                actions.AddRange(action.GetAllChilds());
+            }
+
+            return actions;
+        }
+>>>>>>> Stashed changes
 
         private void DefineModifier(Modifier modifier)
         {
             if (modifier.DefaultData.ExecutionCondition == Enums.ModifierExecutionCondition.Time)
             {
-                _timeBasedModifiers.Add(modifier);
+                if (_timeBasedModifiers.TryGetValue(modifier.DefaultData.Type, out Modifier oldModifier))
+                    oldModifier.Reset();
+                
+                _timeBasedModifiers[modifier.DefaultData.Type] = modifier;
                 modifier.Execute(_internalData);
             }
             else

@@ -27,6 +27,7 @@ namespace Common.Units
         private bool _isFrozen;
         private bool _isVelocityChangeSuppressed;
         
+        public Vector2 LastGroundedPosition { get; private set; }
         public bool IsGrounded => CheckGround(out Collider2D _) && VerticalVelocity == 0;
         public float VerticalVelocity => _rigidbody.velocity.y;
         
@@ -66,8 +67,8 @@ namespace Common.Units
 
         public void StopUpdating()
         {
-            _updateTokenSource.Cancel();
-            _updateTokenSource.Dispose();
+            _updateTokenSource?.Cancel();
+            _updateTokenSource?.Dispose();
             
             _isUpdating = false;
         }
@@ -154,7 +155,12 @@ namespace Common.Units
             results = results.Skip(1).ToArray();
             collider = results[0].collider;
             
-            return results[0].collider != null;
+            bool grounded = results[0].collider != null;
+            
+            if (grounded)
+                LastGroundedPosition = _rigidbody.position;
+            
+            return grounded;
         }
         
         private IKnockbackStrategy DefineKnockback(Collider2D hitbox, Vector2 force, Enums.Knockback knockback)
@@ -166,6 +172,9 @@ namespace Common.Units
                 
                 case Enums.Knockback.Free:
                     return new FreeKnockback(force, _rigidbody);
+                
+                case Enums.Knockback.None:
+                    return null;
                 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(knockback), knockback, null);
@@ -180,6 +189,9 @@ namespace Common.Units
             _rigidbody.AddForce(force);
 
             _knockback = DefineKnockback(hitBox, force, knockback);
+            
+            if (_knockback == null)
+                return;
 
             await _knockback.ExecuteAsync(time, _knockbackTokenSource.Token);
             

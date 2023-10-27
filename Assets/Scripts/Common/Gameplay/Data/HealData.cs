@@ -9,7 +9,7 @@ namespace Common.Gameplay.Data
         public int HealCharges { get; private set; }
         public bool CanHeal => HealCharges > 0;
         
-        public event Action<int> ChargesUpdated;
+        public event Action<Enums.RunDataType, int> ChargesUpdated;
 
         public HealData()
         {
@@ -23,7 +23,7 @@ namespace Common.Gameplay.Data
 
             HealCharges--;
             
-            ChargesUpdated?.Invoke(HealCharges);
+            ChargesUpdated?.Invoke(Enums.RunDataType.Heal, HealCharges);
         }
 
         public void RestoreCharge()
@@ -33,14 +33,14 @@ namespace Common.Gameplay.Data
             
             HealCharges++;
                 
-            ChargesUpdated?.Invoke(HealCharges);
+            ChargesUpdated?.Invoke(Enums.RunDataType.Heal, HealCharges);
         }
         
         public void Clear()
         {
             HealCharges = Constants.DefaultHealCharges;
             
-            ChargesUpdated?.Invoke(HealCharges);
+            ChargesUpdated?.Invoke(Enums.RunDataType.Heal, HealCharges);
         }
     }
 }

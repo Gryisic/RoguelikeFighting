@@ -10,7 +10,7 @@ namespace Common.Gameplay.Data
         public int Amount { get; private set; }
 
         public event Action AmountOverflowed;
-        public event Action<int> AmountChanged;
+        public event Action<Enums.RunDataType, int> AmountChanged;
 
         public void Add(int amount)
         {
@@ -25,8 +25,8 @@ namespace Common.Gameplay.Data
                 
                 AmountOverflowed?.Invoke();
             }
-
-            AmountChanged?.Invoke(Amount);
+            
+            AmountChanged?.Invoke(Enums.RunDataType.Experience, Amount);
         }
         
         public void Remove(int amount)
@@ -43,7 +43,7 @@ namespace Common.Gameplay.Data
                 AmountOverflowed?.Invoke();
             }
 
-            AmountChanged?.Invoke(Amount);
+            AmountChanged?.Invoke(Enums.RunDataType.Experience, Amount);
         }
         
         public void Clear()

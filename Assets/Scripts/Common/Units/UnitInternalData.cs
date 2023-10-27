@@ -1,6 +1,7 @@
 ﻿using System;
 using Common.Models.Particles;
 using Common.Units.Interfaces;
+using Core.Extensions;
 using UnityEngine;
 
 namespace Common.Units
@@ -12,6 +13,7 @@ namespace Common.Units
         public Vector2 MoveDirection { get; private set; }
 
         public bool InAir => Physics.IsGrounded == false;
+        public bool IsInvincible { get; protected set; }
 
         public float StaggerTime { get; private set; }
         public IUnitStatsData StatsData { get; }
@@ -20,6 +22,7 @@ namespace Common.Units
         public UnitPhysics Physics { get; }
 
         public IAnimationEventsReceiver AnimationEventsReceiver { get; }
+        public IAnimationEventsExecutor AnimationEventsExecutor { get; }
         public IActionsData ActionsData { get; }
         public Type Type { get; }
         
@@ -35,6 +38,8 @@ namespace Common.Units
             AnimationEventsReceiver = rendererData.AnimationEventsReceiver;
             Type = type;
             StatsData = statsData;
+
+            AnimationEventsExecutor = new AnimationEventsExecutor(this);
         }
         
         public abstract void Dispose();
@@ -49,6 +54,24 @@ namespace Common.Units
                 throw new InvalidOperationException($"Trying to set stagger time to negative value. Value: {time}");
 
             StaggerTime = time;
+        }
+
+        public void SetInvincibility() => IsInvincible = true;
+
+        public void ResetInvincibility() => IsInvincible = false;
+
+        public void Flip(Vector2 direction)
+        {
+            float directionX = direction.x == 0 ? FaceDirection.x : direction.x.ToNearestNormal();
+            float directionY = Mathf.Ceil(direction.y);
+            
+            Vector2 faceDirection = new Vector2(directionX, directionY);
+            SetFaceDirection(faceDirection);
+            
+            float rotation = directionX > 0 ? 0 : 180;
+            Quaternion quaternion = new Quaternion(0, rotation, 0, 0);
+
+            Transform.rotation = quaternion;
         }
     }
 }

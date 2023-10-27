@@ -16,7 +16,7 @@ namespace Common.Models.Actions
             Data = data;
         }
 
-        public void Dispose()
+        public virtual void Dispose()
         {
             if (executionBase is IDisposable disposable)
                 disposable.Dispose();

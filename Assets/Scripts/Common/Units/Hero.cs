@@ -32,33 +32,6 @@ namespace Common.Units
             _healData = runData.Get<HealData>(Enums.RunDataType.Heal);
         }
         
-        public void Attack() => HeroState.Attack();
-
-        public void Skill() => HeroState.Skill();
-
-        public void Interact() => HeroState.Interact();
-
-        public void Jump() => HeroState.Jump();
-
-        public void Dash() => HeroState.Dash();
-
-        public void LegacySkill(Enums.HeroActionType skillType) { }
-        
-        public void Heal()
-        {
-            if (_healData.CanHeal == false)
-                return;
-            
-            _healData.UseCharge();
-            
-            HeroState.Heal();
-        }
-
-        public void AddModifier(Modifier modifier)
-        {
-            HeroInternalData.ActionsContainer.AddModifier(modifier);
-        }
-        
         public override void Initialize(UnitTemplate template)
         {
             if (template is HeroTemplate == false)
@@ -76,6 +49,14 @@ namespace Common.Units
             
             IHeroInternalData heroInternalData = (IHeroInternalData) internalData;
             HeroActionsContainer actionsContainer = new HeroActionsContainer(heroTemplate.Actions, heroInternalData);
+<<<<<<< Updated upstream
+=======
+            
+            List<IParticleData> particlesData = actionsContainer.GetAllActions()
+                .Select(action => new ParticleData(action.Data.ParticleForCopy, action.Data.ParticleID)).Cast<IParticleData>().ToList();
+
+            particlesPlayer.Initialize(transform, particlesData, genericParticlesData);
+>>>>>>> Stashed changes
 
             HeroInternalData data = internalData as HeroInternalData;
             data.SetActionsContainer(actionsContainer);
@@ -104,12 +85,46 @@ namespace Common.Units
             
             base.Activate();
         }
+        
+        public void Attack() => HeroState.Attack();
+
+        public void Skill() => HeroState.Skill();
+
+        public void Interact() => HeroState.Interact();
+
+        public void Jump() => HeroState.Jump();
+
+        public void Dash() => HeroState.Dash();
+
+        public void LegacySkill(Enums.HeroActionType skillType) => HeroState.LegacySkill(skillType);
+        
+        public void Heal()
+        {
+            if (_healData.CanHeal == false)
+                return;
+            
+            _healData.UseCharge();
+            
+            HeroState.Heal();
+        }
+
+        public void AddModifier(Modifier modifier)
+        {
+            HeroInternalData.ActionsContainer.AddModifier(modifier);
+        }
+
+        public void AddLegacyUnit(LegacyUnit unit, Enums.HeroActionType actionType)
+        {
+            LegacyAction action = new LegacyAction(HeroInternalData, unit);
+            
+            HeroInternalData.ActionsContainer.AddLegacyAction(action, actionType);
+        }
 
         public void StartMoving(Vector2 direction)
         {
             internalData.SetMoveDirection(direction);
             
-            Flip(direction);
+            internalData.Flip(direction);
         }
 
         public void StopMoving()

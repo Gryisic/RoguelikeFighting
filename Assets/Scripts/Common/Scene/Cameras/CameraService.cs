@@ -6,6 +6,11 @@ namespace Common.Scene.Cameras
 {
     public class CameraService : MonoBehaviour, ICameraService
     {
+<<<<<<< Updated upstream
+=======
+        [SerializeField] private CinemachineBrain _brain;
+        [SerializeField] private CinemachineImpulseSource _impulseSource;
+>>>>>>> Stashed changes
         [SerializeField] private FollowingCamera _followingCamera;
         [SerializeField] private FocusCamera _focusCamera;
 
@@ -28,6 +33,22 @@ namespace Common.Scene.Cameras
             _focusCamera.FocusOn(positionToFocusOn, distanceType);
         }
 
+<<<<<<< Updated upstream
+=======
+        public void SetEasingAndConfiner(Enums.CameraEasingType easingType, Collider2D confiner)
+        {
+            _brain.m_DefaultBlend = DefineBlend(easingType);
+            
+            _focusCamera.SetConfiner(confiner);
+            _followingCamera.SetConfiner(confiner);
+        }
+
+        public void Shake()
+        {
+            _impulseSource.GenerateImpulse();
+        }
+
+>>>>>>> Stashed changes
         private void ChangeCamera(Camera newCamera)
         {
             if (_activeCamera != null) 

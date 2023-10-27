@@ -43,6 +43,10 @@
         public const float DashRefreshingTime = 2f;
         public const float JumpForce = 15f;
         public const float DropThroughPlatformTime = 0.25f;
+        
+        public const float ProjectileDangerZoneTime = 0.75f;
+
+        public const float DefaultLegacyUnitSpawnDistance = 5f;
 
         public const float DefaultEnemyAwaitTime = 2f;
 

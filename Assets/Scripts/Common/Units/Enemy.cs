@@ -33,6 +33,11 @@ namespace Common.Units
             UnitParticlesPlayer particlesPlayer = new UnitParticlesPlayer(transform, particlesData);
             IUnitRendererData rendererData = new UnitRendererData(particlesPlayer, animator, animationEventsReceiver);
             
+<<<<<<< Updated upstream
+=======
+            particlesPlayer.Initialize(transform, particlesData, genericParticlesData);
+            
+>>>>>>> Stashed changes
             internalData = new EnemyInternalData(enemyTemplate, physics, Transform, rendererData, StatsData, actionsData, GetType());
 
             EnemyInternalData enemyData = internalData as EnemyInternalData;

@@ -4,7 +4,6 @@ using Common.Gameplay.Modifiers;
 using Common.Models.Actions.Templates;
 using Common.Units.Interfaces;
 using Infrastructure.Utils;
-using UnityEngine;
 
 namespace Common.Models.Actions
 {

@@ -15,6 +15,11 @@ namespace Common.Gameplay.Modifiers
             wrappedModifier?.Execute(internalData);
         }
 
+        public override void Reset()
+        {
+            
+        }
+
         protected override T GetDataInternal<T>()
         {
             if (wrappedModifier != null)

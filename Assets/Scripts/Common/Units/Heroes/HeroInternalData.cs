@@ -34,6 +34,8 @@ namespace Common.Units.Heroes
         public HeroInternalData(Transform transform, UnitPhysics physics, HeroAnimationData heroAnimationData, IUnitRendererData rendererData, IUnitStatsData statsData, IActionsData actionsData, Type type) : base(transform, physics, rendererData, statsData, actionsData, type)
         {
             AnimationData = heroAnimationData;
+
+            IsInvincible = true;
         }
 
         public override void Dispose()

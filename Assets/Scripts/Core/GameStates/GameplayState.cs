@@ -5,11 +5,13 @@ using Common.Gameplay.States;
 using Common.UI;
 using Common.UI.Gameplay;
 using Common.UI.Gameplay.Hero;
+using Common.UI.Gameplay.RunData;
 using Common.Utils;
 using Common.Utils.Extensions;
 using Core.Interfaces;
 using Infrastructure.Factories.GameplayStateFactory.Interfaces;
 using Infrastructure.Utils;
+using UnityEngine;
 
 namespace Core.GameStates
 {
@@ -17,7 +19,7 @@ namespace Core.GameStates
     {
         private readonly IGameplayStateFactory _gameplayStateFactory;
         private readonly IRunData _runData;
-        private readonly HeroView _heroView;
+        private readonly RunDatasView _runDataView;
         
         private bool _isInitialized;
 
@@ -25,7 +27,7 @@ namespace Core.GameStates
         {
             _gameplayStateFactory = gameplayStateFactory;
             _runData = runData;
-            _heroView = ui.Get<HeroView>();
+            _runDataView = ui.Get<RunDatasView>();
         }
 
         public void Dispose()
@@ -35,6 +37,8 @@ namespace Core.GameStates
         
         public void Activate(GameStateArgs args)
         {
+            SubscribeToEvents();
+            
             if (_isInitialized == false)
             {
                 CreateStates();
@@ -44,12 +48,14 @@ namespace Core.GameStates
                 
                 return;
             }
-            
+
             ChangeState<GameplayActiveState>();
         }
 
         public void Deactivate()
         {
+            UnsubscribeToEvents();
+            
             currentState.Deactivate();
         }
         
@@ -69,16 +75,22 @@ namespace Core.GameStates
         {
             ExperienceData experienceData = _runData.Get<ExperienceData>(Enums.RunDataType.Experience);
             HealData healData = _runData.Get<HealData>(Enums.RunDataType.Heal);
+            GaldData galdData = _runData.Get<GaldData>(Enums.RunDataType.Gald);
 
-            healData.ChargesUpdated += _heroView.UpdateHealCharges;
+            experienceData.AmountChanged += _runDataView.SetAmount;
+            healData.ChargesUpdated += _runDataView.SetAmount;
+            galdData.AmountChanged += _runDataView.SetAmount;
         }
 
         private void UnsubscribeToEvents()
         {
             ExperienceData experienceData = _runData.Get<ExperienceData>(Enums.RunDataType.Experience);
             HealData healData = _runData.Get<HealData>(Enums.RunDataType.Heal);
+            GaldData galdData = _runData.Get<GaldData>(Enums.RunDataType.Gald);
 
-            healData.ChargesUpdated -= _heroView.UpdateHealCharges;
+            experienceData.AmountChanged -= _runDataView.SetAmount;
+            healData.ChargesUpdated -= _runDataView.SetAmount;
+            galdData.AmountChanged -= _runDataView.SetAmount;
         }
     }
 }

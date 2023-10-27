@@ -1,7 +1,9 @@
-﻿namespace Common.Units.Interfaces
+﻿using Infrastructure.Utils;
+
+namespace Common.Units.Interfaces
 {
     public interface ILegacySkillExecutor
     {
-        void LegacySkill();
+        void LegacySkill(Enums.HeroActionType skillType);
     }
 }

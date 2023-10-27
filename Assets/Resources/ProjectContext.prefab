@@ -77,7 +77,10 @@ MonoBehaviour:
   _ui: {fileID: 307659142570141565, guid: 85bc15d818889a541aec4eb2560dd7c6, type: 3}
   _debugHeroTemplate:
     _template: {fileID: 11400000, guid: 402dda5585f19f546844573440bd1101, type: 2}
+    _firsLegacyUnitTemplate: {fileID: 11400000, guid: 9d87bb05200354f48bbf609f421cb304, type: 2}
+    _secondLegacyUnitTemplate: {fileID: 0}
   _modifiersDataBase:
     _templates:
     - {fileID: 11400000, guid: 8d4e640c1cf8e254b8709530613577eb, type: 2}
     - {fileID: 11400000, guid: b6ced8f83c9612c46933a40bc26f89bc, type: 2}
+    - {fileID: 11400000, guid: d2609107745dce3499559696c211e443, type: 2}

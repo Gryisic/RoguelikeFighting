@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Common.Gameplay.Modifiers.Templates;
 using DG.Tweening;
+using Infrastructure.Utils;
 using UnityEngine;
 
 namespace Common.UI.Gameplay
@@ -10,6 +12,7 @@ namespace Common.UI.Gameplay
     {
         [SerializeField] private CanvasGroup _group;
         [SerializeField] private ModifierCard[] _cards;
+        [SerializeField] private List<RarityColorMap> _rarityColorMaps;
 
         public event Action<int> CardSelected; 
 
@@ -41,12 +44,23 @@ namespace Common.UI.Gameplay
             {
                 ModifierCard card = _cards[i];
                 ModifierTemplate data = dataList[i];
+                Color rarityColor = _rarityColorMaps.First(m => m.Rarity == data.Rarity).Color;
                 
-                card.SetData(i, data.Icon, data.Name, data.Description);
+                card.SetData(i, data.Icon, data.Name, data.Description, rarityColor);
                 card.Activate();
             }
         }
 
         private void SelectCard(int index) => CardSelected?.Invoke(index);
+        
+        [Serializable]
+        private struct RarityColorMap
+        {
+            [SerializeField] private Enums.ModifierRarity _rarity;
+            [SerializeField] private Color _color;
+
+            public Enums.ModifierRarity Rarity => _rarity;
+            public Color Color => _color;
+        }
     }
 }

@@ -48,6 +48,11 @@ namespace Infrastructure.Utils
             Rinko,
             Ninja
         }
+
+        public enum LegacyUnitNavigationStrategy
+        {
+            Linear
+        }
         
         public enum ActionExecutionAwait
         {
@@ -96,6 +101,15 @@ namespace Infrastructure.Utils
             Fixed,
             Free
         }
+        
+        public enum GenericParticle
+        {
+            Dash,
+            Landing,
+            TakeHit,
+            AttackMarker,
+            MidAirJump
+        }
 
         public enum Stat
         {
@@ -121,6 +135,13 @@ namespace Infrastructure.Utils
             Rare,
             Epic,
             Legendary
+        }
+
+        public enum StatusEffect
+        {
+            None,
+            Freeze,
+            Burn
         }
 
         public enum DefaultAnimation

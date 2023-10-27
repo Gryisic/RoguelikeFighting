@@ -9,6 +9,7 @@ using Common.Scene.Cameras.Interfaces;
 using Common.UI.Gameplay;
 using Common.UI.Gameplay.Hero;
 using Common.UI.Gameplay.Rooms;
+using Common.UI.Gameplay.RunData;
 using Common.Units;
 using Common.Utils.Interfaces;
 using Core.Interfaces;
@@ -29,6 +30,7 @@ namespace Common.Gameplay.States
         private readonly IServicesHandler _servicesHandler;
         private readonly UnitsHandler _unitsHandler;
         private readonly HeroView _heroView;
+        private readonly DamageView _damageView;
         private readonly ModifierCardsHandler _modifierCardsHandler;
         private readonly TradeCardsHandler _tradeCardsHandler;
         private readonly StorageSpinView _storageSpinView;
@@ -46,6 +48,7 @@ namespace Common.Gameplay.States
             _servicesHandler = servicesHandler;
             _unitsHandler = unitsHandler;
             _heroView = ui.Get<HeroView>();
+            _damageView = ui.Get<DamageView>();
             _modifierCardsHandler = ui.Get<ModifierCardsHandler>();
             _tradeCardsHandler = ui.Get<TradeCardsHandler>();
             _storageSpinView = ui.Get<StorageSpinView>();
@@ -74,12 +77,13 @@ namespace Common.Gameplay.States
 
         private void SetDebugExperience(InputAction.CallbackContext obj)
         {
-            _runData.Get<ExperienceData>(Enums.RunDataType.Experience).Add(100);
+            _runData.Get<ExperienceData>(Enums.RunDataType.Experience).Add(25);
         }
         
         private void DamageHero(InputAction.CallbackContext obj)
         {
-            _unitsHandler.Hero.TakeDamage(200);
+            _unitsHandler.Hero.TakeDamage(1);
+            _servicesHandler.GetSubService<ICameraService>().Shake();
         }
         
         private void SubscribeToEvents()
@@ -90,7 +94,6 @@ namespace Common.Gameplay.States
 
             ModifiersData modifiersData = _runData.Get<ModifiersData>(Enums.RunDataType.Modifiers);
             ExperienceData experienceData = _runData.Get<ExperienceData>(Enums.RunDataType.Experience);
-            HealData healData = _runData.Get<HealData>(Enums.RunDataType.Heal);
 
             modifiersData.ModifiersSelectionRequested += OnModifierSelectionRequested;
             experienceData.AmountOverflowed += modifiersData.OnExperienceOverflowed;
@@ -98,10 +101,19 @@ namespace Common.Gameplay.States
             foreach (var room in _stageData.Rooms)
             {
                 if (room is TradeRoom tradeRoom)
-                    tradeRoom.TradeRequested += OnMenuRequested;
+                {
+                    tradeRoom.TradeRequested += OnTradeRequested;
+                    tradeRoom.ItemPurchased += _tradeCardsHandler.ConfirmSelection;
+                    tradeRoom.ItemNotPurchased += _tradeCardsHandler.UndoSelection;
+                }
                 
                 if (room is StorageRoom storageRoom)
                     storageRoom.StorageSpinRequested += OnSpinRequested;
+            }
+            
+            foreach (var unit in _unitsHandler.Units)
+            {
+                unit.DamageTaken += _damageView.DisplayAt;
             }
         }
 
@@ -113,7 +125,6 @@ namespace Common.Gameplay.States
             
             ModifiersData modifiersData = _runData.Get<ModifiersData>(Enums.RunDataType.Modifiers);
             ExperienceData experienceData = _runData.Get<ExperienceData>(Enums.RunDataType.Experience);
-            HealData healData = _runData.Get<HealData>(Enums.RunDataType.Heal);
 
             modifiersData.ModifiersSelectionRequested -= OnModifierSelectionRequested;
             experienceData.AmountOverflowed -= modifiersData.OnExperienceOverflowed;
@@ -121,10 +132,19 @@ namespace Common.Gameplay.States
             foreach (var room in _stageData.Rooms)
             {
                 if (room is TradeRoom tradeRoom)
-                    tradeRoom.TradeRequested -= OnMenuRequested;
+                {
+                    tradeRoom.TradeRequested -= OnTradeRequested;
+                    tradeRoom.ItemPurchased -= _tradeCardsHandler.ConfirmSelection;
+                    tradeRoom.ItemNotPurchased -= _tradeCardsHandler.UndoSelection;
+                }
                 
                 if (room is StorageRoom storageRoom)
                     storageRoom.StorageSpinRequested -= OnSpinRequested;
+            }
+            
+            foreach (var unit in _unitsHandler.Units)
+            {
+                unit.DamageTaken -= _damageView.DisplayAt;
             }
         }
 
@@ -168,9 +188,11 @@ namespace Common.Gameplay.States
             _input.Input.Gameplay.Heal.performed -= _player.Heal;
         }
         
-        private void OnMenuRequested(IReadOnlyList<TradeItemData> templates)
-        { 
-            _tradeCardsHandler.SetCardsData(templates);
+        private void OnTradeRequested(IReadOnlyList<TradeItemData> templates)
+        {
+            GaldData galdData = _runData.Get<GaldData>(Enums.RunDataType.Gald);
+            
+            _tradeCardsHandler.SetCardsData(templates, galdData.Amount);
             _gameplayData.SetPauseType(Enums.MenuType.Trade);
 
             ToMenuState();

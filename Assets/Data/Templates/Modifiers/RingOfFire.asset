@@ -19,6 +19,7 @@ MonoBehaviour:
   _rarity: 0
   _isBase: 1
   _extendsFromAction: 0
+  _statusEffectTemplate: {fileID: 11400000, guid: 6a6327ccd03b17944b4654bb0c610fab, type: 2}
   _time: 2
   _radius: 0.5
   _damage: 100

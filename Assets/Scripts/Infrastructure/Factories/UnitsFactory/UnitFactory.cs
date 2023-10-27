@@ -14,27 +14,28 @@ namespace Infrastructure.Factories.UnitsFactory
         private readonly DiContainer _diContainer;
         private readonly Transform _root;
         
-        private Dictionary<int, Unit> _idPrefabMap;
+        private readonly Dictionary<int, Unit> _idPrefabMap;
         
         public UnitFactory(DiContainer diContainer, SceneInfo sceneInfo)
         {
             _diContainer = diContainer;
             _root = sceneInfo.SpawnInfo.UnitsRoot;
+
+            _idPrefabMap = new Dictionary<int, Unit>();
         }
-        
+
+        public void Load(int id)
+        {
+            string name = id.DefineUnit();
+            Unit unit = Resources.Load<Unit>($"{Constants.PathToUnitPrefabs}/{name}");
+            
+            _idPrefabMap.Add(id, unit);
+        }
+
         public void Load(IReadOnlyList<int> id)
         {
-            _idPrefabMap = new Dictionary<int, Unit>();
-            
-            for (var index = 0; index < id.Count; index++)
-            {
-                int i = id[index];
-
-                string name = i.DefineUnit();
-                Unit unit = Resources.Load<Unit>($"{Constants.PathToUnitPrefabs}/{name}");
-
-                _idPrefabMap.Add(i, unit);
-            }
+            foreach (var i in id) 
+                Load(i);
         }
 
         public Unit Create(UnitTemplate template, Vector3 at)

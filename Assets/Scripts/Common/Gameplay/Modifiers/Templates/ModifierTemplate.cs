@@ -1,4 +1,5 @@
-﻿using Infrastructure.Utils;
+﻿using Common.Models.StatusEffects;
+using Infrastructure.Utils;
 using UnityEngine;
 
 namespace Common.Gameplay.Modifiers.Templates
@@ -16,6 +17,9 @@ namespace Common.Gameplay.Modifiers.Templates
         [Space, Header("Action Based Extension Data")]
         [SerializeField] private Enums.HeroActionType _extendsFromAction;
 
+        [Space, Header("Status Effect Data")] 
+        [SerializeField] private StatusEffectTemplate _statusEffectTemplate;
+
         public string Name => _name;
         public string Description => _description;
         public Sprite Icon => _icon;
@@ -26,5 +30,7 @@ namespace Common.Gameplay.Modifiers.Templates
         public Enums.HeroActionType ExtendsFromAction => _extendsFromAction;
         
         public abstract Enums.Modifier Type { get; }
+        
+        public StatusEffectTemplate StatusEffectTemplate => _statusEffectTemplate;
     }
 }

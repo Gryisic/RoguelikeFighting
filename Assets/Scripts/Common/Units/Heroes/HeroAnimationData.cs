@@ -9,12 +9,12 @@ namespace Common.Units.Heroes
         [SerializeField] private AnimationClip _dashClip;
         
         [SerializeField] private JumpAnimationData _jumpAnimationData;
-
+        
         public AnimationClip DashClip => _dashClip;
         public AnimationClip RiseClip => _jumpAnimationData.RiseClip;
         public AnimationClip CycleClip => _jumpAnimationData.CycleClip;
         public AnimationClip LandingClip => _jumpAnimationData.LandingClip;
-        
+
         [Serializable]
         private struct JumpAnimationData
         {

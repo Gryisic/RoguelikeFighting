@@ -55,6 +55,7 @@ namespace Common.Units.StateMachine
 
             _isStaggered = true;
 
+            _internalData.ParticlesPlayer.PlayGenericParticle(Enums.GenericParticle.TakeHit, _internalData.FaceDirection.x);
             _internalData.Animator.PlayDefaultAnimation(Enums.DefaultAnimation.TakeHitMedium);
             
             while (timer < _internalData.StaggerTime && _staggerTokenSource.IsCancellationRequested == false)

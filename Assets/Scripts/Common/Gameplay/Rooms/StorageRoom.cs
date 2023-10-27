@@ -21,6 +21,8 @@ namespace Common.Gameplay.Rooms
         private Dictionary<int, ItemsPack> _rangeItemMap;
 
         private CancellationTokenSource _awaitTokenSource;
+
+        private bool _isActive;
         
         public event Action<IReadOnlyList<StorageItemData>, StorageItemData> StorageSpinRequested;
 
@@ -41,12 +43,21 @@ namespace Common.Gameplay.Rooms
             _awaitTokenSource?.Dispose();
             
             StorageSpinRequested = null;
+            
+            base.Dispose();
         }
 
         public override void Enter()
         {
             _menuTrigger.Triggered += OnMenuTriggerTriggered;
 
+<<<<<<< Updated upstream
+=======
+            _isActive = true;
+            
+            CameraService.FocusOn(cameraFocusPoint);
+
+>>>>>>> Stashed changes
             base.Enter();
         }
         
@@ -79,13 +90,21 @@ namespace Common.Gameplay.Rooms
         
         private void OnMenuTriggerTriggered(Enums.MenuType type)
         {
+            if (_isActive == false)
+                return;
+
+            _isActive = false;
+            
             animator.PlayNext();
 
             _awaitTokenSource = new CancellationTokenSource();
+
+            IReadOnlyList<StorageItemData> allItems = GetItems();
+            StorageItemData selectedItem = GetRandomItem();
             
-            AwaitAsync().Forget();
+            AwaitAsync(selectedItem).Forget();
             
-            StorageSpinRequested?.Invoke(GetItems(), GetRandomItem());
+            StorageSpinRequested?.Invoke(allItems, selectedItem);
         }
 
         private IReadOnlyList<StorageItemData> GetItems()
@@ -119,7 +138,7 @@ namespace Common.Gameplay.Rooms
                 
                 step++;
             }
-
+            
             return item;
         }
         
@@ -137,7 +156,7 @@ namespace Common.Gameplay.Rooms
             return intValue;
         }
 
-        private async UniTask AwaitAsync()
+        private async UniTask AwaitAsync(Item item)
         {
             float delay = Constants.StorageSpinPrewarmTime + Constants.StorageSpinTime;
 
@@ -150,6 +169,15 @@ namespace Common.Gameplay.Rooms
             await UniTask.Delay(TimeSpan.FromSeconds(delay), cancellationToken: _awaitTokenSource.Token);
             
             animator.PlayNext();
+<<<<<<< Updated upstream
+=======
+            ChangeTrigger.Activate();
+            CameraService.Shake();
+            
+            ModifyData(item.Type, item);
+
+            ActivateExitParticles();
+>>>>>>> Stashed changes
         }
         
         private class ItemsPack

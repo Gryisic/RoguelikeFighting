@@ -20,7 +20,14 @@ MonoBehaviour:
   _isChargeable: 0
   _chargeTime: 0
   _chargeClip: {fileID: 0}
+<<<<<<< Updated upstream
   _amount: 250
+=======
+  _particleForCopy: {fileID: 5864851652186894350, guid: 14a68734dfeb8004c965a61c9948cbc4, type: 3}
+  _particleID: 10
+  _rotation: 90
+  _amount: 25
+>>>>>>> Stashed changes
   _knockback: 2
   _knockbackForce: {x: 20, y: 0}
   _knockbackTime: 0.3

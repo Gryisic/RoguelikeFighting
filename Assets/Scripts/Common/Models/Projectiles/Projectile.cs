@@ -13,11 +13,15 @@ namespace Common.Models.Projectiles
     {
         [SerializeField] protected Rigidbody2D localRigidbody;
         [SerializeField] protected Collider2D localCollider;
+        [SerializeField] protected ParticleSystem hitMarkerParticle;
+        [SerializeField] protected LayerMask _floorMask;
+        [SerializeField] protected bool deactivateOnCollide;
         
         protected CancellationTokenSource launchTokenSource;
 
         protected bool isCollided;
 
+        private int _damage;
         private Type _ignoredCollisionType;
 
         private void Awake()
@@ -48,30 +52,27 @@ namespace Common.Models.Projectiles
             }
         }
 
-        public void Launch(Vector2 from, Vector2 to, Type ignoreCollisionWith)
+        public void Launch(Vector2 from, Vector2 to, int damage, Type ignoreCollisionWith)
         {
             _ignoredCollisionType = ignoreCollisionWith;
-            
-            gameObject.SetActive(true);
+            _damage = damage;
             
             launchTokenSource = new CancellationTokenSource();
             
             LaunchAsync(from, to).Forget();
         }
 
-        private void OnCollisionEnter2D(Collision2D other)
+        private void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.collider.TryGetComponent(out IDamageable damageable))
-            {
-                if (damageable.GetType() == _ignoredCollisionType)
-                    return;
-            }
-
-            isCollided = true;
+            if (other.TryGetComponent(out IDamageable damageable) == false) 
+                return;
             
-            Debug.Log($"Collided with {other.transform.name}");
-
-            localCollider.enabled = false;
+            if (damageable.GetType() == _ignoredCollisionType)
+                return;
+                
+            isCollided = true;
+                
+            damageable.TakeDamage(_damage);
         }
 
         protected abstract UniTask LaunchAsync(Vector2 from, Vector2 to);

@@ -1,4 +1,4 @@
-﻿using Common.Units.Stats.Interfaces;
+﻿using Common.Models.StatusEffects.Interfaces;
 using UnityEngine;
 
 namespace Common.Units.Interfaces
@@ -7,5 +7,6 @@ namespace Common.Units.Interfaces
     {
         Transform Transform { get; }
         IUnitStatsData StatsData { get; }
+        IStatusEffectsHandler EffectsHandler { get; }
     }
 }

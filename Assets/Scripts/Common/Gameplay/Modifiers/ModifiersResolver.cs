@@ -4,7 +4,6 @@ using System.Linq;
 using Common.Gameplay.Modifiers.Templates;
 using UnityEngine;
 using ModifierType = Infrastructure.Utils.Enums.Modifier;
-using Random = System.Random;
 
 namespace Common.Gameplay.Modifiers
 {
@@ -90,13 +89,15 @@ namespace Common.Gameplay.Modifiers
 
         private Modifier SelectModifier(ModifierType type, ModifierTemplate template)
         {
+            _modifiersHandler.TryGetModifierByType(type, out Modifier modifier);
+            
             switch (type)
             {
                 case ModifierType.RingOfFire:
-                    return new RingOfFireModifier(template);
+                    return new RingOfFireModifier(template, modifier);
 
                 case ModifierType.Freeze:
-                    return new FreezeModifier(template);
+                    return new FreezeModifier(template, modifier);
                 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);

@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4967786517b45cf8fb4570b7c9acedb, type: 3}
+  m_Name: YukiAction
+  m_EditorClassIdentifier: 
+  _name: Yuki
+  _actionClip: {fileID: 7400000, guid: 0a6ab6f4faed06d4091b70213f7ee03e, type: 2}
+  _baseEffect: 0
+  _executionPlacement: 0
+  _executeAfterClipPlayed: 0
+  _isChargeable: 0
+  _chargeTime: 0
+  _chargeClip: {fileID: 0}
+  _particleForCopy: {fileID: 5426068031110189068, guid: d25470f3b8d9a634fabbca734ffe451a, type: 3}
+  _particleID: 0
+  _rotation: 0
+  _amount: 75
+  _knockback: 0
+  _knockbackForce: {x: 0, y: 0}
+  _knockbackTime: 0.3
+  _vector: {x: 1, y: 0}
+  _distance: 0.1
+  _movingTime: 1.7
+  _freezeAfterMoving: 0
+  _useClipLengthAsTime: 0
+  _animatorController: {fileID: 0}
+  _nextStanceTemplate: {fileID: 0}
+  _positionRelativeToTarget: {x: 0, y: 0}
+  _healPercent: 0
+  _healTime: 0
+  _icon: {fileID: 2514988542215765323, guid: cedfabc2a5d0a404bac3b6c3ecdc519b, type: 3}
+  _movementsSpeed: 7
+  _moveClip: {fileID: 7400000, guid: 84d8bf734b6945149a37820938f9512f, type: 2}
+  _navigationStrategy: 0
+  _floorMask:
+    serializedVersion: 2
+    m_Bits: 128

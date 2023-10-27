@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Threading;
 using Common.Models.Actions;
-using Common.Models.Actions.Templates;
-using Common.Models.Particles;
-using Common.Models.Particles.Interfaces;
-using Common.Units.Heroes;
 using Common.Units.Interfaces;
 using Cysharp.Threading.Tasks;
 using Infrastructure.Utils;
@@ -15,9 +11,7 @@ namespace Common.Units.StateMachine.HeroStates
     public class ActionState : HeroState, IAttackExecutor, ISkillExecutor, IDisposable
     {
         private CancellationTokenSource _actionTokenSource;
-
-        private HeroAction _currentAction;
-
+        
         private bool _isExecuting;
         
         public ActionState(IUnitStatesChanger unitStatesChanger, IHeroInternalData internalData) : base(unitStatesChanger, internalData) { }
@@ -31,8 +25,6 @@ namespace Common.Units.StateMachine.HeroStates
 
         public override void Exit()
         {
-            _currentAction = null;
-            
             internalData.ResetAction();
             internalData.Physics.UnSuppressManualVelocityChange();
             internalData.Physics.UnfreezeFalling();
@@ -66,20 +58,21 @@ namespace Common.Units.StateMachine.HeroStates
                     if (internalData.InAir)
                         internalData.Physics.FreezeFalling();
 
-                    _currentAction = action;
                     AnimationClip currentClip = action.Data.ActionClip;
 
-                    internalData.AnimationEventsReceiver.ActionExecutionRequested += action.Execute;
-                    internalData.AnimationEventsReceiver.MovingRequested += OnMovingRequested;
-                    internalData.AnimationEventsReceiver.ParticlesEmitRequested += OnParticlesEmitRequested;
+                    internalData.AnimationEventsReceiver.ActionExecutionRequested += internalData.AnimationEventsExecutor.OnActionExecutionRequested;
+                    internalData.AnimationEventsReceiver.MovingRequested += internalData.AnimationEventsExecutor.OnMovingRequested;
+                    internalData.AnimationEventsReceiver.ParticlesEmitRequested += internalData.AnimationEventsExecutor.OnParticlesEmitRequested;
                     
+                    internalData.AnimationEventsExecutor.SetData(action, _actionTokenSource.Token);
                     internalData.Animator.PlayAnimationClip(currentClip);
                     internalData.ResetAction();
                     
                     await UniTask.Delay(TimeSpan.FromSeconds(currentClip.length), cancellationToken: _actionTokenSource.Token);
 
-                    internalData.AnimationEventsReceiver.ActionExecutionRequested -= action.Execute;
-                    internalData.AnimationEventsReceiver.MovingRequested -= OnMovingRequested;
+                    internalData.AnimationEventsReceiver.ActionExecutionRequested -= internalData.AnimationEventsExecutor.OnActionExecutionRequested;
+                    internalData.AnimationEventsReceiver.MovingRequested -= internalData.AnimationEventsExecutor.OnMovingRequested;
+                    internalData.AnimationEventsReceiver.ParticlesEmitRequested -= internalData.AnimationEventsExecutor.OnParticlesEmitRequested;
                 }
                 else
                 {
@@ -91,6 +84,7 @@ namespace Common.Units.StateMachine.HeroStates
 
             _isExecuting = false;
         }
+<<<<<<< Updated upstream
 
         private void OnParticlesEmitRequested()
         {
@@ -123,5 +117,7 @@ namespace Common.Units.StateMachine.HeroStates
             internalData.Physics.UnSuppressManualVelocityChange();
             internalData.Physics.UpdateVelocity(Vector2.zero);
         }
+=======
+>>>>>>> Stashed changes
     }
 }

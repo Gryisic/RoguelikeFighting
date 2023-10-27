@@ -1,4 +1,5 @@
 ﻿using Common.Units.Interfaces;
+using Infrastructure.Utils;
 
 namespace Common.Units.Extensions
 {
@@ -16,10 +17,10 @@ namespace Common.Units.Extensions
                 skillExecutor.Skill();
         }
         
-        public static void LegacySkill(this IHeroState state)
+        public static void LegacySkill(this IHeroState state, Enums.HeroActionType skillType)
         {
             if (state is ILegacySkillExecutor legacySkillExecutor)
-                legacySkillExecutor.LegacySkill();
+                legacySkillExecutor.LegacySkill(skillType);
         }
         
         public static void Dash(this IHeroState state)

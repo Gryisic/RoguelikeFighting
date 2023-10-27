@@ -41,6 +41,8 @@ namespace Common.Gameplay.Rooms
 
             _requirementCheckTokenSource?.Cancel();
             _requirementCheckTokenSource?.Dispose();
+            
+            base.Dispose();
         }
 
         public override void Enter()

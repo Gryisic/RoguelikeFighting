@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading;
 using Common.Models.Actions.Templates;
+using Common.Models.Particles;
+using Common.Models.Particles.Interfaces;
 using Common.Units.Interfaces;
 using Cysharp.Threading.Tasks;
 using Infrastructure.Utils;
@@ -41,6 +43,11 @@ namespace Common.Models.Actions
             if (Data.IsChargeable)
                 await PlayClipAndAwaitAsync(Data.ChargeClip, Data.ChargeTime, token);
             
+            _internalData.ParticlesPlayer.PlayGenericParticle(Enums.GenericParticle.AttackMarker, _internalData.FaceDirection.x);
+            
+            Vector2 faceDirection = (_internalData.HeroData.Transform.position - _internalData.Transform.position).normalized;
+            _internalData.Flip(faceDirection);
+            
             await PlayClipAndAwaitAsync(Data.ActionClip, Data.ActionClip.length, token);
             
             UnsubscribeToEvents();
@@ -53,16 +60,25 @@ namespace Common.Models.Actions
         {
             _internalData.AnimationEventsReceiver.ActionExecutionRequested += Execute;
             _internalData.AnimationEventsReceiver.MovingRequested += OnMovingRequested;
+            _internalData.AnimationEventsReceiver.ParticlesEmitRequested += OnParticlesEmitRequested;
         }
 
         private void UnsubscribeToEvents()
         {
             _internalData.AnimationEventsReceiver.ActionExecutionRequested -= Execute;
             _internalData.AnimationEventsReceiver.MovingRequested -= OnMovingRequested;
+            _internalData.AnimationEventsReceiver.ParticlesEmitRequested -= OnParticlesEmitRequested;
         }
         
         private void OnMovingRequested() => MoveAsync().Forget();
 
+        private void OnParticlesEmitRequested()
+        {
+            IParticleData particleData = new ParticleData(Data.ParticleForCopy, Data.ParticleID);
+            
+            _internalData.ParticlesPlayer.Play(particleData, _internalData.FaceDirection.x);
+        }
+        
         private async UniTask PlayClipAndAwaitAsync(AnimationClip clip, float time, CancellationToken token)
         {
             _internalData.Animator.PlayAnimationClip(clip);
