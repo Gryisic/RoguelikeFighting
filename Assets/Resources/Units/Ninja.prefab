@@ -283,7 +283,7 @@ MonoBehaviour:
     _attackMarker: {fileID: 2634483145706231984}
     _takeHit: {fileID: 8202554706539019379}
     _midAirJump: {fileID: 0}
-  _collider: {fileID: 9168525041724755204}
+  collider: {fileID: 9168525041724755204}
   _healthBar:
     _renderer: {fileID: 7072273513139515523}
 --- !u!1001 &3830899367684217625

@@ -5,6 +5,7 @@ using Common.Gameplay.Data;
 using Common.Gameplay.Interfaces;
 using Common.Gameplay.Triggers;
 using Common.Models.Items;
+using Common.Scene.Cameras.Interfaces;
 using Core.Extensions;
 using Infrastructure.Utils;
 using UnityEngine;
@@ -25,11 +26,11 @@ namespace Common.Gameplay.Rooms
         
         public override Enums.RoomType Type => Enums.RoomType.Trade;
 
-        public override void Initialize(IStageData stageData, IRunData runData)
+        public override void Initialize(IStageData stageData, IRunData runData, ICameraService cameraService)
         {
             _itemsMap = new Dictionary<int, TradeItemData>();
             
-            base.Initialize(stageData, runData);
+            base.Initialize(stageData, runData, cameraService);
         }
 
         public override void Dispose()
@@ -95,10 +96,7 @@ namespace Common.Gameplay.Rooms
             
             return items.ToList();
         }
-
-<<<<<<< Updated upstream
-        private void OnMenuTriggerTriggered(Enums.MenuType type) => TradeRequested?.Invoke(GetRandomItems());
-=======
+        
         private void OnMenuTriggerTriggered(Enums.MenuType type)
         {
             animator.PlayNext();
@@ -110,6 +108,5 @@ namespace Common.Gameplay.Rooms
             TradeRequested?.Invoke(_itemsToTrade);
             ActivateExitParticles();
         }
->>>>>>> Stashed changes
     }
 }

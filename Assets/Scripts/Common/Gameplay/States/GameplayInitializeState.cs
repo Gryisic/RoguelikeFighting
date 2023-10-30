@@ -26,14 +26,11 @@ namespace Common.Gameplay.States
         private readonly SpawnInfo _spawnInfo;
         private readonly UnitsHandler _unitsHandler;
         private readonly RunData _runData;
-<<<<<<< Updated upstream
-=======
         private readonly Stage _stage;
         private readonly RunDatasView _runDataView;
->>>>>>> Stashed changes
         private readonly HeroView _heroView;
 
-        public GameplayInitializeState(IStateChanger<IGameplayState> stateChanger, Player player, SceneInfo sceneInfo, IUnitFactory unitFactory, UnitsHandler unitsHandler, IRunData runData, UI.UI ui)
+        public GameplayInitializeState(IStateChanger<IGameplayState> stateChanger, Player player, SceneInfo sceneInfo, IUnitFactory unitFactory, UnitsHandler unitsHandler, IStageData stageData, IRunData runData, UI.UI ui)
         {
             _stateChanger = stateChanger;
             _unitFactory = unitFactory;
@@ -41,14 +38,12 @@ namespace Common.Gameplay.States
             _player = player;
             _unitsHandler = unitsHandler;
 
-<<<<<<< Updated upstream
-=======
             _runDataView = ui.Get<RunDatasView>();
->>>>>>> Stashed changes
             _heroView = ui.Get<HeroView>();
             
             _spawnInfo = sceneInfo.SpawnInfo;
-            
+
+            _stage = stageData as Stage;
             _runData = runData as RunData;
         }
 
@@ -58,6 +53,8 @@ namespace Common.Gameplay.States
             CreateEnemies();
             SetUI();
             
+            _stage.Initialize();
+            
             _stateChanger.ChangeState<GameplayActiveState>();
         }
 
@@ -65,7 +62,7 @@ namespace Common.Gameplay.States
         {
             _unitFactory.Load(_runData.InitialHeroData.HeroTemplate.ID);
 
-            Vector3 playerSpawnPointPosition = _spawnInfo.PlayerSpawnPoint.position;
+            Vector3 playerSpawnPointPosition = _stage.Rooms[0].HeroInitialPosition.position;
             
             Hero hero = _unitFactory.Create(_runData.InitialHeroData.HeroTemplate, playerSpawnPointPosition) as Hero;
             hero.Initialize(_runData.InitialHeroData.HeroTemplate);

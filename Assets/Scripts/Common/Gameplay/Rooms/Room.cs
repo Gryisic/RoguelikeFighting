@@ -3,11 +3,8 @@ using System.Threading;
 using Common.Gameplay.Interfaces;
 using Common.Gameplay.Triggers;
 using Common.Models.Animators;
-<<<<<<< Updated upstream
-=======
 using Common.Scene.Cameras.Interfaces;
 using Cysharp.Threading.Tasks;
->>>>>>> Stashed changes
 using Infrastructure.Utils;
 using UnityEngine;
 
@@ -21,28 +18,20 @@ namespace Common.Gameplay.Rooms
         [SerializeField] private ParticleSystem _exitParticle;
 
         [SerializeField] protected RoomAnimator animator;
-<<<<<<< Updated upstream
-=======
         
-        [FormerlySerializedAs("cameraConfiner")]
         [Space, Header("Additional Data")]
         [SerializeField] private Collider2D _cameraConfiner;
-        [FormerlySerializedAs("cameraEasing")] [SerializeField] private Enums.CameraEasingType _cameraEasing;
+        [SerializeField] private Enums.CameraEasingType _cameraEasing;
         
         protected abstract ICameraService CameraService { get; set; }
         
         private CancellationTokenSource _particleTokenSource;
->>>>>>> Stashed changes
 
         public RoomChangeTrigger ChangeTrigger => _changeTrigger;
         public Transform HeroInitialPosition => _heroInitialPosition;
         
         public abstract Enums.RoomType Type { get; }
 
-<<<<<<< Updated upstream
-        public abstract void Initialize(IStageData stageData, IRunData runData);
-        public abstract void Dispose();
-=======
         public abstract void Initialize(IStageData stageData, IRunData runData, ICameraService cameraService);
 
         public virtual void Dispose()
@@ -50,7 +39,6 @@ namespace Common.Gameplay.Rooms
             _particleTokenSource?.Cancel();
             _particleTokenSource?.Dispose();
         }
->>>>>>> Stashed changes
 
         public virtual void Enter()
         {
@@ -59,13 +47,15 @@ namespace Common.Gameplay.Rooms
             gameObject.SetActive(true);
             
             animator.Activate();
-            
+            CameraService.SetEasingAndConfiner(_cameraEasing, _cameraConfiner);
+
             DeactivateEnterParticleAsync().Forget();
         }
 
         public virtual void Exit()
         {
             animator.Deactivate();
+            animator.Reset();
             
             _exitParticle.gameObject.SetActive(false);
             gameObject.SetActive(false);

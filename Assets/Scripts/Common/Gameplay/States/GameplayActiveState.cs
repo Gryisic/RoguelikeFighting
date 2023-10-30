@@ -35,8 +35,6 @@ namespace Common.Gameplay.States
         private readonly TradeCardsHandler _tradeCardsHandler;
         private readonly StorageSpinView _storageSpinView;
         
-        private ICameraService _cameraService;
-        
         public GameplayActiveState(IStateChanger<IGameplayState> stateChanger, IGameplayData gameplayData, IStageData stageData, Player player, IRunData runData, IServicesHandler servicesHandler, UnitsHandler unitsHandler, UI.UI ui)
         {
             _stateChanger = stateChanger;
@@ -61,12 +59,8 @@ namespace Common.Gameplay.States
         
         public void Activate()
         {
-            _cameraService ??= _servicesHandler.GetSubService<ICameraService>();
-                
             AttachInput();
             SubscribeToEvents();
-            
-            _cameraService.FollowUnit(_player.HeroTransform);
         }
         
         public void Deactivate()

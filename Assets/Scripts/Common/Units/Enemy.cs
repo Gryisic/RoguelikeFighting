@@ -28,16 +28,13 @@ namespace Common.Units
             Type = enemyTemplate.Type;
 
             List<IParticleData> particlesData = (from actionTemplate in enemyTemplate.ActionTemplates where actionTemplate.ParticleForCopy != null 
-                select new ParticleData(actionTemplate.ParticleForCopy, actionTemplate.ParticleID, actionTemplate.Rotation)).Cast<IParticleData>().ToList();
+                select new ParticleData(actionTemplate.ParticleForCopy, actionTemplate.ParticleID)).Cast<IParticleData>().ToList();
 
-            UnitParticlesPlayer particlesPlayer = new UnitParticlesPlayer(transform, particlesData);
+            UnitParticlesPlayer particlesPlayer = new UnitParticlesPlayer();
             IUnitRendererData rendererData = new UnitRendererData(particlesPlayer, animator, animationEventsReceiver);
             
-<<<<<<< Updated upstream
-=======
             particlesPlayer.Initialize(transform, particlesData, genericParticlesData);
             
->>>>>>> Stashed changes
             internalData = new EnemyInternalData(enemyTemplate, physics, Transform, rendererData, StatsData, actionsData, GetType());
 
             EnemyInternalData enemyData = internalData as EnemyInternalData;

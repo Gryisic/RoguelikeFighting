@@ -310,7 +310,7 @@ MonoBehaviour:
     _attackMarker: {fileID: 0}
     _takeHit: {fileID: 0}
     _midAirJump: {fileID: 3236602950415100937}
-  _collider: {fileID: 4024568713563668429}
+  collider: {fileID: 4024568713563668429}
 --- !u!1 &5935702460255486431
 GameObject:
   m_ObjectHideFlags: 0

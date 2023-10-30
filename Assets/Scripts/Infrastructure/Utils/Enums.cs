@@ -22,6 +22,12 @@ namespace Infrastructure.Utils
             Far,
             Close
         }
+
+        public enum CameraEasingType
+        {
+            Instant,
+            Smooth
+        }
         
         public enum MenuType
         {

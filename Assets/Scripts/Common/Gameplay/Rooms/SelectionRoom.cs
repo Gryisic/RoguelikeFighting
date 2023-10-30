@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Common.Gameplay.Interfaces;
 using Common.Gameplay.Triggers;
+using Common.Scene.Cameras.Interfaces;
 using Common.UI.Gameplay.Rooms;
 using Core.Extensions;
 using Infrastructure.Utils;
@@ -20,12 +21,16 @@ namespace Common.Gameplay.Rooms
 
         [Space, Header("Room View")]
         [SerializeField] private SelectionRoomView _roomView;
+        
+        [Space, Header("Additional Data")]
+        [SerializeField] protected Transform _cameraFocusPoint;
 
         private IReadOnlyList<Enums.RoomType> _roomTypes;
-        
+
+        protected override ICameraService CameraService { get; set; }
         public override Enums.RoomType Type => Enums.RoomType.Selection;
 
-        public override void Initialize(IStageData stageData, IRunData runData)
+        public override void Initialize(IStageData stageData, IRunData runData, ICameraService cameraService)
         {
             if (ChangeTrigger is SelectionRoomTrigger == false)
                 throw new Exception("Selection Room doesn't have 'Selection Room Trigger'");
@@ -36,6 +41,7 @@ namespace Common.Gameplay.Rooms
                 .ToList();
 
             _roomTypes = types;
+            CameraService = cameraService;
 
             foreach (var trigger in _selectionTriggers)
             {
@@ -63,6 +69,7 @@ namespace Common.Gameplay.Rooms
             
             _roomView.Activate();
             ChangeTrigger.Deactivate();
+            CameraService.FocusOn(_cameraFocusPoint);
 
             base.Enter();
         }
@@ -97,32 +104,34 @@ namespace Common.Gameplay.Rooms
                     RoomTemplate template = _generalTemplates.First(t => t.Type == type);
                     Vector2 position = _layout.GetNextTriggerPosition();
                 
+                    if (triggersAmount == 2)
+                        Debug.Log($"Index {i} Pos {position}");
+                    
                     _roomView.SelectionMarkersHandler.SetDataAndActivate(j, template);
                     _selectionTriggers[j].SetPosition(position);
                     _selectionTriggers[j].SetIndexAndType(j, type);
                     _selectionTriggers[j].Activate();
                 }
             }
-
+            
             _layout.Reset();
         }
 
         private void OnRoomSelected(Enums.RoomType type)
         {
             SelectionRoomTrigger changeTrigger = ChangeTrigger as SelectionRoomTrigger;
+            
             changeTrigger.UpdateType(type);
             changeTrigger.Activate();
             
             foreach (var trigger in _selectionTriggers) 
                 trigger.Deactivate();
-<<<<<<< Updated upstream
-=======
             
             CameraService.Shake();
             animator.PlayNext();
+            _roomView.Deactivate();
             
             ActivateExitParticles();
->>>>>>> Stashed changes
         }
         
         private void OnHeroEnteredTrigger(int index) => _roomView.SelectionMarkersHandler.Expand(index);

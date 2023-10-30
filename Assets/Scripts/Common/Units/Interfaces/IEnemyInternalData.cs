@@ -10,6 +10,5 @@ namespace Common.Units.Interfaces
         ISharedUnitData HeroData { get; }
         EnemyTemplate Data { get; }
         IReadOnlyList<EnemyAction> Actions { get; }
-        Transform Transform { get; }
     }
 }

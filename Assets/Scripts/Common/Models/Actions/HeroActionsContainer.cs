@@ -74,8 +74,6 @@ namespace Common.Models.Actions
             
             return false;
         }
-<<<<<<< Updated upstream
-=======
 
         public bool TryGetLegacyAction(Enums.HeroActionType actionType, out LegacyAction action) => _legacyActionsMap.TryGetValue(actionType, out action);
 
@@ -93,7 +91,6 @@ namespace Common.Models.Actions
 
             return actions;
         }
->>>>>>> Stashed changes
 
         private void DefineModifier(Modifier modifier)
         {

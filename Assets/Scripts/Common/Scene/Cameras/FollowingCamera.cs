@@ -7,9 +7,9 @@ namespace Common.Scene.Cameras
     {
         public void FollowUnit(Transform unitTransform, Enums.CameraDistanceType distanceType)
         {
-            camera.m_Lens.OrthographicSize = DistanceToSize(distanceType);
+            virtualCamera.m_Lens.OrthographicSize = DistanceToSize(distanceType);
 
-            camera.Follow = unitTransform;
+            virtualCamera.Follow = unitTransform;
         }
 
         protected override float DistanceToSize(Enums.CameraDistanceType distanceType)

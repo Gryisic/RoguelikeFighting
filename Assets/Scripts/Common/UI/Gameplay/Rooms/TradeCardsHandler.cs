@@ -1,31 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
 using Common.Models.Items;
+using Common.UI.Interfaces;
 using UnityEngine;
 
 namespace Common.UI.Gameplay.Rooms
 {
-    public class TradeCardsHandler : UIElement
+    public class TradeCardsHandler : UIElement, ISelectableUIElement, IHorizontallyNavigatableUIElement
     {
         [SerializeField] private TradeCard[] _cards;
 
-<<<<<<< Updated upstream
-=======
         private int _hoveredCardIndex;
         private int _maxIndex;
 
         public event Func<int> RequestGaldAmount; 
         public event Action Entered;
         public event Action Exited;
->>>>>>> Stashed changes
         public event Action<int> CardSelected;
 
         public override void Activate()
         {
-            foreach (var card in _cards) 
+            foreach (var card in _cards)
+            {
                 card.CardSelected += SelectCard;
+                card.HoveredViaPointer += HoveredViaPointer;
+            }
 
-            base.Activate();
+            _hoveredCardIndex = 0;
+            _cards[_hoveredCardIndex].Hover();
         }
         
         public override void Deactivate()
@@ -33,16 +35,11 @@ namespace Common.UI.Gameplay.Rooms
             foreach (var card in _cards)
             {
                 card.CardSelected -= SelectCard;
-                
+                card.HoveredViaPointer -= HoveredViaPointer;
+
                 card.Deactivate();
             }
-
-            base.Deactivate();
         }
-<<<<<<< Updated upstream
-        
-        public void SetCardsData(IReadOnlyList<TradeItemData> itemsData)
-=======
 
         public void ConfirmSelection(int index)
         {
@@ -80,8 +77,9 @@ namespace Common.UI.Gameplay.Rooms
         }
 
         public void SetCardsData(IReadOnlyList<TradeItemData> itemsData, int currentGaldAmount)
->>>>>>> Stashed changes
         {
+            _maxIndex = itemsData.Count - 1;
+
             for (var i = 0; i < itemsData.Count; i++)
             {
                 TradeCard card = _cards[i];
@@ -92,8 +90,6 @@ namespace Common.UI.Gameplay.Rooms
         }
         
         private void SelectCard(int index) => CardSelected?.Invoke(index);
-<<<<<<< Updated upstream
-=======
 
         private void HoveredViaPointer(int index)
         {
@@ -108,6 +104,5 @@ namespace Common.UI.Gameplay.Rooms
             _cards[currentIndex].UnHover();
             _cards[nextIndex].Hover();
         }
->>>>>>> Stashed changes
     }
 }

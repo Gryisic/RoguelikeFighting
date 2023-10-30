@@ -31,14 +31,6 @@ namespace Common.UI.Gameplay.Rooms
         private float _leftBorder;
         private float _center;
         private float _rightBorder;
-        
-        private void Awake()
-        {
-            //Activate();
-            //Spin();
-            
-            //Debug.Log($"C {_content.rectTransform.rect.xMax} F {_itemsView.First().Transform.rect.xMin} L {_itemsView.Last().Transform.rect.xMax + 1.385f * (_itemsView.Length - 1)}");
-        }
 
         private void OnDestroy()
         {

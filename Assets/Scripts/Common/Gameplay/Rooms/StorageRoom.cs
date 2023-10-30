@@ -4,6 +4,7 @@ using System.Threading;
 using Common.Gameplay.Interfaces;
 using Common.Gameplay.Triggers;
 using Common.Models.Items;
+using Common.Scene.Cameras.Interfaces;
 using Core.Extensions;
 using Cysharp.Threading.Tasks;
 using Infrastructure.Utils;
@@ -28,13 +29,13 @@ namespace Common.Gameplay.Rooms
 
         public override Enums.RoomType Type => Enums.RoomType.Storage;
 
-        public override void Initialize(IStageData stageData, IRunData runData)
+        public override void Initialize(IStageData stageData, IRunData runData, ICameraService cameraService)
         {
             _rangeItemMap = new Dictionary<int, ItemsPack>();
-            
+
             InitializePacks();
             
-            base.Initialize(stageData, runData);
+            base.Initialize(stageData, runData, cameraService);
         }
 
         public override void Dispose()
@@ -51,13 +52,10 @@ namespace Common.Gameplay.Rooms
         {
             _menuTrigger.Triggered += OnMenuTriggerTriggered;
 
-<<<<<<< Updated upstream
-=======
             _isActive = true;
             
             CameraService.FocusOn(cameraFocusPoint);
 
->>>>>>> Stashed changes
             base.Enter();
         }
         
@@ -169,15 +167,12 @@ namespace Common.Gameplay.Rooms
             await UniTask.Delay(TimeSpan.FromSeconds(delay), cancellationToken: _awaitTokenSource.Token);
             
             animator.PlayNext();
-<<<<<<< Updated upstream
-=======
             ChangeTrigger.Activate();
             CameraService.Shake();
             
             ModifyData(item.Type, item);
 
             ActivateExitParticles();
->>>>>>> Stashed changes
         }
         
         private class ItemsPack

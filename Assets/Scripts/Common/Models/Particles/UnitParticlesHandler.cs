@@ -12,40 +12,22 @@ namespace Common.Models.Particles
     public class UnitParticlesHandler
     {
         private readonly IParticlesFactory _factory;
-<<<<<<< Updated upstream
-        private readonly Dictionary<int, ParticleSystem> _particlesMap;
-=======
         private readonly Dictionary<int, LocalParticlesData> _particlesMap;
         private readonly Dictionary<Enums.GenericParticle, ParticleSystem> _genericParticlesMap;
->>>>>>> Stashed changes
 
         public UnitParticlesHandler(Transform parent, IReadOnlyList<IParticleData> particlesData, GenericParticlesData genericParticlesData)
         {
             _factory = new ParticlesFactory();
-<<<<<<< Updated upstream
-            _particlesMap = new Dictionary<int, ParticleSystem>();
-=======
             _particlesMap = new Dictionary<int, LocalParticlesData>();
             _genericParticlesMap = new Dictionary<Enums.GenericParticle, ParticleSystem>();
->>>>>>> Stashed changes
             
             Initialize(parent, particlesData, genericParticlesData);
         }
         
         private void Initialize(Transform parent, IReadOnlyList<IParticleData> particlesData, GenericParticlesData genericParticlesData)
         {
-<<<<<<< Updated upstream
-            for (var i = 0; i < particlesData.Count; i++)
-            {
-                var data = particlesData[i];
-                ParticleSystem particle = _factory.Create(data.ParticleForCopy, parent);
-
-                _particlesMap.Add(data.ID, particle);
-            }
-=======
             FillParticlesMap(parent, particlesData);
             FillGenericParticlesMap(parent, genericParticlesData);
->>>>>>> Stashed changes
         }
 
         public ParticleSystem GetParticle(int id)
@@ -53,9 +35,6 @@ namespace Common.Models.Particles
             if (_particlesMap.ContainsKey(id) == false)
                 throw new NullReferenceException($"Particle with ID {id} isn't presented in particles map");
 
-<<<<<<< Updated upstream
-            return _particlesMap[id];
-=======
             return _particlesMap[id].ParticleSystem;
         }
         
@@ -87,6 +66,8 @@ namespace Common.Models.Particles
                 ParticleSystem particle = _factory.Create(data.ParticleForCopy, parent);
                 List<ParticleSystem> childs = new List<ParticleSystem>();
 
+                particle.gameObject.SetActive(false);
+                
                 if (particle.transform.childCount > 0)
                     childs.AddRange(particle.GetComponentsInChildren<ParticleSystem>());
 
@@ -105,18 +86,13 @@ namespace Common.Models.Particles
             {
                 Enums.GenericParticle type = types[i];
                 ParticleSystem copy = genericParticlesData.GetParticleOfType(type);
-                // ParticleSystem particle = null;
-                //
-                // if (copy != null)
-                //     particle = _factory.Create(copy, parent);
-                
+
                 _genericParticlesMap.Add(type, copy);
             }
         }
         
         private struct LocalParticlesData
         {
-            
             public ParticleSystem ParticleSystem { get; }
             public IReadOnlyList<ParticleSystem> Childs { get; }
             
@@ -125,7 +101,6 @@ namespace Common.Models.Particles
                 ParticleSystem = particleSystem;
                 Childs = childs;
             }
->>>>>>> Stashed changes
         }
     }
 }

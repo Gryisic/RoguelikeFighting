@@ -39,24 +39,18 @@ namespace Common.Units
             
             HeroTemplate heroTemplate = (HeroTemplate) template;
 
-            List<IParticleData> particlesData = (from actionTemplate in heroTemplate.Actions where actionTemplate.ParticleForCopy != null 
-                select new ParticleData(actionTemplate.ParticleForCopy, actionTemplate.ParticleID, actionTemplate.Rotation)).Cast<IParticleData>().ToList();
-
-            UnitParticlesPlayer particlesPlayer = new UnitParticlesPlayer(transform, particlesData);
+            UnitParticlesPlayer particlesPlayer = new UnitParticlesPlayer();
             IUnitRendererData rendererData = new UnitRendererData(particlesPlayer, animator, animationEventsReceiver);
 
             internalData = new HeroInternalData(Transform, physics, heroTemplate.heroAnimationData, rendererData, StatsData, actionsData, GetType());
             
             IHeroInternalData heroInternalData = (IHeroInternalData) internalData;
             HeroActionsContainer actionsContainer = new HeroActionsContainer(heroTemplate.Actions, heroInternalData);
-<<<<<<< Updated upstream
-=======
             
             List<IParticleData> particlesData = actionsContainer.GetAllActions()
                 .Select(action => new ParticleData(action.Data.ParticleForCopy, action.Data.ParticleID)).Cast<IParticleData>().ToList();
 
             particlesPlayer.Initialize(transform, particlesData, genericParticlesData);
->>>>>>> Stashed changes
 
             HeroInternalData data = internalData as HeroInternalData;
             data.SetActionsContainer(actionsContainer);

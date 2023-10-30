@@ -84,40 +84,5 @@ namespace Common.Units.StateMachine.HeroStates
 
             _isExecuting = false;
         }
-<<<<<<< Updated upstream
-
-        private void OnParticlesEmitRequested()
-        {
-            HeroActionTemplate data = _currentAction.Data;
-            IParticleData particleData = new ParticleData(data.ParticleForCopy, data.ParticleID, data.Rotation);
-            
-            internalData.ParticlesPlayer.Play(particleData);
-        }
-
-        private void OnMovingRequested() => MoveAsync().Forget();
-
-        private async UniTask MoveAsync()
-        {
-            float freezeTime = _currentAction.Data.FreezeAfterMoving;
-            float movingTime = _currentAction.Data.UseClipLengthAsTime ? _currentAction.Data.ActionClip.length : _currentAction.Data.MovingTime;
-            float speed = _currentAction.Data.Distance / movingTime;
-            float horizontalSpeed = speed * internalData.FaceDirection.x;
-            Vector2 velocityVector = new Vector2(_currentAction.Data.Vector.x * horizontalSpeed, _currentAction.Data.Vector.y * speed);
-            
-            internalData.Physics.UpdateVelocity(velocityVector);
-            internalData.Physics.SuppressManualVelocityChange();
-
-            await UniTask.Delay(TimeSpan.FromSeconds(movingTime), cancellationToken: _actionTokenSource.Token);
-            
-            internalData.Physics.FreezeFalling();
-            
-            await UniTask.Delay(TimeSpan.FromSeconds(freezeTime), cancellationToken: _actionTokenSource.Token);
-            
-            internalData.Physics.UnfreezeFalling();
-            internalData.Physics.UnSuppressManualVelocityChange();
-            internalData.Physics.UpdateVelocity(Vector2.zero);
-        }
-=======
->>>>>>> Stashed changes
     }
 }

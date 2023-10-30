@@ -7,7 +7,7 @@ namespace Common.Scene.Cameras
     {
         public void FocusOn(Vector2 positionToFocusOn, Enums.CameraDistanceType distanceType)
         {
-            camera.m_Lens.OrthographicSize = DistanceToSize(distanceType);
+            virtualCamera.m_Lens.OrthographicSize = DistanceToSize(distanceType);
 
             Vector3 finalPosition = positionToFocusOn;
             finalPosition.z = -10;

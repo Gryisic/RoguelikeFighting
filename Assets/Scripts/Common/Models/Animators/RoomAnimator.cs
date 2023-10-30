@@ -37,5 +37,7 @@ namespace Common.Models.Animators
             
             _index++;
         }
+
+        public void Reset() => _index = 0;
     }
 }

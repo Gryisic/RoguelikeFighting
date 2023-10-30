@@ -7,6 +7,9 @@ namespace Common.Gameplay.Waves
     {
         public override event Action Fulfilled;
 
-        public override void StartChecking(CancellationToken token) { }
+        public override void StartChecking(CancellationToken token)
+        {
+            
+        }
     }
 }

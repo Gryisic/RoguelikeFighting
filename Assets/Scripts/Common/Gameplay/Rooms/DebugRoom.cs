@@ -4,6 +4,7 @@ using System;
 using Common.Gameplay.Interfaces;
 using Common.Gameplay.Triggers;
 using Common.Gameplay.Waves;
+using Common.Scene.Cameras.Interfaces;
 using Infrastructure.Utils;
 using UnityEngine;
 
@@ -14,15 +15,16 @@ namespace Common.Gameplay.Rooms
         [SerializeField] private TriggerWaveMap[] _wavesMap;
 
         public override Enums.RoomType Type => Enums.RoomType.Battle;
+        protected override ICameraService CameraService { get; set; }
         
         private void Awake()
         {
             SubscribeToEvents();
         }
 
-        public override void Initialize(IStageData stageData, IRunData runData)
+        public override void Initialize(IStageData stageData, IRunData runData, ICameraService cameraService)
         {
-            
+            CameraService = cameraService;
         }
 
         public override void Dispose()

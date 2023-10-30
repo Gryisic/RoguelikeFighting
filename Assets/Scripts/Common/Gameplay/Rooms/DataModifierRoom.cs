@@ -2,31 +2,25 @@
 using Common.Gameplay.Data;
 using Common.Gameplay.Interfaces;
 using Common.Models.Items;
+using Common.Scene.Cameras.Interfaces;
 using Infrastructure.Utils;
+using UnityEngine;
 
 namespace Common.Gameplay.Rooms
 {
     public abstract class DataModifierRoom : Room
     {
-<<<<<<< Updated upstream
-        private IRunData _runData;
-=======
         [Space, Header("Additional Data")]
         [SerializeField] protected Transform cameraFocusPoint;
 
         protected override ICameraService CameraService { get; set; }
 
         protected IRunData runData;
->>>>>>> Stashed changes
 
-        public override void Initialize(IStageData stageData, IRunData runData)
+        public override void Initialize(IStageData stageData, IRunData runData, ICameraService cameraService)
         {
-<<<<<<< Updated upstream
-            _runData = runData;
-=======
             this.runData = runData;
             CameraService = cameraService;
->>>>>>> Stashed changes
         }
 
         protected void ModifyData(Enums.RunDataType type, Item itemData)

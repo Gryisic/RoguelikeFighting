@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using Common.Gameplay.Interfaces;
 using Common.Gameplay.Rooms;
+using Common.Scene.Cameras.Interfaces;
 using Common.Units;
 using Core.Extensions;
+using Core.Interfaces;
+using Core.Utils;
 using Infrastructure.Utils;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -14,9 +17,10 @@ namespace Common.Gameplay
 {
     public class Stage : MonoBehaviour, IStageData, IDisposable
     {
-        [FormerlySerializedAs("_roomPrefabs")] [SerializeField] private Room[] _rooms;
+        [SerializeField] private Room[] _rooms;
 
         private IRunData _runData;
+        private IServicesHandler _servicesHandler;
         private Room _currentRoom;
 
         public event Action<Vector2> HeroPositionChangeRequested; 
@@ -25,11 +29,15 @@ namespace Common.Gameplay
         public IReadOnlyList<Room> Rooms => _rooms;
 
         [Inject]
-        private void Construct(IRunData runData, UnitsHandler unitsHandler)
+        private void Construct(IRunData runData, IServicesHandler servicesHandler, UnitsHandler unitsHandler)
         {
             _runData = runData;
+            _servicesHandler = servicesHandler;
             UnitsHandler = unitsHandler;
-            
+        }
+
+        public void Initialize()
+        {
             InitializeRooms();
             
             _currentRoom = _rooms[0]; 
@@ -52,7 +60,7 @@ namespace Common.Gameplay
             {
                 room.ChangeTrigger.Triggered += ChangeRoom;
                 
-                room.Initialize(this, _runData);
+                room.Initialize(this, _runData, _servicesHandler.GetSubService<ICameraService>());
 
                 if (room.gameObject.activeSelf)
                     room.gameObject.SetActive(false);

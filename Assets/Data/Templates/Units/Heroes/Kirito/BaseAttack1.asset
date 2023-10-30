@@ -20,7 +20,7 @@ MonoBehaviour:
   _isChargeable: 0
   _chargeTime: 0
   _chargeClip: {fileID: 0}
-  _particleForCopy: {fileID: 3301989189972598655, guid: 7342b5ba098833a488c198d4df400489, type: 3}
+  _particleForCopy: {fileID: 382103756866157219, guid: 3afca87887f1a1348a09c6f366e13938, type: 3}
   _particleID: 0
   _rotation: 180
   _amount: 100
@@ -38,7 +38,7 @@ MonoBehaviour:
   _healPercent: 0
   _healTime: 0
   _extendsInto:
-  - {fileID: 11400000, guid: 0dca0d91fffdf3a4b8c588d7347f82c8, type: 2}
+  - {fileID: 11400000, guid: e880890382bd82b4a8ab06cdb31b16fb, type: 2}
   _extendsFrom: 1
   _direction: 0
   _icon: {fileID: 0}

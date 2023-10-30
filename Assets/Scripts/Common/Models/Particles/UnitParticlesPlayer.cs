@@ -8,31 +8,31 @@ namespace Common.Models.Particles
 {
     public class UnitParticlesPlayer
     {
-<<<<<<< Updated upstream
-        private readonly UnitParticlesHandler _handler;
-        
-        public UnitParticlesPlayer(Transform parent, IReadOnlyList<IParticleData> particlesData)
-=======
         private UnitParticlesHandler _handler;
-
+        
         public void Initialize(Transform parent, IReadOnlyList<IParticleData> particlesData, GenericParticlesData genericParticlesData)
->>>>>>> Stashed changes
         {
             _handler = new UnitParticlesHandler(parent, particlesData, genericParticlesData);
         }
         
-        public void Play(IParticleData data)
+        public void Play(IParticleData data, float faceDirection)
         {
             ParticleSystem particleSystem = _handler.GetParticle(data.ID);
             ParticleSystem.MainModule particleSystemMain = particleSystem.main;
             
-            particleSystemMain.startRotationMultiplier = data.Rotation;
+            SetRotation(particleSystemMain, faceDirection);
+
+            if (particleSystem.transform.childCount > 0)
+            {
+                IReadOnlyList<ParticleSystem> childs = _handler.GetChildsOfParticle(data.ID);
+
+                foreach (var child in childs) 
+                    SetRotation(child.main, faceDirection);
+            }
 
             particleSystem.gameObject.SetActive(true);
             particleSystem.Play();
         }
-<<<<<<< Updated upstream
-=======
         
         public void PlayGenericParticle(Enums.GenericParticle particle, float faceDirection, bool isFreezedOnPosition = true)
         {
@@ -67,6 +67,5 @@ namespace Common.Models.Particles
             particle.startRotation3D = true;
             particle.startRotationY = faceDirection > 0 ? 0 : 180 * Mathf.Deg2Rad;
         }
->>>>>>> Stashed changes
     }
 }

@@ -4,23 +4,23 @@ using Common.Gameplay.Data;
 using Common.Gameplay.Interfaces;
 using Common.Gameplay.Rooms;
 using Common.UI;
+using Common.UI.Extensions;
 using Common.UI.Gameplay;
 using Common.UI.Gameplay.Hero;
 using Common.UI.Gameplay.Rooms;
-<<<<<<< Updated upstream
-=======
 using Common.UI.Gameplay.RunData;
 using Common.UI.Interfaces;
->>>>>>> Stashed changes
 using Common.Utils.Interfaces;
 using Core.Interfaces;
 using Infrastructure.Utils;
+using UnityEngine;
 
 namespace Common.Gameplay.States
 {
     public class GameplayMenuState : IGameplayState, IDeactivatable
     {
         private readonly IStateChanger<IGameplayState> _stateChanger;
+        private readonly IInputService _input;
         private readonly IGameplayData _gameplayData;
         private readonly Player _player;
         private readonly IStageData _stageData;
@@ -32,9 +32,10 @@ namespace Common.Gameplay.States
 
         private UIElement _activeUI;
 
-        public GameplayMenuState(IStateChanger<IGameplayState> stateChanger, IGameplayData gameplayData, Player player, IStageData stageData, IRunData runData, UI.UI ui)
+        public GameplayMenuState(IStateChanger<IGameplayState> stateChanger, IServicesHandler servicesHandler, IGameplayData gameplayData, Player player, IStageData stageData, IRunData runData, UI.UI ui)
         {
             _stateChanger = stateChanger;
+            _input = servicesHandler.InputService;
             _gameplayData = gameplayData;
             _player = player;
             _stageData = stageData;
@@ -48,14 +49,14 @@ namespace Common.Gameplay.States
         public void Activate()
         {
             SubscribeToEvents();
-            
             ActivateUI();
+            AttachInput();
         }
 
         public void Deactivate()
         {
             UnsubscribeToEvents();
-            
+            DeAttachInput();
             DeactivateUI();
         }
         
@@ -83,12 +84,9 @@ namespace Common.Gameplay.States
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-<<<<<<< Updated upstream
-=======
 
             if (_activeUI is ISelectableUIElement selectable)
                 selectable.Exited += ToActiveState;
->>>>>>> Stashed changes
             
             _activeUI.Activate();
         }
@@ -144,8 +142,6 @@ namespace Common.Gameplay.States
             }
         }
         
-<<<<<<< Updated upstream
-=======
         private void AttachInput()
         {
             _input.Input.Menu.Select.performed += _activeUI.Select;
@@ -172,7 +168,6 @@ namespace Common.Gameplay.States
             _input.Input.Menu.Right.performed -= _activeUI.MoveRight;
         }
         
->>>>>>> Stashed changes
         private void OnModifierCardSelected(int index)
         {
             _runData.Get<ModifiersData>(Enums.RunDataType.Modifiers).GetModifierFromBuffer(index);
@@ -184,20 +179,12 @@ namespace Common.Gameplay.States
         {
             TradeRoom tradeRoom = _stageData.Rooms.First(r => r is TradeRoom) as TradeRoom;
             tradeRoom.ItemSelected(index);
-            
-            ToActiveState();
         }
         
         private int OnGaldAmountRequested() => _runData.Get<GaldData>(Enums.RunDataType.Gald).Amount;
 
-        private void OnStorageSpinEnded()
-        {
-            ToActiveState();
-        }
-        
-        private void ToActiveState()
-        {
-            _stateChanger.ChangeState<GameplayActiveState>();
-        }
+        private void OnStorageSpinEnded() => ToActiveState();
+
+        private void ToActiveState() => _stateChanger.ChangeState<GameplayActiveState>();
     }
 }

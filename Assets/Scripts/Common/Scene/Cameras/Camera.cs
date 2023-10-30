@@ -6,16 +6,13 @@ namespace Common.Scene.Cameras
 {
     public abstract class Camera : MonoBehaviour
     {
-        [SerializeField] protected CinemachineVirtualCamera camera;
-<<<<<<< Updated upstream
-=======
+        [SerializeField] protected CinemachineVirtualCamera virtualCamera;
         [SerializeField] protected CinemachineImpulseListener impulseListener;
         [SerializeField] private CinemachineConfiner2D confiner2D;
->>>>>>> Stashed changes
 
         public void Activate()
         {
-            camera.Priority = Constants.ActivatedCameraPriority;
+            virtualCamera.Priority = Constants.ActivatedCameraPriority;
 
             impulseListener.enabled = true;
         }
@@ -24,10 +21,12 @@ namespace Common.Scene.Cameras
         {
             impulseListener.enabled = false;
             
-            camera.Follow = null;
-            camera.Priority = Constants.DeactivatedCameraPriority;
+            virtualCamera.Follow = null;
+            virtualCamera.Priority = Constants.DeactivatedCameraPriority;
         }
-        
+
+        public void SetConfiner(Collider2D confiner) => confiner2D.m_BoundingShape2D = confiner;
+
         protected abstract float DistanceToSize(Enums.CameraDistanceType distanceType);
     }
 }

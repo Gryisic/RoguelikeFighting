@@ -250,17 +250,156 @@ namespace Core.PlayerInput
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Back"",
+                    ""type"": ""Button"",
+                    ""id"": ""b481dbd0-3bf0-4c73-b543-9c8b55acba8b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Up"",
+                    ""type"": ""Button"",
+                    ""id"": ""0abe897e-f07f-4fdd-a286-c49461f53097"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Down"",
+                    ""type"": ""Button"",
+                    ""id"": ""8e6c15ce-ee10-4123-ba1b-a60ca7bbe80a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Left"",
+                    ""type"": ""Button"",
+                    ""id"": ""6ecdf5b9-0773-4609-b91e-5e4f3c1144ff"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Right"",
+                    ""type"": ""Button"",
+                    ""id"": ""4fefc8e1-daf0-43f2-b931-480efb68dfac"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
                 {
                     ""name"": """",
                     ""id"": ""ce56a31b-77d8-4b2b-8137-1b4889651a40"",
-                    ""path"": ""<Mouse>/leftButton"",
+                    ""path"": ""<Keyboard>/enter"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Select"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4bd39b93-a1b7-41a6-89f9-04e6a52fa76a"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Back"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2bc4f5de-7f4c-44d0-8335-8d43d8032796"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Up"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f5b129e3-00fd-4bf3-bbbb-03283cc12d2f"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Up"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""146547d4-c72d-4d72-8cc0-bd44cc441eda"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Down"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""223348f6-dabe-4bd1-b5b0-6691ddf53929"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Down"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c649167c-40c5-4e7b-acda-c08255bcceab"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Left"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""05785a14-1de7-48d7-be8e-153d066605c8"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Left"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8841c806-cf15-4247-a9ec-5d975b446019"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Right"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7a74c302-c7df-497d-9299-8ee7e73ca1f2"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Right"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -329,6 +468,11 @@ namespace Core.PlayerInput
             // Menu
             m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
             m_Menu_Select = m_Menu.FindAction("Select", throwIfNotFound: true);
+            m_Menu_Back = m_Menu.FindAction("Back", throwIfNotFound: true);
+            m_Menu_Up = m_Menu.FindAction("Up", throwIfNotFound: true);
+            m_Menu_Down = m_Menu.FindAction("Down", throwIfNotFound: true);
+            m_Menu_Left = m_Menu.FindAction("Left", throwIfNotFound: true);
+            m_Menu_Right = m_Menu.FindAction("Right", throwIfNotFound: true);
             // Debug
             m_Debug = asset.FindActionMap("Debug", throwIfNotFound: true);
             m_Debug_SetDebugModifier = m_Debug.FindAction("SetDebugModifier", throwIfNotFound: true);
@@ -480,11 +624,21 @@ namespace Core.PlayerInput
         private readonly InputActionMap m_Menu;
         private IMenuActions m_MenuActionsCallbackInterface;
         private readonly InputAction m_Menu_Select;
+        private readonly InputAction m_Menu_Back;
+        private readonly InputAction m_Menu_Up;
+        private readonly InputAction m_Menu_Down;
+        private readonly InputAction m_Menu_Left;
+        private readonly InputAction m_Menu_Right;
         public struct MenuActions
         {
             private @Input m_Wrapper;
             public MenuActions(@Input wrapper) { m_Wrapper = wrapper; }
             public InputAction @Select => m_Wrapper.m_Menu_Select;
+            public InputAction @Back => m_Wrapper.m_Menu_Back;
+            public InputAction @Up => m_Wrapper.m_Menu_Up;
+            public InputAction @Down => m_Wrapper.m_Menu_Down;
+            public InputAction @Left => m_Wrapper.m_Menu_Left;
+            public InputAction @Right => m_Wrapper.m_Menu_Right;
             public InputActionMap Get() { return m_Wrapper.m_Menu; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -497,6 +651,21 @@ namespace Core.PlayerInput
                     @Select.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnSelect;
                     @Select.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnSelect;
                     @Select.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnSelect;
+                    @Back.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnBack;
+                    @Back.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnBack;
+                    @Back.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnBack;
+                    @Up.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnUp;
+                    @Up.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnUp;
+                    @Up.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnUp;
+                    @Down.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnDown;
+                    @Down.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnDown;
+                    @Down.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnDown;
+                    @Left.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnLeft;
+                    @Left.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnLeft;
+                    @Left.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnLeft;
+                    @Right.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnRight;
+                    @Right.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnRight;
+                    @Right.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnRight;
                 }
                 m_Wrapper.m_MenuActionsCallbackInterface = instance;
                 if (instance != null)
@@ -504,6 +673,21 @@ namespace Core.PlayerInput
                     @Select.started += instance.OnSelect;
                     @Select.performed += instance.OnSelect;
                     @Select.canceled += instance.OnSelect;
+                    @Back.started += instance.OnBack;
+                    @Back.performed += instance.OnBack;
+                    @Back.canceled += instance.OnBack;
+                    @Up.started += instance.OnUp;
+                    @Up.performed += instance.OnUp;
+                    @Up.canceled += instance.OnUp;
+                    @Down.started += instance.OnDown;
+                    @Down.performed += instance.OnDown;
+                    @Down.canceled += instance.OnDown;
+                    @Left.started += instance.OnLeft;
+                    @Left.performed += instance.OnLeft;
+                    @Left.canceled += instance.OnLeft;
+                    @Right.started += instance.OnRight;
+                    @Right.performed += instance.OnRight;
+                    @Right.canceled += instance.OnRight;
                 }
             }
         }
@@ -564,6 +748,11 @@ namespace Core.PlayerInput
         public interface IMenuActions
         {
             void OnSelect(InputAction.CallbackContext context);
+            void OnBack(InputAction.CallbackContext context);
+            void OnUp(InputAction.CallbackContext context);
+            void OnDown(InputAction.CallbackContext context);
+            void OnLeft(InputAction.CallbackContext context);
+            void OnRight(InputAction.CallbackContext context);
         }
         public interface IDebugActions
         {

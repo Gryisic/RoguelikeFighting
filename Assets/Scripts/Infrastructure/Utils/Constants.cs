@@ -12,9 +12,11 @@
         public const float CloseFollowCameraSize = 3.5f;
         public const float FarFollowCameraSize = 7.5f;
         
-        public const float NeutralFocusCameraSize = 3.5f;
-        public const float CloseFocusCameraSize = 1f;
-        public const float FarFocusCameraSize = 5f;
+        public const float NeutralFocusCameraSize = 5f;
+        public const float CloseFocusCameraSize = 3.5f;
+        public const float FarFocusCameraSize = 7f;
+
+        public const float DefaultCameraBlendTime = 0.2f;
 
         public const int ExperienceNeededToRequestNextModifier = 100;
         public const int DefaultAmountOfModifiersToRequest = 100;

@@ -20,7 +20,7 @@ MonoBehaviour:
   _isChargeable: 0
   _chargeTime: 0
   _chargeClip: {fileID: 0}
-  _particleForCopy: {fileID: 3310225750525224532, guid: 54b0ee8d39a957347a6d7ca23a1cc274, type: 3}
+  _particleForCopy: {fileID: 3310225750525224532, guid: 94bb74ee2f5517944814bfeb2843b80f, type: 3}
   _particleID: 0
   _rotation: 0
   _amount: 0

@@ -54,6 +54,23 @@ namespace Common.Models.Actions
             return actions;
         }
 
+        public IReadOnlyList<HeroAction> GetAllChilds()
+        {
+            List<HeroAction> actions = new List<HeroAction>();
+            
+            if (ExtendsInto.Count > 0)
+            {
+                List<HeroAction> childActions = ExtendsInto.ToList();
+                
+                actions.AddRange(childActions);
+                
+                foreach (var action in childActions) 
+                    actions.AddRange(action.GetAllChilds());
+            }
+
+            return actions;
+        }
+
         public void AddModifier(Modifier modifier)
         {
             ModifierAction modifiedAction = new ModifierAction(_internalData, modifier, Data, executionBase);
