@@ -31,7 +31,7 @@ namespace Core
             loadScene.completed -= OnSceneLoadCompleted;
             loadScene.completed -= UnloadSceneAsync;
 
-            _currentSceneIndex = (int) sceneType;
+            _currentSceneIndex = _nextSceneIndex;
         }
 
         private async UniTask LoadSceneAsync(AsyncOperation loadScene, CancellationToken token)

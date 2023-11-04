@@ -38,8 +38,8 @@ Material:
     m_Ints: []
     m_Floats:
     - DissolveScale: 5
-    - DissolveWidth: 0.5
-    - _DissolvePercent: 0
+    - DissolveWidth: 0.25
+    - _DissolvePercent: 1
     m_Colors:
-    - _DissolveColor: {r: 1, g: 0.099629164, b: 0, a: 1}
+    - _DissolveColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

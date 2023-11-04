@@ -62,7 +62,7 @@ namespace Common.Models.Particles
 
                 if (_particlesMap.ContainsKey(data.ID))
                     continue;
-
+                
                 ParticleSystem particle = _factory.Create(data.ParticleForCopy, parent);
                 List<ParticleSystem> childs = new List<ParticleSystem>();
 

@@ -86,7 +86,7 @@ namespace Common.Units
                 return;
             
             _rigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
-            _rigidbody.velocity = Vector2.down;
+            _rigidbody.velocity = CheckGround(out Collider2D _) ? Vector2.zero : Vector2.down;
 
             _isFrozen = false;
         }
@@ -149,17 +149,16 @@ namespace Common.Units
             float distance = 0.1f;
             Bounds bounds = _collider.bounds;
             RaycastHit2D[] results = new RaycastHit2D[2];
-            
-            Physics2D.BoxCastNonAlloc(bounds.center, bounds.size, 0f, Vector2.down, results, distance);
 
-            results = results.Skip(1).ToArray();
+            Physics2D.BoxCastNonAlloc(bounds.center, bounds.size, 0f, Vector2.down, results, distance, 1 << Constants.FloorLayerIndex);
+
             collider = results[0].collider;
             
             bool grounded = results[0].collider != null;
             
             if (grounded)
                 LastGroundedPosition = _rigidbody.position;
-            
+
             return grounded;
         }
         

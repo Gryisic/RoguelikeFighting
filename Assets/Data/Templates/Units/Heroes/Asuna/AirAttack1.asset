@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 772b55505b9f4feda34fecf04c99a937, type: 3}
+  m_Name: AirAttack1
+  m_EditorClassIdentifier: 
+  _name: Air Attack 1
+  _actionClip: {fileID: 7400000, guid: 4c7da3fb251445f43a001c64a6d74830, type: 2}
+  _baseEffect: 0
+  _executionPlacement: 1
+  _executeAfterClipPlayed: 0
+  _isChargeable: 0
+  _chargeTime: 0
+  _chargeClip: {fileID: 0}
+  _particleForCopy: {fileID: 7054095395233632604, guid: 2bd2784e7a5ede34da5972d29ac0c3dd, type: 3}
+  _particleID: 3
+  _rotation: 0
+  _amount: 50
+  _knockback: 0
+  _knockbackForce: {x: 0, y: 0}
+  _knockbackTime: 0.3
+  _vector: {x: 0, y: 0}
+  _distance: 0
+  _movingTime: 0
+  _freezeAfterMoving: 0
+  _useClipLengthAsTime: 0
+  _animatorController: {fileID: 0}
+  _nextStanceTemplate: {fileID: 0}
+  _statsToIncrease: []
+  _statsToDecrease: []
+  _positionRelativeToTarget: {x: 0, y: 0}
+  _healPercent: 0
+  _healTime: 0
+  _extendsInto:
+  - {fileID: 11400000, guid: 63c56ca197cc5054e964ab78833a1fa4, type: 2}
+  _extendsFrom: 1
+  _direction: 0
+  _icon: {fileID: 0}

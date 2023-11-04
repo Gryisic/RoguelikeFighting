@@ -9,12 +9,14 @@ namespace Core.Utils
     public class ServicesHandler : IServicesHandler
     {
         public IInputService InputService { get; }
+        public IConfigsService ConfigsService { get; }
 
-        private List<IService> _subServices;
+        private readonly List<IService> _subServices;
 
-        public ServicesHandler(IInputService inputService)
+        public ServicesHandler(IInputService inputService, IConfigsService configsService)
         {
             InputService = inputService;
+            ConfigsService = configsService;
 
             _subServices = new List<IService>();
         }

@@ -1,5 +1,4 @@
-﻿using System;
-using Common.Gameplay.Modifiers;
+﻿using Common.Gameplay.Modifiers;
 using Core.Interfaces;
 using Infrastructure.Utils;
 using UnityEngine;
@@ -19,12 +18,9 @@ namespace Core.GameStates
         
         public void Activate(GameStateArgs args)
         {
-            if (Debugging.DebugData.ShowGameStateData)
-                Debug.Log("Init!");
-            
             _modifiersDataBase.Initialize();
             
-            _stateSwitcher.SwitchState<SceneSwitchState>(new SceneSwitchArgs(Enums.SceneType.Arena));
+            _stateSwitcher.SwitchState<SceneSwitchState>(new SceneSwitchArgs(Enums.SceneType.Arena, Enums.GameStateType.Gameplay));
         }
     }
 }

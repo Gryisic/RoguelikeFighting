@@ -14,7 +14,6 @@ using Common.Units;
 using Common.Utils.Interfaces;
 using Core.Interfaces;
 using Infrastructure.Utils;
-using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Common.Gameplay.States
@@ -30,6 +29,7 @@ namespace Common.Gameplay.States
         private readonly IServicesHandler _servicesHandler;
         private readonly UnitsHandler _unitsHandler;
         private readonly HeroView _heroView;
+        private readonly RunDatasView _dataView;
         private readonly DamageView _damageView;
         private readonly ModifierCardsHandler _modifierCardsHandler;
         private readonly TradeCardsHandler _tradeCardsHandler;
@@ -46,6 +46,7 @@ namespace Common.Gameplay.States
             _servicesHandler = servicesHandler;
             _unitsHandler = unitsHandler;
             _heroView = ui.Get<HeroView>();
+            _dataView = ui.Get<RunDatasView>();
             _damageView = ui.Get<DamageView>();
             _modifierCardsHandler = ui.Get<ModifierCardsHandler>();
             _tradeCardsHandler = ui.Get<TradeCardsHandler>();
@@ -61,6 +62,9 @@ namespace Common.Gameplay.States
         {
             AttachInput();
             SubscribeToEvents();
+            
+            _heroView.Activate();
+            _dataView.Activate();
         }
         
         public void Deactivate()
@@ -71,7 +75,7 @@ namespace Common.Gameplay.States
 
         private void SetDebugExperience(InputAction.CallbackContext obj)
         {
-            _runData.Get<ExperienceData>(Enums.RunDataType.Experience).Add(25);
+            _runData.Get<ExperienceData>(Enums.RunDataType.Experience).Add(100);
         }
         
         private void DamageHero(InputAction.CallbackContext obj)
@@ -103,6 +107,9 @@ namespace Common.Gameplay.States
                 
                 if (room is StorageRoom storageRoom)
                     storageRoom.StorageSpinRequested += OnSpinRequested;
+
+                if (room is BattleRoom battleRoom)
+                    battleRoom.ExperienceObtained += experienceData.Add;
             }
             
             foreach (var unit in _unitsHandler.Units)
@@ -134,6 +141,9 @@ namespace Common.Gameplay.States
                 
                 if (room is StorageRoom storageRoom)
                     storageRoom.StorageSpinRequested -= OnSpinRequested;
+                
+                if (room is BattleRoom battleRoom)
+                    battleRoom.ExperienceObtained -= experienceData.Add;
             }
             
             foreach (var unit in _unitsHandler.Units)

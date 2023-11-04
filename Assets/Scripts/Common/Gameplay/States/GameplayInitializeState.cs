@@ -5,12 +5,14 @@ using Common.Gameplay.Interfaces;
 using Common.Models.Actions;
 using Common.Models.Actions.Templates;
 using Common.Scene;
+using Common.Scene.Cameras.Interfaces;
 using Common.UI.Gameplay;
 using Common.UI.Gameplay.Hero;
 using Common.UI.Gameplay.RunData;
 using Common.Units;
 using Common.Units.Legacy;
 using Common.Utils.Interfaces;
+using Core.Interfaces;
 using Infrastructure.Factories.UnitsFactory.Interfaces;
 using Infrastructure.Utils;
 using UnityEngine;
@@ -21,23 +23,27 @@ namespace Common.Gameplay.States
     {
         private readonly IStateChanger<IGameplayState> _stateChanger;
         private readonly IUnitFactory _unitFactory;
+        private readonly IServicesHandler _servicesHandler;
         
         private readonly Player _player;
         private readonly SpawnInfo _spawnInfo;
         private readonly UnitsHandler _unitsHandler;
         private readonly RunData _runData;
         private readonly Stage _stage;
+        private readonly UI.UI _ui;
         private readonly RunDatasView _runDataView;
         private readonly HeroView _heroView;
 
-        public GameplayInitializeState(IStateChanger<IGameplayState> stateChanger, Player player, SceneInfo sceneInfo, IUnitFactory unitFactory, UnitsHandler unitsHandler, IStageData stageData, IRunData runData, UI.UI ui)
+        public GameplayInitializeState(IStateChanger<IGameplayState> stateChanger, IServicesHandler servicesHandler, Player player, SceneInfo sceneInfo, IUnitFactory unitFactory, UnitsHandler unitsHandler, IStageData stageData, IRunData runData, UI.UI ui)
         {
             _stateChanger = stateChanger;
             _unitFactory = unitFactory;
+            _servicesHandler = servicesHandler;
             
             _player = player;
             _unitsHandler = unitsHandler;
 
+            _ui = ui;
             _runDataView = ui.Get<RunDatasView>();
             _heroView = ui.Get<HeroView>();
             
@@ -60,12 +66,12 @@ namespace Common.Gameplay.States
 
         private void CreatePlayer()
         {
-            _unitFactory.Load(_runData.InitialHeroData.HeroTemplate.ID);
+            _unitFactory.Load(_runData.HeroTemplate.ID);
 
             Vector3 playerSpawnPointPosition = _stage.Rooms[0].HeroInitialPosition.position;
             
-            Hero hero = _unitFactory.Create(_runData.InitialHeroData.HeroTemplate, playerSpawnPointPosition) as Hero;
-            hero.Initialize(_runData.InitialHeroData.HeroTemplate);
+            Hero hero = _unitFactory.Create(_runData.HeroTemplate, playerSpawnPointPosition) as Hero;
+            hero.Initialize(_runData.HeroTemplate);
             
             if (TryCreateLegacyUnit(_runData.InitialLegacyUnitData.FirstLegacyUnitTemplate, playerSpawnPointPosition, out LegacyUnit firstLegacyUnit))
                 hero.AddLegacyUnit(firstLegacyUnit, Enums.HeroActionType.FirstLegacySkill);
@@ -117,11 +123,11 @@ namespace Common.Gameplay.States
         
         private void SetUI()
         {
-            int currentHealth = _unitsHandler.Hero.StatsData.GetStatValue(Enums.Stat.Health);
-            int maxHealth = _unitsHandler.Hero.StatsData.GetStatValue(Enums.Stat.MaxHealth);
+            int currentHealth = _unitsHandler.Hero.StatsData.GetStatValueAsInt(Enums.Stat.Health);
+            int maxHealth = _unitsHandler.Hero.StatsData.GetStatValueAsInt(Enums.Stat.MaxHealth);
             _heroView.UpdateHealth(currentHealth, maxHealth);
 
-            List<HeroActionTemplate> baseSkills = _runData.InitialHeroData.HeroTemplate.Actions.Where(a =>
+            List<HeroActionTemplate> baseSkills = _runData.HeroTemplate.Actions.Where(a =>
                 a.ExtendsFrom == Enums.HeroActionType.Skill || a.ExtendsFrom == Enums.HeroActionType.FirstLegacySkill ||
                 a.ExtendsFrom == Enums.HeroActionType.SecondLegacySkill).ToList();
 
@@ -138,6 +144,9 @@ namespace Common.Gameplay.States
             _runDataView.SetAmount(Enums.RunDataType.Heal, healCharges);
             _runDataView.SetAmount(Enums.RunDataType.Experience, xpAmount);
             _runDataView.SetAmount(Enums.RunDataType.Gald, galdAmount);
+
+            Camera camera = _servicesHandler.GetSubService<ICameraService>().SceneCamera;
+            _ui.SetCameraToLayer(camera, Enums.UILayer.Camera);
         }
     }
 }

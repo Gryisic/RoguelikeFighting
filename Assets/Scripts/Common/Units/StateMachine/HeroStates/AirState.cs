@@ -103,10 +103,10 @@ namespace Common.Units.StateMachine.HeroStates
         {
             _isJumping = true;
             
-            internalData.Animator.PlayAnimationClip(internalData.AnimationData.CycleClip);
+            internalData.Animator.PlayAnimationClip(internalData.AnimationData.JumpCycleClip);
 
             await UniTask.WaitUntil(() => internalData.InAir == false, cancellationToken: _jumpTokenSource.Token);
-
+            
             internalData.ParticlesPlayer.PlayGenericParticle(Enums.GenericParticle.Landing, internalData.FaceDirection.x, false);
 
             if (internalData.MoveDirection.x != 0)

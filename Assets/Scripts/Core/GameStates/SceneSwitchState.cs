@@ -2,6 +2,7 @@
 using System.Threading;
 using Core.Interfaces;
 using Cysharp.Threading.Tasks;
+using Infrastructure.Utils;
 using UnityEngine;
 
 namespace Core.GameStates
@@ -23,9 +24,6 @@ namespace Core.GameStates
         
         public void Activate(GameStateArgs args)
         {
-            if (Debugging.DebugData.ShowGameStateData)
-                Debug.Log("SceneSwitch!");
-            
             ResetRequested?.Invoke();
 
             if (args is SceneSwitchArgs sceneSwitchArgs)
@@ -53,7 +51,24 @@ namespace Core.GameStates
             _isActive = false;
             _tokenSource.Dispose();
 
-            _stateSwitcher.SwitchState<GameplayState>(new GameStateArgs());
+            ChangeState(args.NextGameState);
+        }
+
+        private void ChangeState(Enums.GameStateType nextState)
+        {
+            switch (nextState)
+            {
+                case Enums.GameStateType.MainMenu:
+                    _stateSwitcher.SwitchState<MainMenuState>(new GameStateArgs());
+                    break;
+                
+                case Enums.GameStateType.Gameplay:
+                    _stateSwitcher.SwitchState<GameplayState>(new GameStateArgs());
+                    break;
+                
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(nextState), nextState, null);
+            }
         }
     }
 }

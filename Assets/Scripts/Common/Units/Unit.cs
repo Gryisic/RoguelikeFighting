@@ -113,6 +113,8 @@ namespace Common.Units
         {
             if (internalData.IsInvincible)
                 return;
+
+            amount = (int) (amount * StatsData.GetStatValue(Enums.Stat.DefenceMultiplier));
             
             internalData.SetStaggerTime(0.3f);
             StatsData.DecreaseStat(Enums.Stat.Health, amount);
@@ -138,7 +140,9 @@ namespace Common.Units
             if (internalData.IsInvincible)
                 return;
 
-            int currentHealth = StatsData.GetStatValue(Enums.Stat.Health);
+            amount = (int) (amount * StatsData.GetStatValue(Enums.Stat.DefenceMultiplier));
+
+            int currentHealth = StatsData.GetStatValueAsInt(Enums.Stat.Health);
             
             if (currentHealth - amount <= 0) 
                 amount = Mathf.Clamp(currentHealth - amount, currentHealth, amount);

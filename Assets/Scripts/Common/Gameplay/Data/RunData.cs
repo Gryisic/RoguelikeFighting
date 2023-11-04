@@ -1,37 +1,38 @@
 ﻿using System.Collections.Generic;
 using Common.Gameplay.Interfaces;
+using Common.Units.Heroes;
 using Common.Units.Interfaces;
 using Core.Interfaces;
 using Infrastructure.Utils;
-using UnityEngine;
 
 namespace Common.Gameplay.Data
 {
     public class RunData : IRunData
     {
         private Dictionary<Enums.RunDataType, IConcreteRunData> _dataMap;
-
-#if UNITY_EDITOR
-
+        
         public IInitialHeroData InitialHeroData { get; }
         public IInitialLegacyUnitData InitialLegacyUnitData { get; }
-#endif
-        
+
+        public HeroTemplate HeroTemplate { get; private set; }
         public ISharedUnitData SharedHeroData { get; private set; }
+        public int VisitedRoomsAmount { get; private set; }
 
 #if UNITY_EDITOR
         public RunData(IInitialHeroData initialData, IInitialLegacyUnitData initialLegacyUnitData, ModifiersData modifiersData)
         {
-            InitialHeroData = initialData;
+            HeroTemplate = initialData.HeroTemplate;
             InitialLegacyUnitData = initialLegacyUnitData;
 
             Initialize(modifiersData);
         }
 #endif
 
-        // public RunData(ModifiersData modifiersData)
+        // public RunData(IInitialLegacyUnitData initialLegacyUnitData, ModifiersData modifiersData)
         // {
-        //     ModifiersData = modifiersData;
+        //     InitialLegacyUnitData = initialLegacyUnitData;
+        //     
+        //     Initialize(modifiersData);
         // }
         
         private void Initialize(ModifiersData modifiersData)
@@ -51,10 +52,18 @@ namespace Common.Gameplay.Data
         }
 
         public T Get<T>(Enums.RunDataType type) where T : IConcreteRunData => (T) _dataMap[type];
+        
+        public void SetHeroTemplate(HeroTemplate heroTemplate)
+        {
+            HeroTemplate = heroTemplate;
+        }
+
+        public void IncreaseVisitedRoomsAmount() => VisitedRoomsAmount++;
 
         public void Clear()
         {
             SharedHeroData = null;
+            VisitedRoomsAmount = 0;
 
             foreach (var data in _dataMap.Values) 
                 data.Clear();

@@ -39,6 +39,12 @@ namespace Core
         public void Dispose()
         {
             _currentState.Deactivate();
+            
+            foreach (var gameState in _gameStates)
+            {
+                if (gameState is IStatesResetRequester resetRequester)
+                    resetRequester.ResetRequested -= ResetAllStates;
+            }
         }
 
         public void SwitchState<T>(GameStateArgs args) where T : IGameState

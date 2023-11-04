@@ -2,6 +2,7 @@
 using Common.Gameplay.Interfaces;
 using Common.Models.Actions.Templates;
 using Common.Units.Interfaces;
+using Infrastructure.Utils;
 using UnityEngine;
 
 namespace Common.Models.Actions
@@ -32,7 +33,7 @@ namespace Common.Models.Actions
                 
                 if (damageable.GetType() != _internalData.Type)
                 {
-                    int damage = (int) (data.Amount * AffectMultiplier);
+                    int damage = (int) (data.Amount * _internalData.StatsData.GetStatValue(Enums.Stat.AttackMultiplier));
                     Vector2 directionalForce = new Vector2(data.KnockbackForce.x * _internalData.FaceDirection.x, data.KnockbackForce.y);
                     
                     damageable.TakeDamage(damage);

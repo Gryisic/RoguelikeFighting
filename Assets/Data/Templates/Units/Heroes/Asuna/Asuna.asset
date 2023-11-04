@@ -26,5 +26,15 @@ MonoBehaviour:
       _riseClip: {fileID: 7400000, guid: 09d8a2a335ff79a4f88d64fe408466a5, type: 2}
       _cycleClip: {fileID: 7400000, guid: 87601a1d05a8937469ebdb6ed8397038, type: 2}
       _landingClip: {fileID: 7400000, guid: db5b073d5bfa36f4c8cdfb01203b6ea4, type: 2}
+    _crouchAnimationData:
+      _crouchClip: {fileID: 7400000, guid: 5f73b7a6d201676479519f887d96649a, type: 2}
+      _crouchCycleClip: {fileID: 7400000, guid: 6a391aece209c634da4ef3c9554cb5eb, type: 2}
+      _standingClip: {fileID: 7400000, guid: d9c554438d52948418e1857b9822efd8, type: 2}
   _actions:
   - {fileID: 11400000, guid: 054d635793d2eaa489cf51134ca55578, type: 2}
+  - {fileID: 11400000, guid: 747c8a303b021a64d9a22da586644e36, type: 2}
+  - {fileID: 11400000, guid: fc2a5cba58d6cc1499fdb7331aa54ef7, type: 2}
+  - {fileID: 11400000, guid: 9e1ec05a038dd7a4e9862ecec8fc2c7b, type: 2}
+  - {fileID: 11400000, guid: 61dd3624d857c3a4fa6964ddece41e4e, type: 2}
+  - {fileID: 11400000, guid: 6b3482b0f33c53240ab45a0d6f1ccbfa, type: 2}
+  - {fileID: 11400000, guid: c114793f33add0f499864e51a1848ae2, type: 2}

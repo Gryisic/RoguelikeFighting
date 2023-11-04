@@ -74,11 +74,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _game: {fileID: 2987485936005772538, guid: f92b042cfe3eee046afaf41cfec38aaa, type: 3}
+  _configsService: {fileID: 11400000, guid: 5ad020aaa8b127d44b3053419c267f87, type: 2}
   _ui: {fileID: 307659142570141565, guid: 85bc15d818889a541aec4eb2560dd7c6, type: 3}
   _debugHeroTemplate:
-    _template: {fileID: 11400000, guid: 402dda5585f19f546844573440bd1101, type: 2}
+    _template: {fileID: 11400000, guid: a41f8f3ce7f98144ea3fd367c958e5c3, type: 2}
     _firsLegacyUnitTemplate: {fileID: 11400000, guid: 9d87bb05200354f48bbf609f421cb304, type: 2}
     _secondLegacyUnitTemplate: {fileID: 0}
+  _heroesDatabase:
+    _templates:
+    - {fileID: 11400000, guid: 89cd686835a19bd4798c514b8e80b91e, type: 2}
+    - {fileID: 11400000, guid: e7a534d6455038940aadbccca144102d, type: 2}
   _modifiersDataBase:
     _templates:
     - {fileID: 11400000, guid: 8d4e640c1cf8e254b8709530613577eb, type: 2}

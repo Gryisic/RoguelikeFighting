@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Common.Gameplay.Interfaces;
 using Common.Models.Actions;
 using Common.Models.Particles;
 using Common.Models.Particles.Interfaces;
@@ -8,12 +9,11 @@ using Common.Units.Enemies;
 using Common.Units.Interfaces;
 using Common.Units.StateMachine.EnemyStates;
 using Infrastructure.Utils;
-using Ink.Parsed;
 using UnityEngine;
 
 namespace Common.Units
 {
-    public class Enemy : Unit
+    public class Enemy : Unit, IKillable
     {
         [SerializeField] private EnemyHealthBar _healthBar;
 
@@ -66,11 +66,28 @@ namespace Common.Units
 
         public override void Activate()
         {
+            ResetHealth();
+
             ChangeState<IdleState>();
             
             base.Activate();
         }
 
         public void SetHeroData(ISharedUnitData heroData) => _heroData = heroData;
+        
+        public void Kill()
+        {
+            int damage = StatsData.GetStatValueAsInt(Enums.Stat.Health);
+            
+            TakeDamage(damage);
+        }
+        
+        private void ResetHealth()
+        {
+            int currentHealth = StatsData.GetStatValueAsInt(Enums.Stat.Health);
+            int maxHealth = StatsData.GetStatValueAsInt(Enums.Stat.MaxHealth);
+            
+            StatsData.IncreaseStat(Enums.Stat.Health, maxHealth - currentHealth);
+        }
     }
 }

@@ -23,6 +23,13 @@ namespace Common.Gameplay.Rooms
             CameraService = cameraService;
         }
 
+        public override void Enter()
+        {
+            runData.IncreaseVisitedRoomsAmount();
+            
+            base.Enter();
+        }
+
         protected void ModifyData(Enums.RunDataType type, Item itemData)
         {
             if (itemData is TradeItemData tradeItemData)

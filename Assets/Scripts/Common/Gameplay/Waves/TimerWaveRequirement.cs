@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 namespace Common.Gameplay.Waves
 {
-    public class TimerWaveRequirement : NextWaveRequirement
+    public class TimerWaveRequirement : WaveRequirement
     {
         public override event Action Fulfilled;
 
-        private readonly int _timer;
+        private readonly float _timer;
         
-        public TimerWaveRequirement(int timer)
+        public TimerWaveRequirement(float timer)
         {
             _timer = timer;
         }

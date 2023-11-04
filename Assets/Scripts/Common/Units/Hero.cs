@@ -20,7 +20,7 @@ namespace Common.Units
     public class Hero : Unit, IManuallyMovable, IHeroActions
     {
         private HealData _healData;
-        
+
         public Enums.Hero HeroType { get; private set; }
         
         private IHeroInternalData HeroInternalData => internalData as IHeroInternalData;
@@ -38,7 +38,7 @@ namespace Common.Units
                 throw new InvalidOperationException("Trying to initialize Hero from non Hero Template");
             
             HeroTemplate heroTemplate = (HeroTemplate) template;
-
+            
             UnitParticlesPlayer particlesPlayer = new UnitParticlesPlayer();
             IUnitRendererData rendererData = new UnitRendererData(particlesPlayer, animator, animationEventsReceiver);
 
@@ -49,7 +49,7 @@ namespace Common.Units
             
             List<IParticleData> particlesData = actionsContainer.GetAllActions()
                 .Select(action => new ParticleData(action.Data.ParticleForCopy, action.Data.ParticleID)).Cast<IParticleData>().ToList();
-
+            
             particlesPlayer.Initialize(transform, particlesData, genericParticlesData);
 
             HeroInternalData data = internalData as HeroInternalData;
@@ -60,6 +60,7 @@ namespace Common.Units
             states = new IUnitState[]
             {
                 new IdleState(this, heroInternalData),
+                new CrouchState(this, heroInternalData),
                 new MovingState(this, heroInternalData),
                 new DashState(this, heroInternalData),
                 new AirState(this, heroInternalData),

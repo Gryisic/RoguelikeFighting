@@ -28,12 +28,14 @@ MonoBehaviour:
   _knockbackForce: {x: 10, y: 0}
   _knockbackTime: 0.3
   _vector: {x: 1, y: 0}
-  _distance: 10
-  _movingTime: 0
+  _distance: 5
+  _movingTime: 1
   _freezeAfterMoving: 0
   _useClipLengthAsTime: 1
   _animatorController: {fileID: 0}
   _nextStanceTemplate: {fileID: 0}
+  _statsToIncrease: []
+  _statsToDecrease: []
   _positionRelativeToTarget: {x: 0, y: 0}
   _healPercent: 0
   _healTime: 0

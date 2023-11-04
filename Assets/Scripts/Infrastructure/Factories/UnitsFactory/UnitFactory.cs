@@ -41,7 +41,7 @@ namespace Infrastructure.Factories.UnitsFactory
         public Unit Create(UnitTemplate template, Vector3 at)
         {
             Unit unit = _idPrefabMap[template.ID];
-
+            
             unit = _diContainer.InstantiatePrefabForComponent<Unit>(unit, at, Quaternion.identity, _root);
             
             return unit;

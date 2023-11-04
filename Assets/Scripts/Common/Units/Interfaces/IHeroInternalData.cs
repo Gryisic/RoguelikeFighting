@@ -22,6 +22,8 @@ namespace Common.Units.Interfaces
         public int MaxJumps { get; }
         public int RemainingJumps { get; }
         public bool JumpRequested { get; }
+        
+        public bool IsCrouching { get; }
 
         void SetDashData(float distance, float force, int maxDashesCount);
         void IncreaseRemainingDashes();
@@ -32,7 +34,11 @@ namespace Common.Units.Interfaces
         public void DecreaseRemainingJumps();
         public void ResetJumps();
 
+        void UpdateInputDirection();
+        
         void SetAction(Enums.HeroActionType actionType);
         void ResetAction();
+
+        void SetCrouching(bool isCrouching);
     }
 }

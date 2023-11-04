@@ -8,11 +8,13 @@ namespace Infrastructure.Utils
         {
             Initialize,
             SceneSwitch,
+            MainMenu,
             Gameplay
         }
         
         public enum SceneType
         {
+            MainMenu,
             Arena
         }
 
@@ -28,6 +30,13 @@ namespace Infrastructure.Utils
             Instant,
             Smooth
         }
+
+        public enum UILayer
+        {
+            Overlay,
+            Camera,
+            World
+        }
         
         public enum MenuType
         {
@@ -37,7 +46,7 @@ namespace Infrastructure.Utils
             Storage
         }
         
-        public enum NextWaveRequirement
+        public enum WaveRequirement
         {
             EnemiesDefeated,
             Timer
@@ -120,7 +129,9 @@ namespace Infrastructure.Utils
         public enum Stat
         {
             MaxHealth,
-            Health
+            Health,
+            AttackMultiplier,
+            DefenceMultiplier
         }
 
         public enum Modifier

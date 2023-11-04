@@ -4,6 +4,8 @@ using Common.Gameplay.Interfaces;
 using Common.Gameplay.Modifiers;
 using Common.UI;
 using Common.UI.Gameplay;
+using Common.Units.Selection;
+using Core.Configs;
 using Core.GameStates;
 using Core.Interfaces;
 using Core.PlayerInput;
@@ -21,8 +23,10 @@ namespace Core.Installers
     public class GameInstaller : MonoInstaller, IInitializable, IDisposable
     {
         [SerializeField] private Game _game;
+        [SerializeField] private ConfigsService _configsService;
         [SerializeField] private UI _ui;
         [SerializeField] private DebugHeroTemplate _debugHeroTemplate;
+        [SerializeField] private SelectionHeroesDatabase _heroesDatabase;
         [SerializeField] private ModifiersDataBase _modifiersDataBase;
         
         public void Initialize() => _game.Initiate();
@@ -31,6 +35,7 @@ namespace Core.Installers
         {
             BindServices();
             BindSceneSwitcher();
+            BindHeroes();
             BindModifiers();
             BindRunData();
             BindFactories();
@@ -44,6 +49,7 @@ namespace Core.Installers
         {
             Container.Resolve<IInputService>().Dispose();
             
+            _ui.Dispose();
             _game.Dispose();
         }
         
@@ -53,6 +59,11 @@ namespace Core.Installers
 
         private void BindRunData() => Container.Bind<IRunData>().To<RunData>().AsSingle();
 
+        private void BindHeroes()
+        {
+            Container.Bind<SelectionHeroesDatabase>().FromInstance(_heroesDatabase).AsSingle();
+        }
+        
         private void BindModifiers()
         {
             Container.Bind<ModifiersDataBase>().FromInstance(_modifiersDataBase).AsSingle();
@@ -65,6 +76,8 @@ namespace Core.Installers
         {
             Container.Bind<Input>().WhenInjectedInto<InputService>();
             Container.BindInterfacesTo<InputService>().AsSingle();
+
+            Container.Bind<IConfigsService>().To<ConfigsService>().FromInstance(_configsService).AsSingle();
 
             Container.BindInterfacesTo<ServicesHandler>().AsSingle().CopyIntoDirectSubContainers();
         }
@@ -95,6 +108,7 @@ namespace Core.Installers
         {
             Container.BindInterfacesAndSelfTo<GameInitializeState>().AsSingle();
             Container.BindInterfacesAndSelfTo<SceneSwitchState>().AsSingle();
+            Container.BindInterfacesAndSelfTo<MainMenuState>().AsSingle();
             Container.BindInterfacesAndSelfTo<DialogueState>().AsSingle();
             Container.BindInterfacesAndSelfTo<GameplayState>().AsSingle();
 

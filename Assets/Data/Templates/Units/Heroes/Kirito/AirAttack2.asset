@@ -15,22 +15,32 @@ MonoBehaviour:
   _name: AirAttack2
   _actionClip: {fileID: 7400000, guid: 388217dbab7f4af4b8e2413705d2c5d1, type: 2}
   _baseEffect: 0
+  _executionPlacement: 1
   _executeAfterClipPlayed: 0
   _isChargeable: 0
   _chargeTime: 0
   _chargeClip: {fileID: 0}
+  _particleForCopy: {fileID: 2896774269262999512, guid: 53c3620eb76cbaa46bb1a6f3d6098492, type: 3}
+  _particleID: 4
+  _rotation: 0
   _amount: 0
   _knockback: 0
   _knockbackForce: {x: 0, y: 0}
   _knockbackTime: 0.3
-  _vector: {x: 0, y: 0}
-  _distance: 0
+  _vector: {x: 1, y: 1}
+  _distance: 0.1
   _movingTime: 0
-  _useClipLengthAsTime: 0
+  _freezeAfterMoving: 0
+  _useClipLengthAsTime: 1
   _animatorController: {fileID: 0}
   _nextStanceTemplate: {fileID: 0}
+  _statsToIncrease: []
+  _statsToDecrease: []
+  _positionRelativeToTarget: {x: 0, y: 0}
+  _healPercent: 0
+  _healTime: 0
   _extendsInto:
   - {fileID: 11400000, guid: 7a1739a87646873499d5c756e9a9ab6f, type: 2}
   _extendsFrom: 1
   _direction: 0
-  _executionPlacement: 1
+  _icon: {fileID: 0}

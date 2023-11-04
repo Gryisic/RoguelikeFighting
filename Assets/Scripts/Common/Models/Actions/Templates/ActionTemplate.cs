@@ -1,4 +1,6 @@
-﻿using Infrastructure.Utils;
+﻿using System.Collections.Generic;
+using Common.Units.Stats;
+using Infrastructure.Utils;
 using UnityEditor.Animations;
 using UnityEngine;
 
@@ -40,6 +42,8 @@ namespace Common.Models.Actions.Templates
         [Space, Header("Stance Change Data")]
         [SerializeField] private AnimatorController _animatorController;
         [SerializeField] private ActionTemplate _nextStanceTemplate;
+        [SerializeField] private List<StatMultipliersMap> _statsToIncrease;
+        [SerializeField] private List<StatMultipliersMap> _statsToDecrease;
 
         [Space, Header("Teleportation Data")] 
         [SerializeField] private Vector2 _positionRelativeToTarget;
@@ -76,6 +80,8 @@ namespace Common.Models.Actions.Templates
         
         public AnimatorController AnimatorController => _animatorController;
         public ActionTemplate NextStanceTemplate => _nextStanceTemplate;
+        public List<StatMultipliersMap> StatsToIncrease => _statsToIncrease;
+        public List<StatMultipliersMap> StatsToDecrease => _statsToDecrease;
         
         public Vector2 PositionRelativeToTarget => _positionRelativeToTarget;
         public float FreezeAfterMoving => _freezeAfterMoving;

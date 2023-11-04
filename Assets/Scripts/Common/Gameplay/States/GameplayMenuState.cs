@@ -86,7 +86,7 @@ namespace Common.Gameplay.States
             }
 
             if (_activeUI is ISelectableUIElement selectable)
-                selectable.Exited += ToActiveState;
+                selectable.Backed += ToActiveState;
             
             _activeUI.Activate();
         }

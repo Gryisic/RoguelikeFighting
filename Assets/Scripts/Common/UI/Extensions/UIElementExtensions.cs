@@ -1,4 +1,5 @@
-﻿using Common.UI.Interfaces;
+﻿using System;
+using Common.UI.Interfaces;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -15,7 +16,7 @@ namespace Common.UI.Extensions
         public static void Undo(this UIElement element, InputAction.CallbackContext context)
         {
             if (element is ISelectableUIElement selectable)
-                selectable.Undo();
+                selectable.Back();
         }
         
         public static void MoveLeft(this UIElement element, InputAction.CallbackContext context)
@@ -40,6 +41,12 @@ namespace Common.UI.Extensions
         {
             if (element is IVerticallyNavigatableUIElement navigatable)
                 navigatable.MoveDown();
+        }
+
+        public static void Dispose(this UIElement element)
+        {
+            if (element is IDisposable disposable)
+                disposable.Dispose();
         }
     }
 }

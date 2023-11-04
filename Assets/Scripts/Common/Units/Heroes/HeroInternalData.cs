@@ -24,6 +24,7 @@ namespace Common.Units.Heroes
         public int MaxJumps { get; private set; }
         public int RemainingJumps { get; private set; }
         public bool JumpRequested { get; private set; }
+        public bool IsCrouching { get; private set; }
 
         public Enums.HeroActionType LastActionType { get; private set; }
         
@@ -91,6 +92,8 @@ namespace Common.Units.Heroes
             JumpRequested = false;
         }
 
+        public void UpdateInputDirection() => InputDirection = DefineInputDirection();
+
         public void SetAction(Enums.HeroActionType actionType)
         {
             LastActionType = actionType;
@@ -119,7 +122,9 @@ namespace Common.Units.Heroes
          
             LastActionType = Enums.HeroActionType.None;
         }
-        
+
+        public void SetCrouching(bool isCrouching) => IsCrouching = isCrouching;
+
         private Enums.ActionExecutionPlacement DefinePlacement()
         {
             if (InAir == false)

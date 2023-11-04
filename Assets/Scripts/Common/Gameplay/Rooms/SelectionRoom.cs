@@ -37,10 +37,11 @@ namespace Common.Gameplay.Rooms
             
             List<Enums.RoomType> types = Enum.GetValues(typeof(Enums.RoomType))
                 .Cast<Enums.RoomType>()
-                .Where(t => t != Enums.RoomType.Selection)
+                .Where(t => t != Enums.RoomType.Selection && t != Enums.RoomType.ExtensiveBattle)
                 .ToList();
 
             _roomTypes = types;
+            
             CameraService = cameraService;
 
             foreach (var trigger in _selectionTriggers)
@@ -83,38 +84,40 @@ namespace Common.Gameplay.Rooms
 
         private void SetTriggers()
         {
-            int backupIterations = 3;
             int triggersAmount = Random.Range(1, _selectionTriggers.Length + 1);
             HashSet<Enums.RoomType> usedTypes = new HashSet<Enums.RoomType>();
+
+            if (triggersAmount > _roomTypes.Count)
+                triggersAmount = _roomTypes.Count;
             
             _layout.SetTriggersAmount(triggersAmount);
 
-            for (int i = 0; i < backupIterations; i++)
+            for (int i = 0; i < triggersAmount; i++)
             {
-                if (usedTypes.Count >= triggersAmount)
-                    break;
+                Enums.RoomType type = GetRandomType(usedTypes);
+                RoomTemplate template = _generalTemplates.First(t => t.Type == type);
+                Vector2 position = _layout.GetNextTriggerPosition();
 
-                for (int j = usedTypes.Count; j < triggersAmount; j++)
-                {
-                    Enums.RoomType type = _roomTypes.Random();
-                    
-                    if (usedTypes.Add(type) == false)
-                        continue;
-                
-                    RoomTemplate template = _generalTemplates.First(t => t.Type == type);
-                    Vector2 position = _layout.GetNextTriggerPosition();
-                
-                    if (triggersAmount == 2)
-                        Debug.Log($"Index {i} Pos {position}");
-                    
-                    _roomView.SelectionMarkersHandler.SetDataAndActivate(j, template);
-                    _selectionTriggers[j].SetPosition(position);
-                    _selectionTriggers[j].SetIndexAndType(j, type);
-                    _selectionTriggers[j].Activate();
-                }
+                _roomView.SelectionMarkersHandler.SetDataAndActivate(i, template);
+                _selectionTriggers[i].SetPosition(position);
+                _selectionTriggers[i].SetIndexAndType(i, type);
+                _selectionTriggers[i].Activate();
             }
             
             _layout.Reset();
+        }
+
+        private Enums.RoomType GetRandomType(HashSet<Enums.RoomType> usedTypes)
+        {
+            while (true)
+            {
+                Enums.RoomType type = _roomTypes.Random();
+
+                if (usedTypes.Add(type) == false) 
+                    continue;
+                
+                return type;
+            }
         }
 
         private void OnRoomSelected(Enums.RoomType type)

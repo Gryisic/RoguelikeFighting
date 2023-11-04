@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _id: 11
   _name: Ninja
-  _maxHealth: 500
+  _maxHealth: 750
   _type: 1
   _executionType: 1
   _actionTemplates:

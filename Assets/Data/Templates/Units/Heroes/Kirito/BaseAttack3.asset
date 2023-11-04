@@ -34,6 +34,8 @@ MonoBehaviour:
   _useClipLengthAsTime: 1
   _animatorController: {fileID: 0}
   _nextStanceTemplate: {fileID: 0}
+  _statsToIncrease: []
+  _statsToDecrease: []
   _positionRelativeToTarget: {x: 0, y: 0}
   _healPercent: 0
   _healTime: 0

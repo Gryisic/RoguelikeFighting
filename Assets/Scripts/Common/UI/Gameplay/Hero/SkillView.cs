@@ -14,23 +14,10 @@ namespace Common.UI.Gameplay.Hero
 
         public Enums.HeroActionType SkillType => _skillType;
 
-        private void Awake()
-        {
-            _icon.color = _nullColor;
-        }
-
         public void UpdateIcon(Sprite sprite)
         {
-            if (sprite == null)
-            {
-                Debug.Log(_skillType);
-                _icon.color = _nullColor;
-            }
-            else
-            {
-                _icon.color = _filledColor;
-            }
-            
+            _icon.color = sprite == null ? _nullColor : _filledColor;
+
             _icon.sprite = sprite;
         }
     }

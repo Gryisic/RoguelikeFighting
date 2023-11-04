@@ -15,10 +15,14 @@ MonoBehaviour:
   _name: CrouchAttack3
   _actionClip: {fileID: 7400000, guid: 8cd845afcca0df947920e2ce21ec7eb2, type: 2}
   _baseEffect: 0
+  _executionPlacement: 0
   _executeAfterClipPlayed: 0
   _isChargeable: 0
   _chargeTime: 0
   _chargeClip: {fileID: 0}
+  _particleForCopy: {fileID: 4554907053911960932, guid: 690b13ed34b34e44ea846962b68fb780, type: 3}
+  _particleID: 8
+  _rotation: 0
   _amount: 0
   _knockback: 0
   _knockbackForce: {x: 0, y: 0}
@@ -26,10 +30,16 @@ MonoBehaviour:
   _vector: {x: 0, y: 0}
   _distance: 0
   _movingTime: 0
-  _useClipLengthAsTime: 0
+  _freezeAfterMoving: 0
+  _useClipLengthAsTime: 1
   _animatorController: {fileID: 0}
   _nextStanceTemplate: {fileID: 0}
+  _statsToIncrease: []
+  _statsToDecrease: []
+  _positionRelativeToTarget: {x: 0, y: 0}
+  _healPercent: 0
+  _healTime: 0
   _extendsInto: []
   _extendsFrom: 1
   _direction: 2
-  _executionPlacement: 0
+  _icon: {fileID: 0}

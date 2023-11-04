@@ -5,6 +5,7 @@ using Common.Gameplay.Interfaces;
 using Common.Gameplay.Rooms;
 using Common.Scene.Cameras.Interfaces;
 using Common.Units;
+using Core.Configs.Interfaces;
 using Core.Extensions;
 using Core.Interfaces;
 using Core.Utils;
@@ -62,6 +63,9 @@ namespace Common.Gameplay
                 
                 room.Initialize(this, _runData, _servicesHandler.GetSubService<ICameraService>());
 
+                if (room is BattleRoom battleRoom)
+                    battleRoom.SetDifficultyData(_servicesHandler.ConfigsService.GetConfig<IDifficultyConfig>());
+                
                 if (room.gameObject.activeSelf)
                     room.gameObject.SetActive(false);
             }

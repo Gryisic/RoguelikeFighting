@@ -16,8 +16,8 @@ namespace Common.Models.Actions
 
         public override void Execute()
         {
-            int maxHealth = _internalData.StatsData.GetStatValue(Enums.Stat.MaxHealth);
-            int healAmount = Mathf.CeilToInt((float) maxHealth / 100 * data.HealPercent);
+            float maxHealth = _internalData.StatsData.GetStatValue(Enums.Stat.MaxHealth);
+            int healAmount = Mathf.CeilToInt(maxHealth / 100 * data.HealPercent);
             
             _internalData.StatsData.IncreaseStat(Enums.Stat.Health, healAmount);
         }

@@ -186,6 +186,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 694202305785479431}
     m_Modifications:
+    - target: {fileID: 483462232, guid: 7c2800731dd72c54e9506646b4abda11, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 635621714, guid: 7c2800731dd72c54e9506646b4abda11, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 635621714, guid: 7c2800731dd72c54e9506646b4abda11, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 635621714, guid: 7c2800731dd72c54e9506646b4abda11, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 764.9993
+      objectReference: {fileID: 0}
+    - target: {fileID: 635621714, guid: 7c2800731dd72c54e9506646b4abda11, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1608874276, guid: 7c2800731dd72c54e9506646b4abda11, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3276478490514660631, guid: 7c2800731dd72c54e9506646b4abda11, type: 3}
       propertyPath: m_Name
       value: CameraLayer

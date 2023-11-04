@@ -14,8 +14,8 @@ namespace Common.UI.Gameplay.Rooms
         private int _maxIndex;
 
         public event Func<int> RequestGaldAmount; 
-        public event Action Entered;
-        public event Action Exited;
+        public event Action Selected;
+        public event Action Backed;
         public event Action<int> CardSelected;
 
         public override void Activate()
@@ -58,7 +58,7 @@ namespace Common.UI.Gameplay.Rooms
 
         public void Select() => _cards[_hoveredCardIndex].Select();
 
-        public void Undo() => Exited?.Invoke();
+        public void Back() => Backed?.Invoke();
         
         public void MoveRight()
         {

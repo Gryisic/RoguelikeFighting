@@ -7,6 +7,7 @@ namespace Common.UI.Gameplay.RunData
 {
     public class HealChargesView : RunDataView
     {
+        [SerializeField] private ParticleSystem _particle;
         [SerializeField] private HealChargeView[] _chargesView;
 
         private int _activeCharges;
@@ -20,7 +21,7 @@ namespace Common.UI.Gameplay.RunData
                 ActivateCharges(amount);
             else
                 DeactivateCharges(amount);
-
+            
             _activeCharges = amount;
         }
 
@@ -34,6 +35,8 @@ namespace Common.UI.Gameplay.RunData
         
         private void DeactivateCharges(int amount)
         {
+            PlayParticle();
+
             if (_activeCharges == 1)
             {
                 _chargesView[0].Deactivate();
@@ -45,6 +48,12 @@ namespace Common.UI.Gameplay.RunData
             {
                 _chargesView[i].Deactivate();
             }
+        }
+        
+        private void PlayParticle()
+        {
+            _particle.gameObject.SetActive(true);
+            _particle.Play();
         }
     }
 }

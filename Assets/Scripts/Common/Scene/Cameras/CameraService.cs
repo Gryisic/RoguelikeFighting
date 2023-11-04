@@ -14,7 +14,9 @@ namespace Common.Scene.Cameras
         [SerializeField] private FocusCamera _focusCamera;
 
         private Camera _activeCamera;
-        
+
+        public UnityEngine.Camera SceneCamera => _brain.OutputCamera;
+
         public void FollowUnit(Transform unitTransform, Enums.CameraDistanceType distanceType = Enums.CameraDistanceType.Neutral)
         {
             ChangeCamera(_followingCamera);

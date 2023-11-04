@@ -1,6 +1,9 @@
-﻿using Common.Gameplay.Triggers;
+﻿using System;
+using System.Threading;
+using Common.Gameplay.Triggers;
 using Common.Models.Actions;
 using Common.Units.Interfaces;
+using Cysharp.Threading.Tasks;
 using Infrastructure.Utils;
 using UnityEngine;
 
@@ -19,6 +22,13 @@ namespace Common.Units.StateMachine.HeroStates
                 return;
             }
             
+            if (internalData.IsCrouching)
+            {
+                unitStatesChanger.ChangeState<CrouchState>();
+                
+                return;
+            }
+            
             internalData.ResetJumps();
             internalData.Animator.PlayDefaultAnimation(Enums.DefaultAnimation.Idle);
         }
@@ -32,6 +42,11 @@ namespace Common.Units.StateMachine.HeroStates
         {
             if (internalData.MoveDirection.x != 0)
                 unitStatesChanger.ChangeState<MovingState>();
+
+            if (internalData.MoveDirection.y < 0)
+            {
+                unitStatesChanger.ChangeState<CrouchState>();
+            }
         }
 
         public void Attack() => SetActionAndChangeState(Enums.HeroActionType.BasicAttack);
@@ -54,15 +69,17 @@ namespace Common.Units.StateMachine.HeroStates
 
         public void Jump()
         {
-            if (internalData.InAir == false)
-            {
-                if (internalData.InputDirection == Enums.InputDirection.Down)
-                    internalData.Physics.DropThroughPlatform();
-                else
-                    internalData.RequestJump();
+            internalData.UpdateInputDirection();
+            
+            if (internalData.InAir) 
+                return;
+            
+            if (internalData.InputDirection == Enums.InputDirection.Down)
+                internalData.Physics.DropThroughPlatform();
+            else
+                internalData.RequestJump();
                 
-                unitStatesChanger.ChangeState<AirState>();
-            }
+            unitStatesChanger.ChangeState<AirState>();
         }
         
         public void Interact()

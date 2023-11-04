@@ -7,9 +7,10 @@ namespace Common.Units.Interfaces
     {
         event Action<int, int> HealthChanged; 
 
-        public int GetStatValue(Enums.Stat type);
+        public float GetStatValue(Enums.Stat type);
+        public int GetStatValueAsInt(Enums.Stat type);
 
-        public void IncreaseStat(Enums.Stat type, int amount);
-        public void DecreaseStat(Enums.Stat type, int amount);
+        public void IncreaseStat(Enums.Stat type, float amount);
+        public void DecreaseStat(Enums.Stat type, float amount);
     }
 }

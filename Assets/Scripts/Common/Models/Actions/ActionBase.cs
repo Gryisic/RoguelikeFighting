@@ -9,9 +9,7 @@ namespace Common.Models.Actions
         protected readonly ActionBase wrappedBase;
         
         protected ActionTemplate data;
-
-        protected float AffectMultiplier { get; private set; } = 1;
-
+        
         protected ActionBase(ActionTemplate data, ActionBase wrappedBase = null)
         {
             this.data = data;
@@ -28,36 +26,7 @@ namespace Common.Models.Actions
             this.data = data;
         }
         
-        protected void IncreaseAmountOnDecimalPercent(float percent)
-        {
-            percent = ValidatedValue(percent, "increase");
-
-            AffectMultiplier *= percent;
-        }
-        
-        protected void DecreaseAmountOnDecimalPercent(float percent)
-        {
-            percent = ValidatedValue(percent, "decrease");
-
-            AffectMultiplier *= percent;
-        }
-
         private void ThrowException(string message, float value) => 
             throw new InvalidOperationException($"Trying to {message} multiplier on negative value. Value: {value}");
-        
-        private float ValidatedValue(float value, string exceptionMessage)
-        {
-            if (value < 0)
-                ThrowException("decrease", value);
-            
-            if (value > 100)
-            {
-                Debug.LogWarning($"Trying to increase multiplier on value that exceeds limit. Value will be divided by 100. Value: {value}");
-
-                value /= 100;
-            }
-
-            return value;
-        }
     }
 }

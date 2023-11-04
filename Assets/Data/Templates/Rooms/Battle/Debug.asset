@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Debug
   m_EditorClassIdentifier: 
   _requirement: 0
-  _timer: 5
+  _timer: 0.5

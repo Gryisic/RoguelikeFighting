@@ -19,7 +19,7 @@ namespace Common.Gameplay.Rooms
         
         private void Awake()
         {
-            SubscribeToEvents();
+            
         }
 
         public override void Initialize(IStageData stageData, IRunData runData, ICameraService cameraService)
@@ -30,14 +30,6 @@ namespace Common.Gameplay.Rooms
         public override void Dispose()
         {
             base.Dispose();
-        }
-        
-        private void SubscribeToEvents()
-        {
-            foreach (var map in _wavesMap)
-            {
-                map.Trigger.Triggered += map.Wave.Activate;
-            }
         }
 
         [Serializable]

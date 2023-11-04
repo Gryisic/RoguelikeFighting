@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Threading;
 using Common.Gameplay.Interfaces;
 using Common.Gameplay.Triggers;
 using Common.Gameplay.Waves;
 using Common.Scene.Cameras.Interfaces;
+using Core.Configs.Interfaces;
 using Infrastructure.Utils;
 using UnityEngine;
 
@@ -11,24 +11,26 @@ namespace Common.Gameplay.Rooms
 {
     public class BattleRoom : Room
     {
-        [SerializeField] private BattleRoomTemplate _template;
+        [SerializeField] private WaveTemplate _template;
         [SerializeField] private TriggerWaveMap[] _wavesMap;
 
         private IStageData _stageData;
+        private IRunData _runData;
+        private IDifficultyConfig _difficultyConfig;
 
-        private CancellationTokenSource _requirementCheckTokenSource;
-        private NextWaveRequirement _requirement;
         private int _currentWaveIndex;
 
         protected override ICameraService CameraService { get; set; }
         public override Enums.RoomType Type => Enums.RoomType.Battle;
 
+        public event Action<int> ExperienceObtained;
+
         public override void Initialize(IStageData stageData, IRunData runData, ICameraService cameraService)
         {
             _stageData = stageData;
+            _runData = runData;
             CameraService = cameraService;
-            _requirement = DefineRequirement();
-            
+
             SubscribeToEvents();
 
             foreach (var map in _wavesMap) 
@@ -42,93 +44,79 @@ namespace Common.Gameplay.Rooms
             foreach (var map in _wavesMap) 
                 map.Wave.Dispose();
 
-            _requirementCheckTokenSource?.Cancel();
-            _requirementCheckTokenSource?.Dispose();
-            
             base.Dispose();
         }
 
         public override void Enter()
         {
-            _requirementCheckTokenSource = new CancellationTokenSource();
-            
             foreach (var map in _wavesMap) 
                 map.Trigger.Activate();
             
+            _runData.IncreaseVisitedRoomsAmount();
             ChangeTrigger.Deactivate();
             CameraService.FollowUnit(_stageData.UnitsHandler.Hero.Transform);
-
+            
             base.Enter();
         }
 
-        private void ActivateWave()
-        {
-            _wavesMap[_currentWaveIndex].Wave.Activate();
-            _requirement.StartChecking(_requirementCheckTokenSource.Token);
-        }
-        
-        private void NextWave()
-        {
-            if (_wavesMap[_currentWaveIndex].Wave.HasNextSubWave)
-            {
-                _wavesMap[_currentWaveIndex].Wave.NextSubWave();
-                _requirement.StartChecking(_requirementCheckTokenSource.Token);
+        public void SetDifficultyData(IDifficultyConfig difficultyConfig) => _difficultyConfig = difficultyConfig;
 
-                return;
-            }
+        private void ActivateWave() => _wavesMap[_currentWaveIndex].Wave.Activate(_template);
+
+        private void OnWaveEnded()
+        {
+            TriggerWaveMap waveMap = _wavesMap[_currentWaveIndex];
             
-            _currentWaveIndex++;
-            
-            if (_currentWaveIndex == _wavesMap.Length)
+            waveMap.EndTrigger.Activate();
+            waveMap.Wave.Deactivate();
+
+            if (_currentWaveIndex + 1 >= _wavesMap.Length)
             {
-                Debug.Log("Win");
+                _currentWaveIndex = 0;
+
+                AddExperience();
+            }
+            else
+            {
+                _currentWaveIndex++;
             }
         }
-        
+
         private void SubscribeToEvents()
         {
-            _requirement.Fulfilled += NextWave;
-            
             foreach (var map in _wavesMap)
             {
-                map.Wave.EnemiesDefeated += NextWave;
+                map.Wave.Ended += OnWaveEnded;
                 map.Trigger.Triggered += ActivateWave;
             }
         }
 
         private void UnsubscribeToEvents()
         {
-            _requirement.Fulfilled -= NextWave;
-            
             foreach (var map in _wavesMap)
             {
-                map.Wave.EnemiesDefeated -= NextWave;
+                map.Wave.Ended -= OnWaveEnded;
                 map.Trigger.Triggered -= ActivateWave;
             }
         }
         
-        private NextWaveRequirement DefineRequirement()
+        private void AddExperience()
         {
-            switch (_template.Requirement)
-            {
-                case Enums.NextWaveRequirement.EnemiesDefeated:
-                    return new EnemiesDefeatedWaveRequirement();
-                
-                case Enums.NextWaveRequirement.Timer:
-                    return new TimerWaveRequirement(_template.Timer);
-                
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+            int experienceAmount = Mathf.CeilToInt(Constants.DefaultExperiencePerBattleAmount *
+                                                   _difficultyConfig.BattleExperienceMultiplierCurve.Evaluate(_runData.VisitedRoomsAmount));
+            
+            ExperienceObtained?.Invoke(experienceAmount);
         }
-        
+
         [Serializable]
         private struct TriggerWaveMap
         {
             [SerializeField] private BattleTrigger _trigger;
+            [SerializeField] private Trigger _endTrigger;
             [SerializeField] private Wave _wave;
 
             public BattleTrigger Trigger => _trigger;
+            public Trigger EndTrigger => _endTrigger;
             public Wave Wave => _wave;
         }
     }
